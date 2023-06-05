@@ -1,8 +1,55 @@
 #include "combat.h"
 
+#define ARENA_WIDTH 0xb
+#define ARENA_HEIGHT 0xb
 
+// Addresses of the start of the monster table for some of its fields
+#define MT_X  0x5c5c
+#define MT_Y  0x5c5d
+#define MT_ID 0x5c5a
+#define MT_ANIM_FRAME 0x5c5b
 
-undefined2 draw_monsters_for_coords(uint arenaY,uint arenaX,undefined2 param_3)
+#define PT_LEFT_HAND  0x55c3
+#define PT_RIGHT_HAND 0x55c4
+
+#define CAN_ESCAPE        0x58a3
+#define ACTIVE_EFFECT     0x587a
+#define CROSSHAIR_VISIBLE 0x5898
+
+// Appears to be a bitmap
+#define COMBAT_FLAG_2FC   0x58a2
+#define COMBAT_FLAG_2E9   0x588f
+#define COMBAT_FLAG_2EA   0x5890
+#define ATTACKERS_WEAPON  0x589d
+#define COMBAT_FLAG_2DC   0x5882
+
+#define EFFECT_CROWN    28
+#define EFFECT_IN_AN   'N'
+#define EFFECT_AN_TYM  'T'
+#define EFFECT_REL_RYM 'Q'
+#define EFFECT_MASS_CHARM 'C'
+
+#define WEAPON_DAMAGE_TABLE 0x15fc
+
+// Ignoring animation frames and flavors (like the four different kinds of field),
+// what kind of monster is this?
+#define MKIND(id) (id & 0xfc)
+
+#define CORPSE 0x1e
+#define SPLAT 0x1f
+#define ANY_FIELD 0xe8
+#define POISON_FIELD 0xe8
+#define ELECTRIC_FIELD 0xeb
+#define SHADOWLORD 0xfc
+
+#define CHAOS_SWORD 35
+#define GLASS_SWORD 39
+#define JEWELED_SWORD 40
+#define BARE_HANDS 255
+
+// This is called for each grid square of the combat arena. It draws whichever monsters
+// are supposed to be there.
+undefined2 draw_monsters_for_coords(uint arena_y, uint arena_x, undefined2 param_3)
 
 {
   undefined *puVar1;
@@ -13,48 +60,63 @@ undefined2 draw_monsters_for_coords(uint arenaY,uint arenaX,undefined2 param_3)
   byte *local_16;
   byte *local_14;
   byte *local_12;
-  byte *currentAnimFramep;
-  byte *monsterIDp;
-  byte *monsterYp;
-  byte *monsterXp;
+  byte *cur_anim_frame_p;
+  byte *monster_id_p;
+  byte *monster_y_p;
+  byte *monster_x_p;
   byte monster_id;
   
-  if (((((int)arenaX < 0xb) && ((int)arenaY < 0xb)) && (-1 < (int)arenaX)) && (-1 < (int)arenaY)) {
-    puVar1 = (undefined *)func_0x0000a172(arenaY,arenaX,param_3);
+  // Ignore offscreen monsters
+  if (arena_x < ARENA_WIDTH && arena_y < ARENA_HEIGHT && -1 < arena_x && -1 < arena_y) {
+    puVar1 = func_0x0000a172(arena_y, arena_x, param_3);
     iVar2 = func_0x000089bc(*puVar1);
-    if ((iVar2 == 0) || (pcVar3 = (char *)func_0x0000a172(arenaY,arenaX), *pcVar3 == -1)) {
+    if ((iVar2 == 0) || (pcVar3 = func_0x0000a172(arena_y, arena_x), *pcVar3 == -1)) {
       return 0;
     }
-    monsterXp = (byte *)0x5c5c;
-    monsterYp = (byte *)0x5c5d;
-    monsterIDp = (byte *)0x5c5a;
-    currentAnimFramep = (byte *)0x5c5b;
-    local_12 = (byte *)0xba1a;
-    local_14 = (byte *)0xba1b;
-    local_16 = (byte *)0xba16;
+    monster_x_p = MT_X;
+    monster_y_p = MT_Y;
+    monster_id_p = MT_ID;
+    cur_anim_frame_p = MT_ANIM_FRAME;
+    local_12 = 0xba1a;
+    local_14 = 0xba1b;
+    local_16 = 0xba16;
     uVar4 = 0xba18;
     do {
-      if ((*monsterXp == arenaX) && (*monsterYp == arenaY)) {
-        monster_id = *monsterIDp;
-        if (monster_id == 0xeb) {
+      if ((*monster_x_p == arena_x) && (*monster_y_p == arena_y)) {
+        // Found a monster that needs to be drawn at this location
+        monster_id = *monster_id_p;
+        if (monster_id == ELECTRIC_FIELD) {
+          // Interestingly, this only checks for the blue electric field, not the other kinds.
+          // Maybe used so that if you create an electric field on top of a monster, or some
+          // other kind of field, it takes precedence?
           return 0;
         }
-        if (((((monster_id & 0xfc) != 0xe8) && (monster_id != 0x1e)) && (monster_id != 0x1f)) &&
-           (monster_id != 0)) {
-          monster_id = *currentAnimFramep;
+
+        // Animate animatable monsters        
+        if (MKIND(monster_id) != ANY_FIELD
+         && monster_id != CORPSE
+         && monster_id != SPLAT &&
+            monster_id != 0) {
+          monster_id = *cur_anim_frame_p;
+
 joined_r0x0000012b:
           if (monster_id != 0) {
+            // End of monsters
             return 0;
           }
         }
       }
-      else if ((*local_12 == arenaX) &&
-              ((*local_14 == arenaY && (monster_id = *local_16, (monster_id & 0x24) == 0))))
-      goto joined_r0x0000012b;
-      monsterXp = monsterXp + 8;
-      monsterYp = monsterYp + 8;
-      monsterIDp = monsterIDp + 8;
-      currentAnimFramep = currentAnimFramep + 8;
+      else if ((*local_12 == arena_x) &&
+              ((*local_14 == arena_y && (monster_id = *local_16, (monster_id & 0x24) == 0)))) {
+        // No existing monster is at this location, but a new one needs to be spawned?
+        goto joined_r0x0000012b;
+      }
+
+      // Advance all the pointers to the next monster
+      monster_x_p = monster_x_p + 8;
+      monster_y_p = monster_y_p + 8;
+      monster_id_p = monster_id_p + 8;
+      cur_anim_frame_p = cur_anim_frame_p + 8;
       local_12 = local_12 + 8;
       local_14 = local_14 + 8;
       local_16 = local_16 + 8;
@@ -79,10 +141,10 @@ undefined2 FUN_0000_014e(int param_1,int param_2,uint param_3)
   uVar1 = *(undefined *)(uVar2 + 0x15cc);
   if (((uVar2 == 0x1a) || (iVar3 = func_0x00007e02(0xff,0), iVar3 < 0x80)) &&
      (((*(uint *)(uVar2 * 2 + 0x153c) & 0x8000) == 0 ||
-      ((*(char *)0x587a != 'N' && (*(char *)0x587a != '\x1c')))))) {
+      ((*ACTIVE_EFFECT != EFFECT_IN_AN && (*ACTIVE_EFFECT != EFFECT_CROWN)))))) {
     func_0x0000a11e(0x96,5,400,0x2ee);
     if (param_1 == 0) {
-      local_6 = FUN_0000_14d6(0,-(uint)*(byte *)0x588f,param_3,param_2);
+      local_6 = FUN_0000_14d6(0,-(uint)*COMBAT_FLAG_2E9 ,param_3,param_2);
     }
     else {
       local_6 = 0;
@@ -138,7 +200,7 @@ undefined2 FUN_0000_0226(uint param_1)
           }
           func_0x0000a11e(0x96,5,400,0x2ee);
           *(undefined *)(iVar3 + 0x58a8) = (undefined)param_1;
-          iVar4 = FUN_0000_14d6(0,-(uint)*(byte *)0x588f,param_1,iVar3);
+          iVar4 = FUN_0000_14d6(0,-(uint)*COMBAT_FLAG_2E9 ,param_1,iVar3);
           if (iVar4 == 0) {
             return 1;
           }
@@ -165,8 +227,8 @@ undefined2 FUN_0000_0226(uint param_1)
     else {
       iVar4 = func_0x0000db2e(iVar3,param_1);
       if (iVar4 == 1) {
-        *(undefined *)0x589d = 0x21;
-        func_0x0000db5e(0x21,iVar3,param_1);
+        *ATTACKERS_WEAPON = TWO_HANDED_SWORD;
+        func_0x0000db5e(TWO_HANDED_SWORD, iVar3, param_1);
         return 1;
       }
     }
@@ -186,10 +248,10 @@ void __cdecl16near FUN_0000_03f4(void)
   undefined2 unaff_DS;
   
   iVar3 = (uint)*(byte *)0x589e * 8;
-  *(undefined *)0x589d = 0;
+  *ATTACKERS_WEAPON = 0;
   bVar2 = *(byte *)(iVar3 + -0x45e8);
-  if ((*(char *)0x587a != 'T') &&
-     (((*(char *)0x587a != 'Q' || (iVar4 = func_0x00007e02(1,0), iVar4 != 0)) &&
+  if ((*ACTIVE_EFFECT != EFFECT_AN_TYM) &&
+     (((*ACTIVE_EFFECT != EFFECT_REL_TYM || (iVar4 = func_0x00007e02(1,0), iVar4 != 0)) &&
       ((*(byte *)(iVar3 + -0x45ea) & 4) == 0)))) {
     if ((*(byte *)(iVar3 + -0x45ea) & 8) == 0) {
       if (*(char *)(iVar3 + -0x45e9) == '-') {
@@ -220,7 +282,7 @@ void __cdecl16near FUN_0000_03f4(void)
         }
       }
       else {
-        if ((*(byte *)0x58a2 & 0x10) != 0) {
+        if ((*COMBAT_FLAG_2FC & 0x10) != 0) {
           func_0x0000742a(10);
           func_0x0000a11e(0x28,1,2000,0x4b0);
           func_0x0000db0a(*(undefined *)0x589e);
@@ -282,7 +344,7 @@ undefined2 FUN_0000_0544(int param_1,undefined2 param_2)
 
 
 
-undefined2 FUN_0000_05b6(int param_1,int param_2)
+undefined2 FUN_0000_05b6(int param_1, int weapon)
 
 {
   undefined2 uVar1;
@@ -297,7 +359,7 @@ undefined2 FUN_0000_05b6(int param_1,int param_2)
   undefined2 *fooLo;
   char *somethingLo;
   
-  if ((param_2 == 0xff) || (*(char *)(param_2 + 0x15fc) == '\0')) {
+  if ((weapon == BARE_HANDS) || (*(weapon + WEAPON_DAMAGE_TABLE) == 0)) {
     uVar1 = 0;
   }
   else {
@@ -336,7 +398,7 @@ undefined2 FUN_0000_05b6(int param_1,int param_2)
         *(undefined *)fooLo = *(undefined *)barLo;
       }
     }
-    somethingHi = *(char **)(param_2 * 2 + 0x17f6);
+    somethingHi = *(char **)(weapon * 2 + 0x17f6);
     uVar2 = 0xffff;
     do {
       if (uVar2 == 0) break;
@@ -410,7 +472,8 @@ void __cdecl16near FUN_0000_063e(void)
     return;
   }
   if (((*(byte *)((uint)*(byte *)0x589e * 8 + -0x45ea) & 0x80) == 0) ||
-     ((*(char *)(pcNum * 0x20 + 0x55c3) != '#' && (*(char *)(pcNum * 0x20 + 0x55c4) != '#')))) {
+     (*(pcNum * 0x20 + PT_LEFT_HAND) != CHAOS_SWORD
+  && (*(pcNum * 0x20 + PT_LEFT_HAND) != CHAOS_SWORD))) {
     iVar10 = (uint)*(byte *)0x589e * 8;
     if ((*(byte *)(iVar10 + -0x45ea) & 0x80) != 0) {
       func_0x00008798(*(undefined *)(iVar10 + -0x45e9));
@@ -678,7 +741,6 @@ LAB_0000_0b79:
     func_0x0000b680();
     func_0x0000dbd6();
   }
-                    // # is Chaos Sword
   return;
 LAB_0000_0b56:
   if (local_4 == 0) goto LAB_0000_0b5f;
@@ -712,10 +774,10 @@ undefined2 __cdecl16near FUN_0000_0b94(void)
   func_0x00007886();
   func_0x0000dbfa();
   if (*(int *)0x5876 == 0) {
-    *(undefined *)0x58a3 = 1;
+    *CAN_ESCAPE = 1;
   }
   else {
-    *(undefined *)0x58a3 = 0;
+    *CAN_ESCAPE = 0;
   }
   uVar6 = 0;
   do {
@@ -733,15 +795,15 @@ undefined2 __cdecl16near FUN_0000_0b94(void)
             *pcVar2 = *pcVar2 + -1;
             if (*pcVar2 == '\0') {
               *(char *)(iVar5 + -0x45e7) = '$' - *(char *)(iVar5 + -0x45eb);
-              *(undefined *)0x5898 = 0;
-              *(undefined *)0x58a2 = 0;
-              *(undefined *)0x588f = 0;
-              *(undefined *)0x5890 = 0;
-              *(undefined *)0x589d = 0;
-              pcVar2 = (char *)0x5882;
+              *CROSSHAIR_VISIBLE = 0;
+              *COMBAT_FLAG_2FC = 0;
+              *COMBAT_FLAG_2E9 = 0;
+              *COMBAT_FLAG_2EA = 0;
+              *ATTACKERS_WEAPON = 0;
+              pcVar2 = COMBAT_FLAG_2DC;
               *pcVar2 = *pcVar2 + '\x01';
-              if (*(char *)0x5882 == '\n') {
-                *(undefined *)0x5882 = 0;
+              if (*COMBAT_FLAG_2DC == '\n') {
+                *COMBAT_FLAG_2DC = 0;
                 func_0x0000acec(1);
               }
               *(undefined *)0x589f = 1;
@@ -766,7 +828,7 @@ undefined2 __cdecl16near FUN_0000_0b94(void)
                   iVar4 = func_0x0000dbee();
                   if (iVar4 != -1) goto LAB_0000_0d08;
                   func_0x0000b680();
-                  if (*(char *)0x58a3 == '\0') {
+                  if (*CAN_ESCAPE == 0) {
                     func_0x000075c0(0x6eee);
                     local_4 = 1;
                   }
@@ -774,9 +836,9 @@ undefined2 __cdecl16near FUN_0000_0b94(void)
                 uVar6 = 1;
                 break;
               }
-              if ((*(int *)0x5876 == 0) && (*(char *)0x58a3 == '\0')) {
+              if ((*(int *)0x5876 == 0) && (*CAN_ESCAPE == 0)) {
                 func_0x000075c0(0x6f00);
-                *(undefined *)0x58a3 = 1;
+                *CAN_ESCAPE = 1;
                 uVar6 = 0xd05;
                 func_0x0000a0d8();
                 func_0x00007886();
@@ -832,7 +894,7 @@ int FUN_0000_0d30(int param_1)
   local_4 = 99;
   iVar4 = param_1 * 8;
   local_8 = func_0x0000b3b6(param_1);
-  if (*(char *)0x587a == 'C') {
+  if (*ACTIVE_EFFECT == EFFECT_MASS_CHARM) {
     uVar5 = FUN_0000_13e2(-1,param_1);
     iVar6 = func_0x0000982e();
     if ((int)uVar5 < iVar6) {
@@ -928,7 +990,7 @@ int FUN_0000_0ee4(int param_1)
   if ((*(char *)(iVar5 + -0x45e9) != '\x1b') && (*(char *)(iVar5 + -0x45e9) != '\x1a')) {
     if ((((*(byte *)(iVar5 + -0x45ea) & 0x80) == 0) &&
         (((((*(uint *)((uint)*(byte *)(iVar5 + -0x45e9) * 2 + 0x153c) & 0x2000) != 0 &&
-           (*(char *)0x587a != 'N')) && (*(char *)0x587a != '\x1c')) &&
+           (*ACTIVE_EFFECT != EFFECT_IN_AN)) && (*ACTIVE_EFFECT != EFFECT_CROWN)) &&
          ((iVar6 = func_0x0000dc1e(param_1), iVar6 != 0 || (iVar6 = func_0x0000981e(3), iVar6 != 3))
          )))) && (iVar6 = FUN_0000_120e(), iVar6 != 0)) {
       iVar7 = (uint)*(byte *)(iVar5 + -0x45e8) * 8;
@@ -1011,7 +1073,7 @@ LAB_0000_109c:
         local_8 = 1;
         iVar5 = func_0x0000caf2(*(undefined *)(iVar5 + -0x45e5),*(undefined *)(iVar5 + -0x45e6));
         if (iVar5 == 0) {
-          *(undefined *)0x58a2 = 0x10;
+          *COMBAT_FLAG_2FC = 0x10;
         }
       }
     }
@@ -1135,37 +1197,37 @@ uint FUN_0000_12b0(int param_1,int param_2)
 {
   byte bVar1;
   char cVar2;
-  uint uVar3;
+  uint weapon;
   int iVar4;
   undefined2 unaff_DS;
-  uint local_8;
+  uint damage;
   uint local_6;
   
   if ((*(byte *)(param_2 * 8 + -0x45ea) & 0x40) == 0) {
-    uVar3 = (uint)*(byte *)0x589d;
-    if (uVar3 == 0x27) {
+    weapon = *ATTACKERS_WEAPON;
+    if (weapon == GLASS_SWORD) {
       func_0x000075c0(0x6f1a);
-      func_0x0000cbd0(0x27,param_2);
-      local_8 = 99;
+      func_0x0000cbd0(GLASS_SWORD, param_2);
+      damage = 99;
     }
-    else if (uVar3 == 0x28) {
-      local_8 = 0;
+    else if (weapon == JEWELED_SWORD) {
+      damage = 0;
     }
-    else if (uVar3 == 0xff) {
-      local_8 = 1;
+    else if (weapon == BARE_HANDS) {
+      damage = 1;
     }
     else {
-      bVar1 = *(byte *)(uVar3 + 0x15fc);
-      local_8 = (uint)bVar1;
-      if ((1 < bVar1) && (local_8 != 99)) {
-        local_8 = func_0x00007e02(local_8,1);
+      bVar1 = *(weapon + WEAPON_DAMAGE_TABLE);
+      damage = bVar1;
+      if ((1 < bVar1) && (damage != 99)) {
+        damage = func_0x00007e02(damage,1);
       }
     }
   }
   else {
-    local_8 = (uint)*(byte *)((uint)*(byte *)(param_2 * 8 + -0x45e9) * 8 + 0x13c0);
+    damage = (uint)*(byte *)((uint)*(byte *)(param_2 * 8 + -0x45e9) * 8 + 0x13c0);
   }
-  if (local_8 == 99) {
+  if (damage == 99) {
     local_6 = 99;
   }
   else {
@@ -1175,10 +1237,10 @@ uint FUN_0000_12b0(int param_1,int param_2)
     else {
       cVar2 = *(char *)((uint)*(byte *)(param_1 * 8 + -0x45e9) * 8 + 0x13bf);
     }
-    local_6 = local_8;
+    local_6 = damage;
     if (cVar2 != '\0') {
       iVar4 = func_0x00007e02(cVar2,1);
-      local_6 = local_8 - iVar4;
+      local_6 = damage - iVar4;
     }
   }
   return local_6;
@@ -1192,7 +1254,7 @@ undefined FUN_0000_139a(int param_1)
   undefined uVar1;
   undefined2 unaff_DS;
   
-  if ((((*(char *)0x587a == 'T') && ((*(byte *)(param_1 * 8 + -0x45ea) & 0x40) != 0)) ||
+  if ((((*ACTIVE_EFFECT == EFFECT_AN_TYM) && ((*(byte *)(param_1 * 8 + -0x45ea) & 0x40) != 0)) ||
       (*(char *)(param_1 * 8 + -0x45e9) == '\x1a')) || ((*(byte *)(param_1 * 8 + -0x45ea) & 8) != 0)
      ) {
     uVar1 = 1;
@@ -1277,7 +1339,7 @@ int FUN_0000_14d6(int param_1,undefined2 param_2_00,int param_3,int param_4)
   
   local_a = -1;
   local_6 = 0;
-  if (*(char *)0x588f == '\0') {
+  if (*COMBAT_FLAG_2E9 == '\0') {
     if (((param_1 != 0x27) && (param_1 != 0x23)) && (param_1 != 0x28)) {
       local_8 = -2;
       local_a = param_1;
@@ -1327,12 +1389,12 @@ char FUN_0000_1574(uint param_1,int param_2)
   iVar6 = param_2 * 8;
   pbVar7 = (byte *)(iVar6 + -0x45ec);
   if ((int)param_1 < 1) {
-    *(undefined *)0x58a2 = 0x20;
+    *COMBAT_FLAG_2FC = 0x20;
     param_1 = 0;
   }
   if ((*(byte *)(iVar6 + -0x45ea) & 0x80) == 0) {
     if (((*(byte *)((uint)*(byte *)(iVar6 + -0x45e9) * 2 + 0x153c) & 0x20) != 0) &&
-       (*(char *)0x5890 == '\0')) {
+       (*COMBAT_FLAG_2EA == 0)) {
       param_1 = (int)param_1 / 2;
     }
     if ((*(byte *)((uint)*(byte *)(iVar6 + -0x45e9) * 2 + 0x153c) & 8) != 0) {
@@ -1395,7 +1457,7 @@ char FUN_0000_1574(uint param_1,int param_2)
         if ((*(uint *)(iVar13 + 0x153c) & 0x1000) != 0) {
           func_0x000075c0(*(undefined2 *)(iVar13 + 0x1856));
           func_0x000075c0(0x6f36);
-          *(undefined *)0x58a2 = 2;
+          *COMBAT_FLAG_2FC = 2;
           iVar13 = (uint)*(byte *)(iVar6 + -0x45e8) * 8;
           *(undefined *)(iVar13 + 0x5c5b) = 0x16;
           *(undefined *)(iVar13 + 0x5c5a) = 0x16;
@@ -1476,7 +1538,7 @@ void FUN_0000_18ba(uint param_1,int param_2)
     *(undefined *)(iVar3 + 0x55b3) = 0x50;
     func_0x000075c0(iVar3 + 0x55a8);
     func_0x000075c0(0x6f4e);
-    *(undefined *)0x58a2 = 8;
+    *COMBAT_FLAG_2FC = 8;
     *(undefined *)0xa9fa = 1;
   }
   return;
@@ -1506,14 +1568,14 @@ void FUN_0000_194a(uint param_1,int param_2)
     if (bVar1) {
       return;
     }
-    if ((*(char *)0x5890 != '\0') && (*(char *)0x589d == '4')) {
+    if ((*COMBAT_FLAG_2EA != 0) && (*ATTACKERS_WEAPON == '4')) {
       func_0x0000c61e(param_2);
       return;
     }
-    if ((*(char *)0x5890 == '\0') || (*(char *)0x589d != '3')) {
+    if ((*COMBAT_FLAG_2EA == 0) || (*ATTACKERS_WEAPON != '3')) {
       uVar4 = FUN_0000_12b0(param_2,param_1);
       if (((int)uVar4 < 0) && ((*(byte *)(param_2 * 8 + -0x45ea) & 0x80) != 0)) {
-        *(undefined *)0x58a2 = 0x20;
+        *COMBAT_FLAG_2FC = 0x20;
         return;
       }
       cVar2 = FUN_0000_1574(uVar4,param_2);
