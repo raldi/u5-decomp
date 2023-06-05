@@ -1258,7 +1258,7 @@ uint __cdecl16near FUN_0000_18be(void)
     func_0x0000573a(10);
     func_0x0000573a(0x20);
     uVar5 = (uint)local_12[iVar4];
-    func_0x00005abe(0x30,2,*(undefined *)(uVar5 + 0x5850));
+    print_number(0x30,2,*(undefined *)(uVar5 + 0x5850));
     func_0x0000573a(0x20);
     func_0x000058d0(*(undefined2 *)(uVar5 * 2 + 0x19d2));
   }

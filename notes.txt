@@ -1,0 +1,11 @@
+If you see a memory address in the 0x5xxx range, subtract 0x55a6 and
+look it up in the SAVED.GAM table:
+https://wiki.ultimacodex.com/wiki/Ultima_V_internal_formats#SAVED.GAM
+
+If you see one in the -0x4xxx range, add it to 0x5b36 and look it up in
+DATA.OVL:
+https://wiki.ultimacodex.com/wiki/Ultima_V_internal_formats#DATA.OVL
+
+For instance, if you see -0x45ea, calculate hex(0x5b36-0x45ea) == 0x154c
+and note that this is the start of the monster flags table.
+

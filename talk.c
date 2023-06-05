@@ -180,7 +180,7 @@ undefined2 __cdecl16near FUN_0000_01e2(void)
       } while (pcVar4 != (char *)(uVar2 * 0x20 + 0x55b3));
     }
     func_0x000058d0(0x90cc);
-    func_0x00005abe(0x20,2,local_16);
+    print_number(0x20,2,local_16);
     func_0x000058d0(0x90e0);
     iVar3 = FUN_0000_00ac();
     if (iVar3 != 0) {
