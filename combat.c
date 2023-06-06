@@ -13,7 +13,6 @@
 #define PT_RIGHT_HAND 0x55c4
 
 #define CAN_ESCAPE        0x58a3
-#define ACTIVE_EFFECT     0x587a
 #define CROSSHAIR_VISIBLE 0x5898
 
 // Appears to be a bitmap
@@ -23,6 +22,7 @@
 #define ATTACKERS_WEAPON  0x589d
 #define COMBAT_FLAG_2DC   0x5882
 
+#define ACTIVE_EFFECT    0x587a
 #define EFFECT_CROWN    28
 #define EFFECT_IN_AN   'N'
 #define EFFECT_AN_TYM  'T'
@@ -46,6 +46,24 @@
 #define GLASS_SWORD 39
 #define JEWELED_SWORD 40
 #define BARE_HANDS 255
+
+#define MONSTER_FLAGS 0x153c
+#define MF_MAGIC_BOLTS   0x8000
+#define MF_BARDLIKE      0x4000
+#define MF_TELEPORT      0x2000
+#define MF_VANISH        0x1000
+#define MF_INVISIBLE     0x0800
+#define MF_GATE_DAEMONS  0x0400
+#define MF_MAYBE_POISON  0x0200
+#define MF_GRUNGY        0x0100
+#define MF_BLUDGEON      0x0080
+#define MF_POSSESS       0x0040
+#define MF_UNDEAD        0x0020
+#define MF_DIVIDE        0x0010
+#define MF_GLASS_IMMUNE  0x0008
+#define MF_ALWAYS_POISON 0x0004
+#define MF_STEAL_FOOD    0x0002
+#define MF_NO_TRACE      0x0001
 
 // This is called for each grid square of the combat arena. It draws whichever monsters
 // are supposed to be there.
@@ -140,7 +158,7 @@ undefined2 FUN_0000_014e(int param_1,int param_2,uint param_3)
   uVar2 = (uint)*(byte *)(param_3 * 8 + -0x45e9);
   uVar1 = *(undefined *)(uVar2 + 0x15cc);
   if (((uVar2 == 0x1a) || (iVar3 = func_0x00007e02(0xff,0), iVar3 < 0x80)) &&
-     (((*(uint *)(uVar2 * 2 + 0x153c) & 0x8000) == 0 ||
+     (((*MONSTER_FLAGS[uVar2 * 2] & MF_MAGIC_BOLTS) == 0 ||
       ((*ACTIVE_EFFECT != EFFECT_IN_AN && (*ACTIVE_EFFECT != EFFECT_CROWN)))))) {
     func_0x0000a11e(0x96,5,400,0x2ee);
     if (param_1 == 0) {
@@ -184,7 +202,7 @@ undefined2 FUN_0000_0226(uint param_1)
     if ((*(byte *)(param_1 * 8 + -0x45ea) & 1) == 0) {
       if ((((*(byte *)(iVar3 * 8 + -0x45ea) & 0x80) != 0) &&
           (*(char *)((uint)*(byte *)(iVar3 * 8 + -0x45e9) * 0x20 + 0x55c6) == '-')) &&
-         ((*(uint *)(uVar1 * 2 + 0x153c) & 0x8000) != 0)) {
+         ((*MONSTER_FLAGS[uVar1 * 2] & MF_MAGIC_BOLTS) != 0)) {
         iVar4 = func_0x00007e02(0xff,0);
         local_c = (uint)(iVar4 < 0x80);
       }
@@ -204,7 +222,7 @@ undefined2 FUN_0000_0226(uint param_1)
           if (iVar4 == 0) {
             return 1;
           }
-          if ((((*(byte *)(uVar1 * 2 + 0x153c) & 2) != 0) &&
+          if ((((MONSTER_FLAGS[uVar1 * 2] & MF_STEAL_FOOD) != 0) &&
               (iVar4 = func_0x00007e02(3,0), iVar4 != 0)) && (*(int *)0x57a8 != 0)) {
             func_0x000075c0(0x6d74);
             func_0x0000db0a(param_1);
@@ -989,7 +1007,7 @@ int FUN_0000_0ee4(int param_1)
   iVar5 = param_1 * 8;
   if ((*(char *)(iVar5 + -0x45e9) != '\x1b') && (*(char *)(iVar5 + -0x45e9) != '\x1a')) {
     if ((((*(byte *)(iVar5 + -0x45ea) & 0x80) == 0) &&
-        (((((*(uint *)((uint)*(byte *)(iVar5 + -0x45e9) * 2 + 0x153c) & 0x2000) != 0 &&
+        (((((*MONSTER_FLAGS[(iVar5 + -0x45e9) * 2] & MF_TELEPORT) != 0 &&
            (*ACTIVE_EFFECT != EFFECT_IN_AN)) && (*ACTIVE_EFFECT != EFFECT_CROWN)) &&
          ((iVar6 = func_0x0000dc1e(param_1), iVar6 != 0 || (iVar6 = func_0x0000981e(3), iVar6 != 3))
          )))) && (iVar6 = FUN_0000_120e(), iVar6 != 0)) {
@@ -1283,7 +1301,7 @@ uint FUN_0000_13e2(int param_1,int param_2)
   }
   else {
     if (param_1 != 0) goto LAB_0000_142d;
-    if ((*(byte *)((uint)*(byte *)(iVar2 + -0x45e9) * 2 + 0x153c) & 0x80) == 0) {
+    if ((MONSTER_FLAGS[(iVar2 + -0x45e9) * 2]) & MF_BLUDGEON) == 0) {
 LAB_0000_1428:
       param_1 = -2;
       goto LAB_0000_142d;
@@ -1393,11 +1411,11 @@ char FUN_0000_1574(uint param_1,int param_2)
     param_1 = 0;
   }
   if ((*(byte *)(iVar6 + -0x45ea) & 0x80) == 0) {
-    if (((*(byte *)((uint)*(byte *)(iVar6 + -0x45e9) * 2 + 0x153c) & 0x20) != 0) &&
+    if ((MONSTER_FLAGS[(iVar6 + -0x45e9) * 2] & MF_UNDEAD) != 0) &&
        (*COMBAT_FLAG_2EA == 0)) {
       param_1 = (int)param_1 / 2;
     }
-    if ((*(byte *)((uint)*(byte *)(iVar6 + -0x45e9) * 2 + 0x153c) & 8) != 0) {
+    if (MONSTER_FLAGS[(iVar6 + -0x45e9) * 2] & MF_GLASS_IMMUNE) != 0) {
       param_1 = 0;
     }
     if (*pbVar7 < param_1) {
@@ -1417,7 +1435,7 @@ char FUN_0000_1574(uint param_1,int param_2)
       uVar8 = (uint)*(byte *)(iVar6 + -0x45e6);
       uVar9 = (uint)*(byte *)(iVar6 + -0x45e5);
       bVar4 = *(byte *)(uVar9 * 0x20 + uVar8 + -0x52ec);
-      if ((*(uint *)(uVar11 * 2 + 0x153c) & 0x1001) == 0) {
+      if (MONSTER_FLAGS[uVar11 * 2] & (MF_VANISH|MF_NO_TRACE) == 0) {
         if (*(char *)(iVar6 + -0x45e9) == '\x1c') {
           iVar6 = (uint)*(byte *)(iVar6 + -0x45e8) * 8;
           *(undefined *)(iVar6 + 0x5c5b) = 0x1f;
@@ -1454,7 +1472,7 @@ char FUN_0000_1574(uint param_1,int param_2)
       }
       else {
         iVar13 = (uint)*(byte *)(iVar6 + -0x45e9) * 2;
-        if ((*(uint *)(iVar13 + 0x153c) & 0x1000) != 0) {
+        if (MONSTER_FLAGS[iVar13] & MF_VANISH) != 0) {
           func_0x000075c0(*(undefined2 *)(iVar13 + 0x1856));
           func_0x000075c0(0x6f36);
           *COMBAT_FLAG_2FC = 2;
@@ -1472,7 +1490,7 @@ char FUN_0000_1574(uint param_1,int param_2)
       }
       FUN_0000_1236(iVar6);
     }
-    else if ((*(byte *)((uint)*(byte *)(iVar6 + -0x45e9) * 2 + 0x153c) & 0x10) != 0) {
+    else if (MONSTER_FLAGS[(iVar6 + -0x45e9) * 2] & MF_DIVIDE) != 0) {
       local_c = 0;
       do {
         func_0x0000dc4e(*(undefined *)(iVar6 + -0x45e5),*(undefined *)(iVar6 + -0x45e6));
@@ -1557,7 +1575,7 @@ void FUN_0000_194a(uint param_1,int param_2)
   bool bVar5;
   
   bVar5 = (*(byte *)(param_1 * 8 + -0x45ea) & 0x80) == 0;
-  if (((!bVar5) || ((*(uint *)((uint)*(byte *)(param_1 * 8 + -0x45e9) * 2 + 0x153c) & 0x204) == 0))
+  if (((!bVar5) || MONSTER_FLAGS[(param_1 * 8 + -0x45e9) * 2] & (MF_MAYBE_POISON|MF_ALWAYS_POISON)) == 0))
      || (iVar3 = func_0x00007e02(3,0), iVar3 == 0)) {
     bVar1 = false;
     if (((bVar5) && (*(char *)(param_1 * 8 + -0x45e9) == '\x1c')) &&

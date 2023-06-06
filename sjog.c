@@ -7,32 +7,67 @@ Cause: Offset must be between 0x0 and 0x10ffef, got 0xffffffff instead!
 #define CURRENT_HOUR 0x587f
 
 #define INV_GLASS_SWORDS 0x57e7
+#define INV_KEYS 0x57ac
 
 #define INV_REAGENTS 0x5850
 
-#def HARVEST_FLAGS 0x5858
+#define HARVEST_FLAGS 0x5858
 
-#def PARTY_Z 0x5895
+#define PARTY_LOCATION 0x5893
+#define PARTY_Z 0x5895
 
 #define IS_FRIGATE(x) (x & 0xf8 == 0x20)
-#def MODE_OF_TRANSPORTATION 0x587c
+#define MODE_OF_TRANSPORTATION 0x587c
 
-#def LORD_BRITISH_IN_MIRROR 0x3c
+#define LORD_BRITISH_IN_MIRROR 0x3c
 
-#def EXIT_DIRECTION_FROM_COMBAT 0x58a0
+#define EXIT_DIRECTION_FROM_COMBAT 0x58a0
 
-#def ED_NONE  0
-#def ED_WEST  1
-#def ED_EAST  2
-#def ED_NORTH 3
-#def ED_SOUTH 4
-#def ED_UP    5
-#def ED_DOWN  6
-#def ED_WIN_GAME 77
+#define ED_NONE  0
+#define ED_WEST  1
+#define ED_EAST  2
+#define ED_NORTH 3
+#define ED_SOUTH 4
+#define ED_UP    5
+#define ED_DOWN  6
+#define ED_MIRROR 'M' 
 
-#def COMBAT_TYPE_FLAGS 0x58a1
+#define DUNGEON_HEADING 0x6603
 
-#def CTF_DUNGEON 0x80
+#define COMBAT_TYPE_FLAGS 0x58a1
+
+#define CTF_DUNGEON 0x80
+
+#define RETICLE_VISIBLE 0x589f
+#define ACTIVE_PLAYER 0x587b
+
+#define NON_REGENERATING_OBJECT_FLAGS 0x585c
+
+#define MOONSTONE_X_COORDS 0x582f
+#define MOONSTONE_Y_COORDS 0x5837
+#define MOONSTONE_Z_COORDS 0x5847
+#define INV_MOONSTONE 0x583f
+
+#define MOONSTONE 0x19
+
+#define HIDDEN_ITEM_LOCATIONS 0x3f5c
+#define HIDDEN_ITEM_X_COORDS 0x4040
+#define HIDDEN_ITEM_Y_COORDS 0x40b2
+#define HIDDEN_ITEM_Z_COORDS 0x3fce
+
+#define MINOC_SKULL_KEY_ID 14
+#define MINOC_SKULL_KEY_DATE 0x57b2
+
+#define CASTLE_BLACKTHORN_DUNGEON_KEY_ID 13
+
+#define GLASS_SWORD_ID 15
+
+#define IS_NONMYSTIC(n) (n > 0xc)
+
+#define REMAINING_LIGHT_SPELL_DURATION 0x58a6
+#define REMAINING_TORCH_DURATION 0x58a7
+
+#define SPRITE_FLAGS 0xba16
 
 void FUN_0000_002a(undefined2 param_1,undefined2 param_2,int param_3)
 
@@ -224,41 +259,38 @@ void FUN_0000_02ea(int param_1,int param_2)
 
 
 
-undefined2 FUN_0000_03a8(uint param_1,uint param_2,uint param_3)
-
-{
+undefined2 FUN_0000_03a8(uint z, uint y, uint x) {
   byte *pbVar1;
-  uint uVar2;
+  uint moonstone_b_id;
   int iVar3;
   undefined2 uVar4;
   int iVar5;
   bool bVar6;
   undefined2 unaff_DS;
-  uint local_6;
+  uint moonstone_a_id;
   
-  local_6 = 8;
-  uVar2 = local_6;
+  moonstone_b_id = 8;
   do {
     do {
-      local_6 = uVar2;
-      uVar2 = local_6 - 1;
-      if ((int)uVar2 < 0) {
+      moonstone_a_id = moonstone_b_id;
+      moonstone_b_id = moonstone_a_id - 1;
+      if (moonstone_b_id < 0) {
         return 0;
       }
-    } while ((((*(byte *)(local_6 + 0x582f) != param_3) || (*(byte *)(local_6 + 0x5837) != param_2))
-             || (*(byte *)(local_6 + 0x5847) != param_1)) ||
-            (*(char *)(local_6 + 0x583f) != *(char *)0x5893));
+    } while (MOONSTONE_X_COORDS[moonstone_a_id] != x
+          || MOONSTONE_Y_COORDS[moonstone_a_id] != y
+          || MOONSTONE_Z_COORDS[moonstone_a_id] != z
+          || INV_MOONSTONE[moonstone_a_id] != *PARTY_LOCATION);
     bVar6 = false;
-    iVar5 = 0x20;
-    while (iVar5 = iVar5 + -1, -1 < iVar5) {
-      iVar3 = func_0x0000770e(param_1,param_2,param_3);
-      if ((iVar3 == 0x19) && (*(byte *)(*(int *)0x5876 * 8 + 0x5c5f) == uVar2)) {
+    for (iVar5 = 0x20, iVar5 >= 0; iVar5--) { 
+      iVar3 = func_0x0000770e(z, y, x);
+      if ((iVar3 == MOONSTONE) && (*(*0x5876 * 8 + 0x5c5f) == moonstone_b_id)) {
         bVar6 = true;
       }
     }
   } while (bVar6);
   uVar4 = func_0x00007964();
-  func_0x00007af4(uVar4,uVar2,param_1,param_2,param_3,0x19,0x19);
+  func_0x00007af4(uVar4,moonstone_b_id, z, y, x,0x19,0x19);
   func_0x000058d0(0x8680);
   pbVar1 = (byte *)0x24e6;
   *pbVar1 = *pbVar1 | 2;
@@ -318,28 +350,31 @@ void FUN_0000_0514(uint param_1,uint param_2)
   bool bVar3;
   int iVar4;
   undefined2 uVar5;
-  int iVar6;
+  int hidden_item_id;
   uint uVar7;
   undefined2 unaff_DS;
   
   bVar3 = false;
-  iVar6 = 0;
-  while ((((*(char *)(iVar6 + 0x3f5c) != *(char *)0x5893 ||
-           (*(char *)(iVar6 + 0x3fce) != *PARTY_Z)) || (*(byte *)(iVar6 + 0x4040) != param_2)
-          ) || (*(byte *)(iVar6 + 0x40b2) != param_1))) {
+  hidden_item_id = 0;
+  while (HIDDEN_ITEM_LOCATIONS[hidden_item_id] != *PARTY_LOCATION ||
+         HIDDEN_ITEM_Z_COORDS[hidden_item_id] != *PARTY_Z ||
+         HIDDEN_ITEM_X_COORDS[hidden_item_id] != param_2 || 
+         HIDDEN_ITEM_Y_COORDS[hidden_item_id] != param_1) {
 LAB_0000_062a:
-    iVar6 = iVar6 + 1;
-    if (0x70 < iVar6) {
+    hidden_item_id++;
+    if (hidden_item_id > 0x70) {
 LAB_0000_05a6:
-      if (iVar6 == 0xe) {
-        *(undefined *)0x57b2 = *CURRENT_DAY;
+      if (hidden_item_id == MINOC_SKULL_KEY_ID) {
+        *MINOC_SKULL_KEY_DATE = *CURRENT_DAY;
       }
       if (bVar3) {
         uVar5 = func_0x00007964();
-        uVar2 = *(undefined *)(iVar6 + 0x3e78);
-        func_0x00007af4(uVar5,*(undefined *)(iVar6 + 0x3eea),*(undefined *)(iVar6 + 0x3fce),
-                        *(undefined *)(iVar6 + 0x40b2),*(undefined *)(iVar6 + 0x4040),uVar2,uVar2);
-        pbVar1 = (byte *)0x24e6;
+        uVar2 = *(undefined *)(hidden_item_id + 0x3e78);
+        func_0x00007af4(uVar5,*(hidden_item_id + 0x3eea),
+                        HIDDEN_ITEM_Z_COORDS[hidden_item_id],
+                        HIDDEN_ITEM_Y_COORDS[hidden_item_id],
+                        HIDDEN_ITEM_X_COORDS[hidden_item_id],uVar2,uVar2);
+        pbVar1 = 0x24e6;
         *pbVar1 = *pbVar1 | 2;
         FUN_0000_012a(uVar2);
       }
@@ -349,23 +384,21 @@ LAB_0000_05a6:
       return;
     }
   }
-  if (((((iVar6 != 0xd) || (*(char *)0x57ac != '\0')) ||
+  if (((((hidden_item_id != CASTLE_BLACKTHORN_DUNGEON_KEY_ID) || (*INV_KEYS != 0)) ||
        (iVar4 = func_0x0000770e(*PARTY_Z,param_1,param_2), iVar4 != 0)) &&
-      ((iVar6 != 0xe || (*CURRENT_DAY == *(char *)0x57b2)))) &&
-     ((iVar6 != 0xf ||
-      ((INV_GLASS_SWORDS != 0 ||
+      ((hidden_item_id != MINOC_SKULL_KEY_ID || (*CURRENT_DAY == *MINOC_SKULL_KEY_DATE)))) &&
+     ((hidden_item_id != GLASS_SWORD_ID || ((INV_GLASS_SWORDS != 0 ||
        (iVar4 = func_0x0000770e(PARTY_Z,param_1,param_2), iVar4 != 0)))))) {
-    uVar7 = 1 << ((byte)iVar6 & 7);
-    if (((uVar7 & *(byte *)((iVar6 >> 3) + 0x585c)) != 0) || ((0xc < iVar6 && (iVar6 < 0x10))))
+    uVar7 = 1 << ((byte)hidden_item_id & 7);
+    if (((uVar7 & *((hidden_item_id >> 3) + NON_REGENERATING_OBJECT_FLAGS)) != 0) || 
+       ((IS_NONMYSTIC(hidden_item_id) && (hidden_item_id < 0x10))))
     goto LAB_0000_062a;
-    pbVar1 = (byte *)((iVar6 >> 3) + 0x585c);
+    pbVar1 = ((hidden_item_id >> 3) + NON_REGENERATING_OBJECT_FLAGS);
     *pbVar1 = *pbVar1 | (byte)uVar7;
   }
   bVar3 = true;
   goto LAB_0000_05a6;
 }
-
-
 
 void __cdecl16near FUN_0000_0646(void)
 
@@ -386,11 +419,11 @@ void __cdecl16near FUN_0000_0646(void)
   if (iVar6 == -1) {
     return;
   }
-  if ((*(char *)0x58a7 == '\0') && (*(char *)0x58a6 == '\0')) {
+  if ((*REMAINING_TORCH_DURATION == 0) && (*REMAINING_LIGHT_SPELL_DURATION == 0)) {
     uVar7 = 0x86de;
   }
   else {
-    iVar8 = FUN_0000_006c(*(undefined *)0x6603);
+    iVar8 = FUN_0000_006c(*DUNGEON_HEADING);
     if (iVar8 == 0) {
       return;
     }
@@ -569,7 +602,7 @@ void __cdecl16near FUN_0000_095c(void)
   char *local_16;
   byte *local_14;
   
-  if ((0x20 < *(byte *)0x5893) && (*(byte *)0x5893 < 0x29)) {
+  if ((0x20 < *PARTY_LOCATION && (*PARTY_LOCATION < 0x29)) {
     FUN_0000_0646();
     return;
   }
@@ -592,7 +625,7 @@ void __cdecl16near FUN_0000_095c(void)
   iVar7 = 1;
   do {
     if ((((*pbVar5 == party_x) && (*local_14 == party_y)) &&
-        ((0x7f < *(byte *)0x5893 || (*local_16 == *PARTY_Z)))) && (*pcVar10 == '\x01'))
+        ((0x7f < *PARTY_LOCATION || (*local_16 == *PARTY_Z)))) && (*pcVar10 == '\x01'))
     break;
     pbVar5 = pbVar5 + 8;
     local_14 = local_14 + 8;
@@ -679,7 +712,7 @@ void FUN_0000_0baa(int param_1)
 
 {
   byte *pbVar1;
-  char *pcVar2;
+  char *keys_in_inventory;
   byte bVar3;
   byte bVar4;
   int iVar5;
@@ -706,8 +739,8 @@ void FUN_0000_0baa(int param_1)
     }
     func_0x000058d0(uVar6);
     func_0x0000842e(0x32,1,2000,800);
-    pcVar2 = (char *)0x57ac;
-    *pcVar2 = *pcVar2 + -1;
+    keys_in_inventory = INV_KEYS;
+    *keys_in_inventory--;
   }
   return;
 }
@@ -794,7 +827,7 @@ void __cdecl16near FUN_0000_0d4a(void)
   char *local_12;
   byte *local_10;
   
-  if ((0x20 < *(byte *)0x5893) && (*(byte *)0x5893 < 0x29)) {
+  if ((0x20 < *PARTY_LOCATION && (*PARTY_LOCATION < 0x29)) {
     FUN_0000_0c3e();
     return;
   }
@@ -820,7 +853,7 @@ LAB_0000_0df2:
         return;
       }
       if ((0x83 < bVar3) && (bVar3 < 0x86)) {
-        if ((*(byte *)0x5893 < 0x80) &&
+        if ((*PARTY_LOCATION < 0x80) &&
            (iVar5 = func_0x0000770e(*PARTY_Z,uVar7,uVar6), iVar5 == 0)) {
           uVar4 = 0x8afe;
         }
@@ -835,7 +868,7 @@ LAB_0000_0df2:
             uVar4 = 0x8b10;
             goto LAB_0000_0df2;
           }
-          if (*(byte *)0x5893 < 0x7f) {
+          if (*PARTY_LOCATION < 0x7f) {
             iVar5 = func_0x0000bb9e(uVar4);
             if (iVar5 != -1) {
               piVar13 = (int *)(iVar5 * 0x10 + 0x5f68);
@@ -891,7 +924,7 @@ LAB_0000_0df2:
     pcVar10 = (char *)0x5c62;
     do {
       if ((((*pbVar8 == uVar6) && (*local_10 == uVar7)) &&
-          ((0x7f < *(byte *)0x5893 || (*local_12 == *PARTY_Z)))) && (*pcVar10 == '\x01'))
+          ((0x7f < *PARTY_LOCATION || (*local_12 == *PARTY_Z)))) && (*pcVar10 == '\x01'))
       break;
       pbVar8 = pbVar8 + 8;
       local_10 = local_10 + 8;
@@ -932,7 +965,7 @@ LAB_0000_0fc9:
   iVar2 = FUN_0000_0000();
   if (iVar2 != 0) {
     func_0x00007af4(iVar2,param_6,param_3,param_4,param_5,param_7,param_7);
-    if (*(byte *)0x5893 < 0x80) {
+    if (*PARTY_LOCATION < 0x80) {
       *(undefined *)(iVar2 * 8 + 0x5c61) = 0;
       *(undefined *)(iVar2 * 8 + 0x5c5e) = (undefined)param_3;
     }
@@ -1039,7 +1072,7 @@ void FUN_0000_112c(uint param_1,uint param_2,uint param_3)
   pcVar7 = (char *)0x5c62;
   do {
     if (((*pbVar8 == param_3) && (*local_10 == param_2)) &&
-       ((0x7f < *(byte *)0x5893 || ((*(byte *)0x5893 < 0x80 && (*local_12 == param_1)))))) {
+       ((0x7f < *PARTY_LOCATION || ((*PARTY_LOCATION < 0x80 && (*local_12 == param_1)))))) {
       if (*local_14 == '\x01') break;
       if (*pcVar7 == '\x0e') {
         uVar5 = 0x8b64;
@@ -1065,7 +1098,7 @@ void FUN_0000_112c(uint param_1,uint param_2,uint param_3)
     func_0x00007af4(local_6,0,0,0,0,0,0);
     pbVar1 = (byte *)0x24e6;
     *pbVar1 = *pbVar1 | 2;
-    if ((*(char *)0x5893 != '\0') && (*(byte *)0x5893 < 0x21)) {
+    if ((*PARTY_LOCATION != '\0') && (*PARTY_LOCATION < 0x21)) {
       if (*(byte *)0x5888 < 3) {
         *(undefined *)0x5888 = 0;
       }
@@ -1078,7 +1111,7 @@ void FUN_0000_112c(uint param_1,uint param_2,uint param_3)
       local_8 = local_8 & 0x7f;
       func_0x000058d0(0x8b7e);
       func_0x00007050(uVar6);
-      if ((0x7f < *(byte *)0x5893) && (*(char *)(uVar6 * 0x20 + 0x55b3) == 'D')) {
+      if ((0x7f < *PARTY_LOCATION && (*(char *)(uVar6 * 0x20 + 0x55b3) == 'D')) {
         local_6 = 0;
         uVar4 = 0xba14;
         do {
@@ -1094,8 +1127,8 @@ void FUN_0000_112c(uint param_1,uint param_2,uint param_3)
           local_6 = local_6 + 1;
           uVar4 = local_4 + 8;
         } while (local_4 + 8 < 0xbb14);
-        if (uVar6 == *(byte *)0x587b) {
-          *(undefined *)0x587b = 0xff;
+        if (uVar6 == *ACTIVE_PLAYER) {
+          *ACTIVE_PLAYER = 0xff;
         }
         func_0x00009990();
       }
@@ -1162,7 +1195,7 @@ void __cdecl16near FUN_0000_1374(void)
   undefined local_8;
   undefined local_6;
   
-  if ((0x20 < *(byte *)0x5893) && (*(byte *)0x5893 < 0x29)) {
+  if ((0x20 < *PARTY_LOCATION) && (*PARTY_LOCATION < 0x29)) {
     FUN_0000_12d4();
     return;
   }
@@ -1294,7 +1327,7 @@ LAB_0000_1485:
     if (*(char *)0x57b0 == 'd') {
       *(undefined *)0x57b0 = 99;
     }
-    if (*(char *)0x5893 != '\x11') goto LAB_0000_177a;
+    if (*PARTY_LOCATION != '\x11') goto LAB_0000_177a;
     uVar3 = 0x16;
 LAB_0000_14c2:
     func_0x0000bb92(uVar3);
@@ -1428,7 +1461,7 @@ void __cdecl16near FUN_0000_18ce(void)
   uint local_8;
   int local_6;
   
-  if ((0x20 < *(byte *)0x5893) && (*(byte *)0x5893 < 0x29)) {
+  if ((0x20 < *PARTY_LOCATION) && (*PARTY_LOCATION < 0x29)) {
     FUN_0000_179e();
     return;
   }
@@ -1446,7 +1479,7 @@ void __cdecl16near FUN_0000_18ce(void)
   local_14 = (byte *)0x5c65;
   local_16 = (char *)0x5c66;
   pbVar11 = (byte *)0x5c62;
-  bVar4 = *(byte *)0x5893;
+  bVar4 = *PARTY_LOCATION;
   do {
     if (((*pbVar12 == uVar7) && (*local_14 == uVar8)) &&
        ((0x7f < bVar4 || ((bVar4 < 0x80 && (*local_16 == *PARTY_Z)))))) {
@@ -1497,10 +1530,10 @@ void __cdecl16near FUN_0000_18ce(void)
             puVar9 = (undefined *)func_0x00008482(uVar8,uVar7);
             *puVar9 = 0x44;
             *(undefined *)0x24e6 = 1;
-            if (*(byte *)0x5893 < 0x80) {
+            if (*PARTY_LOCATION < 0x80) {
               func_0x00009eca();
             }
-            *(undefined *)0x58a7 = 100;
+            *REMAINING_TORCH_DURATION = 100;
             func_0x000058d0(0x8de8);
             func_0x0000842e(0x32,1,2000,800);
             func_0x00009990();
@@ -1618,27 +1651,29 @@ LAB_0000_1bc5:
     uVar1 = 0;
   }
   else {
-    if ((*(byte *)(param_2 * 8 + -0x45ea) & 0x80) != 0) {
+    if ((SPRITE_FLAGS[param_2 * 8] & 0x80) != 0) {
+      // Is a PC, not a monster
       if (*EXIT_DIRECTION_FROM_COMBAT == ED_NONE) {
-        *EXIT_DIRECTION_FROM_COMBAT = (undefined)exit_direction;
-      }
-      else if ((exit_direction != *EXIT_DIRECTION_FROM_COMBAT) && ((*COMBAT_TYPE_FLAGS & CTF_DUNGEON) != 0)) {
+        // First PC to exit
+        *EXIT_DIRECTION_FROM_COMBAT = exit_direction;
+      } else if ((exit_direction != *EXIT_DIRECTION_FROM_COMBAT) &&
+                ((*COMBAT_TYPE_FLAGS & CTF_DUNGEON) != 0)) {
+        // Attempt to exit after another PC has left in a different direction
         func_0x000058d0(0x8e88);
         func_0x00006340(200,0xa5);
         goto LAB_0000_1bc5;
       }
     }
-    *(undefined *)0x589f = 1;
+    *RETICLE_VISIBLE = 1;
     FUN_0000_1b6c();
     if (*(int *)0x5876 == 0) {
       uVar1 = 0x8ea6;
-    }
-    else {
+    } else {
       uVar1 = 0x8eae;
     }
     func_0x000058d0(uVar1);
     func_0x0000842e(0x28,1,2000,0x4b0);
-    *(undefined *)0x587b = 0xff;
+    *ACTIVE_PLAYER = 0xff;
     func_0x0000be02(-1 - param_2);
     func_0x00006980();
     func_0x00009990();
@@ -1649,7 +1684,7 @@ LAB_0000_1bc5:
 
 
 
-undefined2 FUN_0000_1c56(int param_1,int param_2)
+undefined2 FUN_0000_1c56(int move_direction, int pc_number)
 
 {
   byte bVar1;
@@ -1657,60 +1692,56 @@ undefined2 FUN_0000_1c56(int param_1,int param_2)
   int iVar3;
   int iVar4;
   undefined2 unaff_DS;
-  int local_c;
-  int local_a;
-  undefined local_6;
-  undefined local_4;
+  int dy;
+  int dx;
   
-  local_c = 0;
-  local_a = 0;
-  bVar1 = *(byte *)(param_2 * 8 + -0x45e8);
-  if (param_1 == 1) {
-    local_a = -1;
+  dy = 0;
+  dx = 0;
+  bVar1 = *(pc_number * 8 + -0x45e8);
+  if (move_direction == ED_WEST) {
+    dx = -1;
     uVar2 = 0x8ece;
   }
-  else if (param_1 == 2) {
-    local_a = 1;
+  else if (move_direction == ED_EAST) {
+    dx = 1;
     uVar2 = 0x8ec8;
   }
-  else if (param_1 == 3) {
-    local_c = -1;
+  else if (move_direction == ED_NORTH) {
+    dy = -1;
     uVar2 = 0x8eb8;
   }
   else {
-    if (param_1 != 4) goto LAB_0000_1c9c;
-    local_c = 1;
+    if (move_direction != ED_SOUTH) goto LAB_0000_1c9c;
+    dy = 1;
     uVar2 = 0x8ec0;
   }
   func_0x000058d0(uVar2);
 LAB_0000_1c9c:
-  local_a = (uint)*(byte *)(param_2 * 8 + -0x45e6) + local_a;
-  local_c = (uint)*(byte *)(param_2 * 8 + -0x45e5) + local_c;
-  if ((((local_a < 0xb) && (local_c < 0xb)) && (-1 < local_a)) && (-1 < local_c)) {
+  dx += *(pc_number * 8 + -0x45e6);
+  dy += *(pc_number * 8 + -0x45e5);
+  if ((((dx < 0xb) && (dy < 0xb)) && (-1 < dx)) && (-1 < dy)) {
+    // Moving around within the bounds of the arena
     iVar4 = (uint)bVar1 * 8;
-    iVar3 = func_0x0000bdf6(local_c,local_a,*(undefined *)(iVar4 + 0x5c5a));
+    iVar3 = func_0x0000bdf6(dy,dx,*(iVar4 + 0x5c5a));
     if (iVar3 == 0) {
       func_0x000058d0(0x8ed4);
       func_0x00006340(200,0xa5);
       func_0x00005b96();
       uVar2 = 0;
-    }
-    else {
-      local_4 = (undefined)local_a;
-      *(undefined *)(param_2 * 8 + -0x45e6) = local_4;
-      *(undefined *)(iVar4 + 0x5c5c) = local_4;
-      local_6 = (undefined)local_c;
-      *(undefined *)(param_2 * 8 + -0x45e5) = local_6;
-      *(undefined *)(iVar4 + 0x5c5d) = local_6;
+    } else {
+      *(pc_number * 8 + -0x45e6) = dx;
+      *(iVar4 + 0x5c5c) = dx;
+      *(pc_number * 8 + -0x45e5) = dy;
+      *(iVar4 + 0x5c5d) = dy;
       func_0x000083be();
       if ((*COMBAT_TYPE_FLAGS & (CTF_DUNGEON | 2)) != 0) {
-        func_0x0000bf3a(local_c,local_a);
+        func_0x0000bf3a(dy,dx);
       }
       uVar2 = 1;
     }
-  }
-  else {
-    uVar2 = attempt_to_exit(param_1,param_2);
+  } else {
+    // Attempting to move out of the combat arena
+    uVar2 = attempt_to_exit(move_direction, pc_number);
   }
   return uVar2;
 }
@@ -1786,25 +1817,26 @@ undefined2 __cdecl16near FUN_0000_1d6a(void)
 }
 
 
-
-void __cdecl16near FUN_0000_1ea4(void)
+// FUN_0000_1ea4
+void __cdecl16near check_for_lb_mirror(void)
 
 {
   int iVar1;
   undefined2 unaff_DS;
   
-  iVar1 = (uint)*(byte *)0x589e * 8;
-  if ((((*(char *)(iVar1 + -0x45ea) != '\0') && ((*(byte *)(iVar1 + -0x45ea) & 0x20) == 0)) &&
-      (*(char *)(iVar1 + -0x45e5) == '\x02')) &&
+  iVar1 = *0x589e * 8;
+  if (SPRITE_FLAGS[iVar1] != 0 &&
+     (SPRITE_FLAGS[iVar1] & 0x20) == 0) &&
+     (*(iVar1 + -0x45e5) == 2)) &&
      ((MKIND(*(*(iVar1 + -0x45e6) + 0xac74)) == LORD_BRITISH_IN_MIRROR)) {
-    *EXIT_DIRECTION_FROM_COMBAT = ED_WIN_GAME;
+    *EXIT_DIRECTION_FROM_COMBAT = ED_MIRROR;
     func_0x0000573a(10,iVar1 + -0x45ec);
     func_0x0000be1a(*(undefined *)0x589e);
     func_0x000058d0(0x8f02);
     func_0x0000842e(0x28,1,2000,0x4b0);
-    *(undefined *)0x587b = 0xff;
+    *ACTIVE_PLAYER = 0xff;
     func_0x00006980();
-    func_0x0000be02(-1 - (uint)*(byte *)0x589e);
+    func_0x0000be02(-1 - *0x589e);
     func_0x00009990();
   }
   return;
@@ -1865,7 +1897,7 @@ LAB_0000_1fcd:
         func_0x000058d0(0x8f4c);
       }
       else {
-        *(undefined *)0x587b = (undefined)param_1;
+        *ACTIVE_PLAYER = (undefined)param_1;
         func_0x0000be1a(iVar3);
         func_0x0000573a(10);
         func_0x00006980();
@@ -1894,7 +1926,7 @@ void FUN_0000_203e(int param_1)
   undefined2 *puVar5;
   undefined2 unaff_DS;
   
-  if (*EXIT_DIRECTION_FROM_COMBAT == ED_WIN_GAME) {
+  if (*EXIT_DIRECTION_FROM_COMBAT == ED_MIRROR) {
     func_0x0000bcca();
   }
   puVar5 = (undefined2 *)0x5c5a;
@@ -1928,27 +1960,24 @@ void FUN_0000_203e(int param_1)
       }
     }
     func_0x0000573a(10);
-    *(undefined *)0x5893 = *(undefined *)0x5894;
+    *PARTY_LOCATION = *(undefined *)0x5894;
   }
   return;
 }
 
 
 
-int FUN_0000_20d8(int param_1,uint param_2,uint param_3)
+int FUN_0000_20d8(int pc_num, uint y, uint x)
 
 {
   undefined2 unaff_DS;
   int local_6;
   
   local_6 = 1;
-  if ((((param_3 < 0x8000) && ((int)param_3 < 0xb)) && (param_2 < 0x8000)) && ((int)param_2 < 0xb))
-  {
-    local_6 = func_0x0000bdf6(param_2,param_3,
-                              *(undefined *)((uint)*(byte *)(param_1 * 8 + -0x45e8) * 8 + 0x5c5a));
+  if (x < 0xb && y < 0xb) {
+    local_6 = func_0x0000bdf6(y, x, *(pc_num * 8 + -0x45e8) * 8 + 0x5c5a));
     local_6 = 1 - local_6;
-  }
-  else if ((*(byte *)(param_1 * 8 + -0x45ea) & 2) != 0) {
+  } else if (SPRITE_FLAGS[pc_num * 8] & 2) != 0) {
     local_6 = 0;
   }
   return local_6;
@@ -1972,23 +2001,23 @@ bool FUN_0000_2148(int param_1)
   local_c = 0;
   do {
     if (local_c == 0) {
-      uVar3 = uVar3 + 1;
+      uVar3++;
     }
     else if (local_c == 1) {
 LAB_0000_21ae:
-      uVar3 = uVar3 - 1;
-      uVar2 = uVar2 + 1;
+      uVar3--;
+      uVar2++;
     }
     else if (local_c == 2) {
-      uVar2 = uVar2 - 2;
+      uVar2 -= 2;
     }
     else if (local_c == 3) goto LAB_0000_21ae;
     iVar1 = FUN_0000_20d8(param_1,uVar3,uVar2);
     if (iVar1 != 0) {
-      local_6 = local_6 + 1;
+      local_6++;
     }
-    local_c = local_c + 1;
-    if (3 < local_c) {
+    local_c++;
+    if (local_c > 3) {
       return local_6 == 4;
     }
   } while( true );

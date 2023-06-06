@@ -1,9 +1,4 @@
-typedef unsigned char   undefined;
-
-typedef unsigned char    undefined1;
-typedef unsigned int    undefined2;
-
-
+#define SPRITE_FLAGS 0xba16
 
 undefined2 FUN_0000_0000(int param_1,undefined2 param_2,undefined2 param_3)
 
@@ -56,7 +51,7 @@ void FUN_0000_0094(int param_1)
   int iVar1;
   undefined2 unaff_DS;
   
-  if ((*(byte *)(param_1 * 8 + -0x45ea) & 0x80) == 0) {
+  if ((SPRITE_FLAGS[param_1 * 8] & 0x80) == 0) {
     iVar1 = *(int *)((uint)*(byte *)(param_1 * 8 + -0x45e9) * 2 + 0x1856);
   }
   else {
@@ -103,17 +98,17 @@ undefined2 FUN_0000_00f4(int param_1)
   iVar7 = param_1 * 8;
   uVar3 = (uint)*(byte *)(iVar7 + -0x45e9);
   uVar4 = (uint)*(byte *)(iVar7 + -0x45e8);
-  if (((*(char *)0x587a == '\x1c') || (*(char *)0x587a == 'N')) ||
-     ((*(byte *)(iVar7 + -0x45ea) & 0x80) != 0)) {
+  if (((*ACTIVE_EFFECT == EFFECT_CROWN) || (*ACTIVE_EFFECT == EFFECT_IN_AN)) ||
+     ((SPRITE_FLAGS[iVar7] & 0x80) != 0)) {
 LAB_0000_0127:
     uVar5 = 0;
   }
   else {
-    if ((*(byte *)(uVar3 * 2 + 0x153c) & 0x40) == 0) {
+    if (MONSTER_FLAGS[uVar3 * 2] & MF_POSSESS) == 0) {
 LAB_0000_01ca:
-      if (((*(uint *)(uVar3 * 2 + 0x153c) & 0x800) == 0) ||
+      if (((MONSTER_FLAGS[uVar3 * 2] & MF_INVISIBLE) == 0) ||
          (iVar7 = func_0x00003eb2(0xff,0), 0x1f < iVar7)) {
-        if (((((*(uint *)(uVar3 * 2 + 0x153c) & 0x400) == 0) ||
+        if ((MONSTER_FLAGS[uVar3 * 2] & MF_GATE_DAEMONS) == 0) ||
              (iVar7 = func_0x00003eb2(0xff,0), 0x1f < iVar7)) ||
             (iVar7 = func_0x00009cb6(), iVar7 == 0)) ||
            ((iVar7 = func_0x00009b96(*(undefined2 *)0x5878,*(undefined2 *)0x5876,0xd8), iVar7 == 0
@@ -137,13 +132,14 @@ LAB_0000_01ca:
         iVar7 = uVar4 * 8;
         if (*(char *)(iVar7 + 0x5c5b) == '\0') {
           func_0x00003670(0x99c2);
-          pbVar1 = (byte *)(param_1 * 8 + -0x45ea);
+          pbVar1 = SPRITE_FLAGS[param_1 * 8];
+
           *pbVar1 = *pbVar1 & 0xef;
           *(undefined *)(iVar7 + 0x5c5b) = *(undefined *)(iVar7 + 0x5c5a);
         }
         else {
           func_0x00003670(0x99ce);
-          pbVar1 = (byte *)(param_1 * 8 + -0x45ea);
+          pbVar1 = SPRITE_FLAGS[param_1 * 8];
           *pbVar1 = *pbVar1 | 0x10;
           *(undefined *)(uVar4 * 8 + 0x5c5b) = 0;
         }
@@ -152,12 +148,12 @@ LAB_0000_01ca:
     else {
       iVar7 = func_0x00003eb2(0x1f,0);
       iVar8 = iVar7 * 8;
-      bVar2 = *(byte *)(iVar8 + -0x45ea);
+      bVar2 = SPRITE_FLAGS[iVar8];
       if (((bVar2 & 0x80) == 0) || ((bVar2 & 0x3d) != 0)) goto LAB_0000_01ca;
       iVar6 = FUN_0000_0000(0,iVar7,param_1);
       if (iVar6 == 0) {
         func_0x000034da(10);
-        pbVar1 = (byte *)(iVar8 + -0x45ea);
+        pbVar1 = SPRITE_FLAGS[iVar8];
         *pbVar1 = *pbVar1 | 1;
         if (*(char *)(iVar8 + -0x45e9) == *(char *)0x587b) {
           *(undefined *)0x587b = 0xff;
@@ -187,7 +183,7 @@ void FUN_0000_0312(int param_1,int param_2)
   int iVar4;
   undefined2 unaff_DS;
   
-  bVar2 = *(byte *)(param_2 * 8 + -0x45ea);
+  bVar2 = SPRITE_FLAGS[param_2 * 8];
   pbVar1 = (byte *)0x58a2;
   *pbVar1 = *pbVar1 & 0xfe;
   if ((*(byte *)0x58a2 & 0x20) != 0) {
@@ -230,7 +226,7 @@ void FUN_0000_0312(int param_1,int param_2)
         if ((param_1 != 0xff) && (*(char *)(param_1 * 8 + -0x45e9) == '-')) {
           func_0x00003670(0x9a10);
           func_0x000061ce(0x28,1,2000,0x4b0);
-          pbVar1 = (byte *)(param_2 * 8 + -0x45ea);
+          pbVar1 = SPRITE_FLAGS[param_2 * 8];
           *pbVar1 = *pbVar1 | 4;
           *(undefined *)((uint)*(byte *)(param_2 * 8 + -0x45e8) * 8 + 0x5c5b) = 0;
           func_0x00005906(4);
@@ -319,8 +315,8 @@ int FUN_0000_0504(int param_1,uint param_2)
   *(undefined *)0x5898 = 1;
   local_c = (uint)*(byte *)((uint)*(byte *)(param_2 * 8 + -0x45e8) * 8 + 0x5c61);
   iVar6 = local_c * 8;
-  if ((((0x1f < local_c) || ((*(byte *)(iVar6 + -0x45ea) & 0x30) != 0)) ||
-      (*(char *)(iVar6 + -0x45ea) == '\0')) ||
+  if ((((0x1f < local_c) || ((SPRITE_FLAGS[iVar6] & 0x30) != 0)) ||
+      (*SPRITE_FLAGS[iVar6] == 0)) ||
      ((*(char *)((uint)*(byte *)(iVar6 + -0x45e8) * 8 + 0x5c5a) == '\0' ||
       (iVar6 = FUN_0000_04d4(local_c,param_2), param_1 < iVar6)))) {
     local_c = param_2;
@@ -612,7 +608,7 @@ undefined2 FUN_0000_09fc(int param_1)
   undefined2 unaff_DS;
   
   uVar1 = (uint)*(byte *)(param_1 + 0x58a8);
-  if ((((uVar1 != 0xff) && (pbVar3 = (byte *)(uVar1 * 8 + -0x45ea), *pbVar3 != 0)) &&
+  if ((((uVar1 != 0xff) && (pbVar3 = SPRITE_FLAGS[uVar1 * 8], *pbVar3 != 0)) &&
       (iVar2 = func_0x00007466(uVar1), iVar2 != 0)) &&
      ((((*pbVar3 & 0xc) == 0 && (*(char *)0x587a != 'T')) &&
       (iVar2 = FUN_0000_04d4(uVar1,param_1), iVar2 == 1)))) {
@@ -731,7 +727,7 @@ void FUN_0000_0c52(int param_1,int param_2)
   if (0x22 < param_1) {
     *(undefined *)0x5890 = 1;
   }
-  if ((*(byte *)(param_2 * 8 + -0x45ea) & 0x80) == 0) {
+  if ((SPRITE_FLAGS[param_2 * 8] & 0x80) == 0) {
     cVar1 = *(char *)(*(byte *)(param_2 * 8 + -0x45e9) + 0x159c);
     if (cVar1 == '\x01') {
       cVar1 = '\0';
@@ -798,7 +794,7 @@ void FUN_0000_0d96(int param_1,int param_2)
   int iVar3;
   undefined2 unaff_DS;
   
-  if (((*(byte *)(param_2 * 8 + -0x45ea) & 0x80) == 0) || (param_1 == 0)) {
+  if (((SPRITE_FLAGS[param_2 * 8] & 0x80) == 0) || (param_1 == 0)) {
     *(undefined *)0x589d = 0xff;
     func_0x00003670(0x9aa0);
     FUN_0000_0c52(0xff,param_2);

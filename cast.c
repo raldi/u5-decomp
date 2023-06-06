@@ -1,8 +1,4 @@
-typedef unsigned char   undefined;
-
-typedef unsigned char    undefined1;
-typedef unsigned int    undefined2;
-
+#define SPRITE_FLAGS 0xba16
 
 /*
 Unable to decompile 'FUN_0000_0000'
@@ -73,8 +69,9 @@ undefined2 __cdecl16near FUN_0000_0114(void)
   if ((int)uVar1 < 0) {
     local_4 = 0xffff;
   }
+  // Is the PC sleeping?
   else if (*(char *)(uVar1 * 0x20 + 0x55b3) == 'S') {
-    *(undefined *)(uVar1 * 0x20 + 0x55b3) = 0x47;
+    *(undefined *)(uVar1 * 0x20 + 0x55b3) = 'G';
     if (0x7f < *(byte *)0x5893) {
       iVar2 = 0;
       pbVar3 = (byte *)0xba16;
@@ -350,8 +347,7 @@ undefined2 __cdecl16near FUN_0000_04b0(void)
   func_0x000050e8(*(undefined2 *)0x5878,*(undefined2 *)0x5876,local_4 * 4 + 0x140);
   *(char *)(iVar4 + 0x5c5a) = cVar2;
   *(char *)(iVar4 + 0x5c5b) = cVar2;
-  pbVar1 = (byte *)(iVar3 * 8 + -0x45ea);
-  *pbVar1 = *pbVar1 | 1;
+  pbVar1 = SPRITE_FLAGS[iVar3 * 8] | 1;
   return 1;
 }
 
@@ -503,7 +499,7 @@ LAB_0000_07ed:
           if (iVar2 < 0) {
             return local_6;
           }
-          pbVar1 = (byte *)(iVar2 * 8 + -0x45ea);
+          pbVar1 = SPRITE_FLAGS[iVar2 * 8];
           *pbVar1 = *pbVar1 | 1;
           local_6 = 1;
           iVar3 = iVar3 + 1;
@@ -653,10 +649,10 @@ LAB_0000_09bf:
             iVar5 = func_0x0000c19e(0,iVar2,*(undefined *)0x589e);
             if (iVar5 == 0) {
               iVar5 = iVar2 * 8;
-              pbVar1 = (byte *)(iVar5 + -0x45ea);
-              *pbVar1 = *pbVar1 ^ 1;
-              if ((*(byte *)(iVar5 + -0x45ea) & 0x80) != 0) {
-                *(undefined *)((uint)*(byte *)(iVar5 + -0x45e9) * 0x20 + 0x55b3) = 0x47;
+              pbVar1 = SPRITE_FLAGS[iVar5];
+              *pbVar1 ^= 1;
+              if ((SPRITE_FLAGS[iVar5] & 0x80) != 0) {
+                *(iVar5 + -0x45e9) * 0x20 + 0x55b3) = 0x47;
                 func_0x00006980();
               }
               func_0x0000be1a(iVar2);
@@ -755,7 +751,8 @@ int __cdecl16near FUN_0000_0b28(void)
           iVar3 = iVar3 * 8;
           iVar2 = iVar2 * 8;
           *(undefined2 *)(iVar3 + -0x45ec) = *(undefined2 *)(iVar2 + -0x45ec);
-          *(undefined2 *)(iVar3 + -0x45ea) = *(undefined2 *)(iVar2 + -0x45ea);
+          // Modify the monster flags table!?
+          SPRITE_FLAGS[iVar3] = SPRITE_FLAGS[iVar2];
           *(undefined2 *)(iVar3 + -0x45e8) = *(undefined2 *)(iVar2 + -0x45e8);
           *(undefined2 *)(iVar3 + -0x45e6) = *(undefined2 *)(iVar2 + -0x45e6);
           local_c = (undefined)iVar4;
