@@ -72,12 +72,12 @@ void FUN_0000_0098(uint param_1,int param_2,char *param_3)
         if (bVar2 < 0x19) {
           iVar6 = FUN_0000_0000(param_1);
           if (iVar6 != 0) {
-            puVar5 = (undefined *)func_0x0000a172(local_c + uVar4,local_a + uVar3);
+            puVar5 = (undefined *)get_sprite_at_coords(local_c + uVar4,local_a + uVar3);
             *puVar5 = 0xdf;
           }
         }
         else if ((bVar2 == 0x19) && (iVar6 = FUN_0000_004a(param_1), iVar6 != 0)) {
-          puVar5 = (undefined *)func_0x0000a172(local_c + uVar4,local_a + uVar3);
+          puVar5 = (undefined *)get_sprite_at_coords(local_c + uVar4,local_a + uVar3);
           *puVar5 = 0x1a;
         }
       }

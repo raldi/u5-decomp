@@ -285,7 +285,7 @@ void FUN_0000_0502(int param_1,int param_2,uint param_3)
     else if (param_3 == 0xe2) {
       param_2 = param_2 + -1;
     }
-    pbVar2 = (byte *)func_0x0000a172(param_1,param_2);
+    pbVar2 = (byte *)get_sprite_at_coords(param_1,param_2);
     param_3 = (uint)*pbVar2;
   }
   if (param_3 == 0x59) {
@@ -564,7 +564,7 @@ void __cdecl16near FUN_0000_099c(void)
   }
   iVar2 = (uint)*(byte *)0x5896 + *(int *)0x5876;
   iVar3 = (uint)*(byte *)0x5897 + *(int *)0x5878;
-  pbVar4 = (byte *)func_0x0000a172(iVar3,iVar2,iVar3);
+  pbVar4 = (byte *)get_sprite_at_coords(iVar3,iVar2,iVar3);
   bVar1 = *pbVar4;
   iVar5 = func_0x000093fe(*(undefined *)0x5895,iVar3,iVar2);
   if (bVar1 == 0x29) {
@@ -916,7 +916,7 @@ void FUN_0000_10fc(char param_1,char param_2)
     iVar4 = 0;
     do {
       puVar3 = (undefined *)
-               func_0x0000a172((uint)*(byte *)0x589c + iVar5,(uint)*(byte *)0x589b + iVar4);
+               get_sprite_at_coords((uint)*(byte *)0x589c + iVar5,(uint)*(byte *)0x589b + iVar4);
       FUN_0000_0f7e(iVar5,iVar4,*puVar3);
       iVar4 = iVar4 + 1;
     } while (iVar4 < 0x20);

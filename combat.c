@@ -86,9 +86,9 @@ undefined2 draw_monsters_for_coords(uint arena_y, uint arena_x, undefined2 param
   
   // Ignore offscreen monsters
   if (arena_x < ARENA_WIDTH && arena_y < ARENA_HEIGHT && -1 < arena_x && -1 < arena_y) {
-    puVar1 = func_0x0000a172(arena_y, arena_x, param_3);
+    puVar1 = get_sprite_at_coords(arena_y, arena_x, param_3);
     iVar2 = func_0x000089bc(*puVar1);
-    if ((iVar2 == 0) || (pcVar3 = func_0x0000a172(arena_y, arena_x), *pcVar3 == -1)) {
+    if ((iVar2 == 0) || (pcVar3 = get_sprite_at_coords(arena_y, arena_x), *pcVar3 == -1)) {
       return 0;
     }
     monster_x_p = MT_X;
@@ -1445,7 +1445,7 @@ char FUN_0000_1574(uint param_1,int param_2)
           return cVar5;
         }
         if (*(char *)(iVar6 + -0x45e9) == '\x1e') {
-          puVar10 = (undefined *)func_0x0000a172(uVar9,uVar8);
+          puVar10 = (undefined *)get_sprite_at_coords(uVar9,uVar8);
           *puVar10 = 0x4c;
         }
         else if ((bVar4 != 0x87) && (3 < bVar4)) {

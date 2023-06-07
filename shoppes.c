@@ -607,7 +607,7 @@ void FUN_0000_07be(int param_1)
   do {
     iVar5 = *local_16 + (uint)*(byte *)0x5896;
     iVar6 = *piVar12 + (uint)*(byte *)0x5897;
-    pcVar11 = (char *)func_0x0000a172(iVar6,iVar5);
+    pcVar11 = (char *)get_sprite_at_coords(iVar6,iVar5);
     cVar4 = *pcVar11;
     iVar7 = func_0x000093fe(*(undefined *)0x5895,iVar6,iVar5);
     if ((iVar7 == 0) && (((cVar4 == 'D' || (cVar4 == 'E')) || (cVar4 == '\x05')))) break;

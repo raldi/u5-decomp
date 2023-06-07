@@ -1,153 +1,190 @@
-typedef unsigned char   undefined;
+#define MAX_NPCS 32
 
-typedef unsigned char    undefined1;
-typedef unsigned int    undefined2;
+#define NPC_TYPES 0x659e
+#define SPRITE_ACTIVE 0x5f6c
+#define SPRITE_TILES 0x5f66
+#define SPRITE_ANIM 0x5f6a
+#define SPRITE_X_COORDS 0x5f60
+#define SPRITE_Y_COORDS 0x5f62
+#define SPRITE_Z_COORDS 0x5f64
 
+#define OTHER_X_COORDS 0x5c5c
+#define OTHER_Y_COORDS 0x5c5d
 
+#define SPRITE_STATES 0x5f5e
 
-void FUN_0000_00d6(undefined2 param_1)
+#define SS_CONTINUE 0
+#define SS_START_ACTIVITY 1
+#define SS_WALK_TO_TARGET 2
+// This one's a guess:
+#define SS_FLEE 3
+#define SS_WARP_DOWN 4
+#define SS_WARP_UP 5
+#define SS_GOING_UP 6
+#define SS_GOING_DOWN 7
+#define SS_WARP_TO_TARGET 8
 
-{
-  int iVar1;
-  int iVar2;
-  undefined2 *puVar3;
-  int iVar4;
-  int iVar5;
+#define PARTY_Z_COORD 0x5895
+
+#define MOVEMENT_LIST_PTRS 0x655e
+#define MOVEMENT_LIST_TABLE 0x615e
+
+#define NPC_SCHEDULES 0x5d5e
+#define NPC_SCHED_X_COORDS 0x5d61
+#define NPC_SCHED_Y_COORDS 0x5d64
+#define NPC_SCHED_Z_COORDS 0x5d67
+#define NPC_SCHED_PERIOD_0 0x5d6a
+#define NPC_SCHED_PERIOD_1 0x5d6b
+#define NPC_SCHED_PERIOD_2 0x5d6c
+#define NPC_SCHED_PERIOD_3 0x5d6d
+
+#define NPC_BEHAVIOR_JUMP_TABLE 0xb02c
+
+#define SEEKING_LADDER_UP 0xffff
+#define SEEKING_LADDER_DOWN 0xfffe
+
+#define LADDER_UP 200
+#define LADDER_DOWN 201
+
+#define IS_STAIRS(n) ((n&0xf4) == 0xc4)
+
+#define RAT 144
+#define SHADOWLORD 252
+
+#define NPC_WALKABLE_BITMAP 0x367e
+
+#define GROUND_TILES 0x6608
+
+void init_npcs_upon_party_arrival(int hour) {
+  int period_id;
+  int index;
+  int offset;
+  int npc_slot;
   undefined2 unaff_DS;
   undefined2 *local_14;
   undefined *local_12;
   undefined2 *local_10;
-  uint *local_c;
-  undefined2 *local_a;
   undefined2 *local_8;
   
-  iVar5 = 1;
-  local_8 = (undefined2 *)0x5f6e;
-  local_a = (undefined2 *)0x5f6e;
-  local_c = (uint *)0x5f70;
-  iVar4 = 0x10;
+  sprite_state_p = &SPRITE_STATES[1];
+  int last_sprite_state_p;
+  offset = 0x10;
   local_10 = (undefined2 *)0x6560;
   local_12 = (undefined *)0x617e;
   local_14 = (undefined2 *)0x65c4;
-  do {
-    puVar3 = local_8;
-    if (*(char *)(iVar5 + 0x659e) != '\0') {
-      iVar1 = FUN_0000_12e0(param_1,iVar5);
-      *local_a = 1;
-      iVar2 = iVar4 + iVar1;
-      *local_c = (uint)*(byte *)(iVar2 + 0x5d61);
-      *(uint *)(iVar4 + 0x5f62) = (uint)*(byte *)(iVar2 + 0x5d64);
-      *(uint *)(iVar4 + 0x5f64) = (uint)*(byte *)(iVar2 + 0x5d67);
-      *(uint *)(iVar4 + 0x5f66) = (uint)*(byte *)(iVar5 + 0x659e);
-      *(int *)(iVar4 + 0x5f6c) = iVar1;
-      *(undefined2 *)(iVar4 + 0x5f6a) = 0;
+  for (npc_slot = 1; npc_slot < 0x20; npc_slot++) {
+    last_sprite_state_p = sprite_state_p;
+    if (NPC_TYPES[npc_slot] != 0) {
+      // Any NPC that actually exists
+      period_id = get_period_id(hour, npc_slot);
+      *sprite_state_p = SS_START_ACTIVITY;
+      index = offset + period_id;
+      SPRITE_X_COORDS[offset] = NPC_SCHED_X_COORDS[index];
+      SPRITE_Y_COORDS[offset] = NPC_SCHED_Y_COORDS[index];
+      SPRITE_Z_COORDS[offset] = NPC_SCHED_Z_COORDS[index];
+      SPRITE_TILES[offset] = NPC_TYPES[npc_slot];
+      SPRITE_ACTIVE[offset] = period_id;
+      SPRITE_ANIM[offset] = 0;
       *local_10 = 0xffff;
       *local_12 = 0;
-      puVar3 = local_14;
+      last_sprite_state_p = local_14;
     }
-    *puVar3 = 0;
-    local_8 = local_8 + 8;
-    local_a = local_a + 8;
-    local_c = local_c + 8;
-    iVar4 = iVar4 + 0x10;
-    local_10 = local_10 + 1;
-    local_12 = local_12 + 0x20;
-    local_14 = local_14 + 1;
-    iVar5 = iVar5 + 1;
-  } while (iVar5 < 0x20);
-  return;
+    *last_sprite_state_p = 0;
+    sprite_state_p += 8;
+    offset += 0x10;
+    local_10++;
+    local_12 += 0x20;
+    local_14++;
+    npc_slot++;
+  }
 }
 
 
 
-void FUN_0000_01a0(undefined2 param_1,int param_2,undefined2 param_3,undefined2 param_4)
-
-{
+int FUN_0000_01a0(npc_slot, sprite_state_bool, y, x) {
   undefined2 local_4;
   
-  if (param_2 == 0) {
-    local_4 = 0xfffe;
+  if (sprite_state_bool == 0) {
+    local_4 = SEEKING_LADDER_DOWN;
+  } else {
+    local_4 = SEEKING_LADDER_UP;
   }
-  else {
-    local_4 = 0xffff;
-  }
-  FUN_0000_032c(param_1,local_4,0,0,param_3,param_4);
-  return;
+  return FUN_0000_032c(npc_slot, local_4, 0, 0, y, x);
 }
 
 
-
-void FUN_0000_01d2(int param_1,uint param_2,int param_3,int param_4,int param_5,int param_6)
+// Seek ladder. But is this called in dungeon.c and shoppes2.c, or are those just
+// different overlays that get put at the same memory address?
+void FUN_0000_01d2(int npc_slot,uint param_2,int param_3,int param_4,int y,int x)
 
 {
-  undefined2 uVar1;
+  int period_id;
   int iVar2;
   uint uVar3;
   uint uVar4;
-  int iVar5;
+  int x;
   byte *pbVar6;
   undefined2 unaff_DS;
   int local_16;
-  char local_e;
-  int local_6;
+  char ladder_sought;
+  int y;
   
-  if (param_2 == 0xffff) {
-    local_e = -0x38;
+  if (param_2 == SEEKING_LADDER_UP) {
+    ladder_sought = LADDER_UP;
   }
-  if (param_2 == 0xfffe) {
-    local_e = -0x37;
+  if (param_2 == SEEKING_LADDER_DOWN) {
+    ladder_sought = LADDER_DOWN;
   }
-  uVar1 = FUN_0000_12e0(*(undefined *)0x587f,param_1);
-  local_6 = 0;
+  period_id = get_period_id(*(undefined *)0x587f,npc_slot);
+  y = 0;
   local_16 = 0;
   do {
-    iVar5 = 0;
+    x = 0;
     do {
-      iVar2 = FUN_0000_0adc(uVar1,param_1,*(undefined *)0x5895,local_6,iVar5);
+      iVar2 = score_potential_move(period_id,npc_slot,*PARTY_Z_COORD,y,x);
       if (iVar2 == 0) {
-        *(undefined *)(local_16 + *(int *)0xb11c + iVar5) = 0x90;
+        *(undefined *)(local_16 + *(int *)0xb11c + x) = 0x90;
       }
       else {
-        *(undefined *)(local_16 + *(int *)0xb11c + iVar5) = 0;
+        *(undefined *)(local_16 + *(int *)0xb11c + x) = 0;
       }
-      if (((int)param_2 < 0) && (*(char *)(local_16 + iVar5 + 0x6608) == local_e)) {
-        *(undefined *)(*(int *)0xb11c + local_16 + iVar5) = 5;
+      if (((int)param_2 < 0) && (*(char *)(local_16 + x + GROUND_TILES) == ladder_sought)) {
+        *(undefined *)(*(int *)0xb11c + local_16 + x) = 5;
       }
-      iVar5 = iVar5 + 1;
-    } while (iVar5 < 0x20);
+      x = x + 1;
+    } while (x < 0x20);
     local_16 = local_16 + 0x20;
-    local_6 = local_6 + 1;
-  } while (local_6 < 0x20);
-  param_1 = param_1 * 0x10;
+    y = y + 1;
+  } while (y < 0x20);
+  npc_slot = npc_slot * 0x10;
   pbVar6 = (byte *)0x5d52;
   do {
     if (0x3f < *pbVar6) {
-      iVar5 = FUN_0000_06a0(*(undefined2 *)(param_1 + 0x5f62),*(undefined2 *)(param_1 + 0x5f60),
+      x = FUN_0000_06a0(*(undefined2 *)(npc_slot + SPRITE_Y_COORDS),*(undefined2 *)(npc_slot + SPRITE_X_COORDS),
                             pbVar6[3],pbVar6[2]);
-      if (iVar5 < 4) {
+      if (x < 4) {
         *(undefined *)((uint)pbVar6[3] * 0x20 + (uint)pbVar6[2] + *(int *)0xb11c) = 0x90;
       }
     }
     pbVar6 = pbVar6 + -8;
   } while ((byte *)0x5c5a < pbVar6);
-  uVar3 = (uint)*(byte *)0x5c5d;
-  uVar4 = (uint)*(byte *)0x5c5c;
-  iVar5 = FUN_0000_06a0(*(undefined2 *)(param_1 + 0x5f62),*(undefined2 *)(param_1 + 0x5f60),uVar3,
+  uVar3 = (uint)*(byte *)OTHER_Y_COORDS;
+  uVar4 = (uint)*(byte *)OTHER_X_COORDS;
+  x = FUN_0000_06a0(*(undefined2 *)(npc_slot + SPRITE_Y_COORDS),*(undefined2 *)(npc_slot + SPRITE_X_COORDS),uVar3,
                         uVar4);
-  if (iVar5 < 4) {
+  if (x < 4) {
     *(undefined *)(uVar3 * 0x20 + *(int *)0xb11c + uVar4) = 0x90;
   }
   if (param_2 < 0x8000) {
     *(undefined *)(param_3 * 0x20 + param_4 + *(int *)0xb11c) = 5;
   }
-  *(undefined *)(param_5 * 0x20 + param_6 + *(int *)0xb11c) = 0x46;
+  *(undefined *)(y * 0x20 + x + *(int *)0xb11c) = 0x46;
   return;
 }
 
 
-
-bool FUN_0000_032c(undefined2 param_1,undefined2 param_2,undefined2 param_3,undefined2 param_4,
-                  undefined2 param_5,undefined2 param_6)
+bool FUN_0000_032c(undefined2 npc_slot,undefined2 param_2,undefined2 param_3,undefined2 param_4,
+                  undefined2 y,undefined2 x)
 
 {
   byte bVar1;
@@ -171,9 +208,9 @@ bool FUN_0000_032c(undefined2 param_1,undefined2 param_2,undefined2 param_3,unde
   local_e = 0;
   local_c = 0;
   local_4 = 1;
-  FUN_0000_01d2(param_1,param_2,param_3,param_4,param_5,param_6);
-  local_2e[0] = (byte)param_6;
-  local_50[0] = (byte)param_5;
+  FUN_0000_01d2(npc_slot,param_2,param_3,param_4,y,x);
+  local_2e[0] = (byte)x;
+  local_50[0] = (byte)y;
   do {
     if (local_e != 0) break;
     local_a = (uint)local_2e[local_c];
@@ -274,7 +311,7 @@ int FUN_0000_04ac(int param_1,int param_2,undefined2 param_3_00,int param_3)
   
   cVar2 = '\0';
   iVar9 = 0;
-  *(undefined2 *)(param_3 * 2 + 0x655e) = 0;
+  *(undefined2 *)(param_3 * 2 + MOVEMENT_LIST_PTRS) = 0;
   bVar12 = *(byte *)(param_1 * 0x20 + param_2 + *(int *)0xb11c);
   bVar11 = bVar12 >> 4;
   bVar3 = bVar11;
@@ -296,7 +333,7 @@ int FUN_0000_04ac(int param_1,int param_2,undefined2 param_3_00,int param_3)
       cVar2 = cVar2 + '\x01';
     }
     if ((bVar3 != bVar11) || (bVar12 == 6)) {
-      *(char *)(param_3 * 0x20 + iVar9 + 0x615e) = cVar2;
+      *(char *)(param_3 * 0x20 + iVar9 + MOVEMENT_LIST_TABLE) = cVar2;
       *(byte *)(param_3 * 0x20 + iVar9 + 0x615f) = bVar3;
       iVar9 = iVar9 + 2;
       if (bVar12 == 6) break;
@@ -311,9 +348,9 @@ int FUN_0000_04ac(int param_1,int param_2,undefined2 param_3_00,int param_3)
     param_3 = param_3 * 0x20;
     iVar10 = 0;
     do {
-      puVar5 = (undefined *)(param_3 + iVar10 + 0x615e);
+      puVar5 = (undefined *)(param_3 + iVar10 + MOVEMENT_LIST_TABLE);
       uVar1 = *puVar5;
-      puVar6 = (undefined *)(param_3 + iVar4 + 0x615e);
+      puVar6 = (undefined *)(param_3 + iVar4 + MOVEMENT_LIST_TABLE);
       *puVar5 = *puVar6;
       *puVar6 = uVar1;
       pcVar7 = (char *)(param_3 + iVar10 + 0x615f);
@@ -384,7 +421,7 @@ int FUN_0000_06a0(int param_1,int param_2,int param_3,int param_4)
 }
 
 
-
+// Possible jump table target
 void FUN_0000_06e4(int param_1,int param_2)
 
 {
@@ -415,10 +452,10 @@ void FUN_0000_06e4(int param_1,int param_2)
   
   local_18 = 0x5c5a;
   iVar6 = param_2 * 0x10;
-  local_8 = iVar6 + 0x5f5e;
-  local_4 = (uint)*(byte *)(param_1 + iVar6 + 0x5d5e);
-  local_6 = FUN_0000_06a0(*(undefined2 *)(iVar6 + 0x5f62),*(undefined2 *)(iVar6 + 0x5f60),
-                          *(undefined *)0x5c5d,*(undefined *)0x5c5c);
+  local_8 = iVar6 + SPRITE_STATES;
+  local_4 = (uint)*(byte *)(param_1 + iVar6 + NPC_SCHEDULES);
+  local_6 = FUN_0000_06a0(*(undefined2 *)(iVar6 + SPRITE_Y_COORDS),*(undefined2 *)(iVar6 + SPRITE_X_COORDS),
+                          *(undefined *)OTHER_Y_COORDS,*(undefined *)OTHER_X_COORDS);
   if ((local_6 == 1) && (3 < (int)local_4)) {
     if ((local_4 == 4) || (local_4 == 5)) {
       if (*(int *)(local_8 + 10) == 0) goto LAB_0000_075a;
@@ -442,7 +479,7 @@ LAB_0000_075a:
       FUN_0000_0632(local_16);
       local_12 = *(undefined2 *)0x5876;
       local_14 = *(undefined2 *)0x5878;
-      iVar6 = FUN_0000_0b9e(0xffff,param_2,local_14,*(undefined2 *)0x5876);
+      iVar6 = metascore_move(0xffff,param_2,local_14,*(undefined2 *)0x5876);
       if (iVar6 == 0) {
         *local_24 = 99;
       }
@@ -511,10 +548,10 @@ LAB_0000_075a:
       iVar6 = *(int *)(local_8 + 0xc) * 8;
       uVar3 = *(undefined2 *)0x5876;
       *(undefined2 *)(local_8 + 2) = uVar3;
-      *(undefined *)(iVar6 + 0x5c5c) = (char)uVar3;
+      *(undefined *)(iVar6 + OTHER_X_COORDS) = (char)uVar3;
       uVar3 = *(undefined2 *)0x5878;
       *(undefined2 *)(local_8 + 4) = uVar3;
-      *(undefined *)(iVar6 + 0x5c5d) = (char)uVar3;
+      *(undefined *)(iVar6 + OTHER_Y_COORDS) = (char)uVar3;
       pbVar2 = (byte *)0x24e6;
       *pbVar2 = *pbVar2 | 2;
     }
@@ -523,187 +560,164 @@ LAB_0000_075a:
 }
 
 
-
-int FUN_0000_0938(uint param_1,int param_2)
-
-{
-  char *pcVar1;
-  byte bVar2;
-  char cVar3;
-  int iVar4;
-  undefined2 *puVar5;
-  int iVar6;
+bool update_sprite_state(uint hour,int npc_slot) {
+  byte npc_target_z;
+  byte party_z;
+  int npc_offset;
+  undefined2 *sprite_state_p;
+  int npc_schedule;
   undefined2 unaff_DS;
-  int local_a;
   int local_6;
-  
-  local_a = -1;
-  iVar4 = param_2 * 0x10;
-  puVar5 = (undefined2 *)(iVar4 + 0x5f5e);
-  iVar6 = iVar4 + 0x5d5e;
-  local_6 = 0;
-  do {
-    if (*(byte *)(local_6 + iVar6 + 0xc) == param_1) {
-      local_a = FUN_0000_12e0(param_1,param_2);
-      if (*(int *)(iVar4 + 0x5f6c) == local_a) {
-        *puVar5 = 1;
-      }
-      else {
-        bVar2 = *(byte *)0x5895;
-        if ((*(uint *)(iVar4 + 0x5f64) == (uint)bVar2) || (*(byte *)(iVar6 + local_a + 9) == bVar2))
-        {
-          bVar2 = *(byte *)0x5895;
-          if (*(uint *)(iVar4 + 0x5f64) == (uint)bVar2) {
-            if (*(byte *)(iVar6 + local_a + 9) == bVar2) {
-              *puVar5 = 2;
-            }
-            else {
-              cVar3 = *(char *)0x5895;
-              pcVar1 = (char *)(iVar6 + local_a + 9);
-              if (*pcVar1 == cVar3 || *pcVar1 < cVar3) {
-                *puVar5 = 7;
-              }
-              else {
-                *puVar5 = 6;
-              }
-            }
-          }
-          else {
-            cVar3 = *(char *)0x5895;
-            pcVar1 = (char *)(iVar4 + 0x5f64);
-            if (*pcVar1 == cVar3 || *pcVar1 < cVar3) {
-              *puVar5 = 5;
-            }
-            else {
-              *puVar5 = 4;
-            }
-          }
-        }
-        else {
-          *puVar5 = 8;
-        }
-      }
+
+  int period_id = -1;
+  npc_offset = npc_slot * 0x10;
+  sprite_state_p = &SPRITE_STATES[npc_offset];
+  npc_schedule = NPC_SCHEDULES[npc_offset];
+
+  // Check each of the four schedule slots
+  for (local_6 = 0; local_6 < 4; local_6++) {
+    if (npc_schedule[local_6 + 0xc] != hour) continue;
+
+    period_id = get_period_id(hour,npc_slot);
+
+    if (SPRITE_ACTIVE[npc_offset] == period_id) {
+      *sprite_state_p = SS_START_ACTIVITY;
       break;
     }
-    local_6 = local_6 + 1;
-  } while (local_6 < 4);
-  if ((((-1 < local_a) &&
-       (iVar6 = local_a + iVar6, *(uint *)(iVar4 + 0x5f60) == (uint)*(byte *)(iVar6 + 3))) &&
-      (*(uint *)(iVar4 + 0x5f62) == (uint)*(byte *)(iVar6 + 6))) &&
-     (*(uint *)(iVar4 + 0x5f64) == (uint)*(byte *)(iVar6 + 9))) {
-    local_a = 0;
-    *puVar5 = 1;
+
+    party_z = *PARTY_Z_COORD;
+
+    npc_target_z = npc_schedule[period_id + 9];
+    bool on_party_floor = SPRITE_Z_COORDS[npc_offset] == party_z;
+    bool scheduled_for_party_floor = npc_target_z == party_z;
+
+    if (on_party_floor && scheduled_for_party_floor) {
+      *sprite_state_p = SS_WALK_TO_TARGET;
+    } else if (on_party_floor) { // but not scheduled
+      if (*npc_target_z <= party_z) {
+        *sprite_state_p = SS_GOING_DOWN;
+      } else {
+        *sprite_state_p = SS_GOING_UP;
+      }
+    } else if (scheduled_for_party_floor) { // but not on it
+      if (*npc_target_z <= party_z) {
+        *sprite_state_p = SS_WARP_UP;
+      } else {
+        *sprite_state_p = SS_WARP_DOWN;
+      }
+    } else { // Neither on_party_floor nor scheduled_for_party_floor
+      *sprite_state_p = SS_WARP_TO_TARGET;
+    }
+    break;
   }
-  if (local_a == -1) {
-    local_a = 0;
+
+  if (period_id < 0) return false;
+
+  npc_schedule += period_id;
+  byte scheduled_x = npc_schedule[3];
+  byte scheduled_y = npc_schedule[6];
+
+  if (SPRITE_X_COORDS[npc_offset] == scheduled_x &&
+      SPRITE_Y_COORDS[npc_offset] == scheduled_y &&
+      on_party_floor) {
+    *sprite_state_p = SS_START_ACTIVITY;
   }
-  else {
-    local_a = local_a + 1;
-  }
-  return local_a;
+
+  return true;
 }
 
 
-
-undefined2 FUN_0000_0a4a(int param_1,int param_2)
+undefined2 is_desirable_vertical_route(int period_id,int npc_slot)
 
 {
-  byte bVar1;
-  byte *pbVar2;
   int iVar3;
-  undefined2 unaff_DS;
-  
-  param_2 = param_2 * 0x10;
-  iVar3 = *(int *)(param_2 + 0x5f6a) * 8;
-  pbVar2 = (byte *)func_0x0000a172(*(undefined *)(iVar3 + 0x5c5d),*(undefined *)(iVar3 + 0x5c5c));
-  bVar1 = *pbVar2;
-  if (*(char *)(param_1 + param_2 + 0x5d67) < *(char *)0x5895) {
-    if (bVar1 == 0xc9) {
+  npc_slot *= 0x10;
+  iVar3 = SPRITE_ANIM[npc_slot] * 8;
+  int sprite = *get_sprite_at_coords(OTHER_Y_COORDS[iVar3],OTHER_X_COORDS[iVar3]);
+  int target_floor = *NPC_SCHED_Z_COORDS[period_id + npc_slot];
+  if (target_floor < *PARTY_Z_COORD) {
+    if (sprite == LADDER_DOWN) {
       return 1;
     }
+  } else if (sprite == LADDER_UP) {
+    return 1;
   }
-  else {
-    iVar3 = *(int *)(param_2 + 0x5f6a) * 8;
-    pbVar2 = (byte *)func_0x0000a172(*(undefined *)(iVar3 + 0x5c5d),*(undefined *)(iVar3 + 0x5c5c));
-    bVar1 = *pbVar2;
-    if (bVar1 == 200) {
-      return 1;
-    }
-  }
-  if ((bVar1 & 0xf4) == 0xc4) {
+  if (IS_STAIRS(sprite) {
     return 1;
   }
   return 0;
 }
 
-
-
-undefined FUN_0000_0adc(uint param_1,int param_2,uint param_3,uint param_4,uint param_5)
+// Returns 0 if the potential move is impossible (like a solid wall)
+//         1 if it's a valid move
+//         2 if it's the target for their current schedule
+int score_potential_move(uint period_id, int npc_slot, uint z, uint y, uint x)
 
 {
-  byte bVar1;
+  byte tile;
   int iVar2;
-  undefined2 unaff_DS;
-  undefined uVar3;
-  
-  if ((((param_1 < 0x8000) &&
-       (iVar2 = param_1 + param_2 * 0x10 + 0x5d5e, *(byte *)(iVar2 + 3) == param_5)) &&
-      (*(byte *)(iVar2 + 6) == param_4)) && (*(byte *)(iVar2 + 9) == param_3)) {
-    uVar3 = 2;
+
+  if ((((period_id < 0x8000) &&
+       (iVar2 = NPC_SCHEDULES[period_id + npc_slot * 0x10],
+        iVar2[3] == x)) &&
+        iVar2[6] == y)) &&
+        iVar2[9] == z)) {
+    return 2;
   }
-  else {
-    if ((((int)param_5 < 0) || ((int)param_4 < 0)) ||
-       ((0x1f < (int)param_5 || (0x1f < (int)param_4)))) {
-      bVar1 = *(byte *)0x6a07;
-    }
-    else {
-      bVar1 = *(byte *)(param_5 + param_4 * 0x20 + 0x6608);
-    }
-    if ((*(int *)(param_2 * 0x10 + 0x5f5e) == 3) && ((bVar1 == 200 || (bVar1 == 0xc9)))) {
-      uVar3 = 1;
-    }
-    else {
-      uVar3 = ((uint)*(byte *)((bVar1 >> 3) + 0x367e) & 0x80 >> (bVar1 & 7)) == 0;
-    }
+
+  if (x < 0 || y < 0 || x > 0x1f || y > 0x1f) {
+    // Off the map; this seems to use a stone column in that case
+    tile = *0x6a07;
+  } else {
+    tile = GROUND_TILES[x + y * 0x20];
   }
-  return uVar3;
+
+  if (SPRITE_STATES[npc_slot * 0x10] == SS_FLEE) && ((tile == LADDER_DOWN || (tile == LADDER_UP)))) {
+    // This check seems unnecessary, because these two tiles have the bit clear below and
+    // would cause 1 to be returned anyway. Maybe at some point, wandering NPCs were supposed
+    // to avoid ladders unless they intended to use them? Or maybe this 1 should've been a 2?
+    return 1;
+  } else {
+    int bitmap_index = tile >> 3;
+    int byte_bit = tile & 7;
+    int mask = 0x80 >> byte_bit;
+    int bitmap_byte = NPC_WALKABLE_BITMAP[bitmap_index];
+    return (bitmap_byte & mask) == 0;
+  }
 }
 
 
 
-int FUN_0000_0b9e(undefined2 param_1,int param_2,int param_3,int param_4)
+// Returns 0 if the potential move is impossible (like a solid wall)
+//         1 if it's a valid move
+//         2 if it's the target for their current schedule
+int metascore_move(undefined2 period_id,int npc_slot,int y,int x)
 
 {
-  byte *pbVar1;
-  uint uVar2;
-  int iVar3;
+  byte *sprite_p;
+  uint sprite;
   undefined2 unaff_DS;
   undefined2 uVar4;
-  int local_4;
   
   uVar4 = 0;
-  if ((((param_4 < 0) || (0x1f < param_4)) || (param_3 < 0)) || (0x1f < param_3)) {
-    local_4 = 0;
+  if ((((x < 0) || (0x1f < x)) || (y < 0)) || (0x1f < y)) {
+    return 0;
   }
-  else {
-    iVar3 = param_4;
-    pbVar1 = (byte *)func_0x0000a172(param_3,param_4);
-    uVar2 = *pbVar1 & 0xfc;
-    if ((*(char *)(param_2 + 0x659e) == -4) || (uVar2 == 0x30)) {
-      local_4 = 1;
-    }
-    else if ((uVar2 == 0x90) && (*(int *)(param_2 * 0x10 + 0x5f5e) != 2)) {
-      local_4 = 0;
-    }
-    else {
-      local_4 = FUN_0000_0adc(param_1,param_2,*(undefined *)0x5895,param_3,param_4);
-    }
-    iVar3 = func_0x00009472(*(undefined *)0x5895,param_3,param_4,iVar3,uVar2,uVar4);
-    if ((local_4 == 0) || (iVar3 != 0)) {
-      local_4 = 0;
-    }
+  sprite_p = get_sprite_at_coords(y,x);
+  sprite = *sprite_p & 0xfc;
+  int rv;
+  if (NPC_TYPES[npc_slot] == SHADOWLORD) || sprite == 0x30) {
+    rv = 1;
+  } else if (sprite == RAT && SPRITE_STATES[npc_slot * 0x10]) != SS_WALK_TO_TARGET)) {
+    rv = 0;
+  } else {
+    rv = score_potential_move(period_id,npc_slot,*PARTY_Z_COORD,y,x);
   }
-  return local_4;
+  int foo = func_0x00009472(*PARTY_Z_COORD, y, x, x, sprite, 0);
+  if (foo != 0) {
+    rv = 0;
+  }
+  return rv;
 }
 
 
@@ -730,13 +744,13 @@ void FUN_0000_0c50(int param_1,undefined2 param_2,int param_3,int param_4,int pa
         (iVar5 = FUN_0000_06a0(*(undefined2 *)0x5878,*(undefined2 *)0x5876,
                                *(undefined *)(param_3 + param_1 + 6),
                                *(undefined *)(param_3 + param_1 + 3)), iVar5 <= param_4)) &&
-       (iVar5 = FUN_0000_0b9e(param_3,param_2,*(undefined2 *)0x5878,*(undefined2 *)0x5876),
+       (iVar5 = metascore_move(param_3,param_2,*(undefined2 *)0x5878,*(undefined2 *)0x5876),
        iVar5 != 0)) {
       iVar5 = *(int *)(param_5 + 0xc) * 8;
       *(undefined2 *)(param_5 + 2) = uVar2;
-      *(undefined *)(iVar5 + 0x5c5c) = (char)uVar2;
+      *(undefined *)(iVar5 + OTHER_X_COORDS) = (char)uVar2;
       *(undefined2 *)(param_5 + 4) = uVar3;
-      *(undefined *)(iVar5 + 0x5c5d) = (char)uVar3;
+      *(undefined *)(iVar5 + OTHER_Y_COORDS) = (char)uVar3;
       pbVar1 = (byte *)0x24e6;
       *pbVar1 = *pbVar1 | 2;
     }
@@ -746,39 +760,36 @@ void FUN_0000_0c50(int param_1,undefined2 param_2,int param_3,int param_4,int pa
 
 
 
-void FUN_0000_0d00(int param_1,int param_2)
+void run_behavior(int period_id, int npc_slot)
 
 {
-  uint uVar1;
-  undefined2 unaff_DS;
-  
-  uVar1 = (uint)*(byte *)(param_1 + param_2 * 0x10 + 0x5d5e);
-  if (uVar1 < 8) {
-                    // WARNING: Could not emulate address calculation at 0x00000d30
-                    // WARNING: Treating indirect jump as call
-    (**(code **)(uVar1 * 2 + -0x4fd4))();
-    return;
+  uint behavior = NPC_SCHEDULES[period_id + npc_slot * 0x10];
+  if (behavior < 8) {
+    //   WARNING: Could not emulate address calculation at 0x00000d30
+    //   WARNING: Treating indirect jump as call
+    //   (**(code **)(uVar1 * 2 + -0x4fd4))();
+    // ...which I'm interpreting as follows.
+    // Weirdly, -0x4fd4 (i.e., 0xb02c) is supposed to correspond to DATA.OVL
+    // offset 0x0b62, but that's smack in the middle of a bunch of location
+    // name text strings.
+    NPC_BEHAVIOR_JUMP_TABLE[behavior * 2]();
   }
-  return;
 }
 
 
-
-void FUN_0000_0db4(undefined2 param_1)
-
-{
+void update_npcs_behaviors(int hour) {
   byte *pbVar1;
-  char *pcVar2;
+  char *target_z_p;
   int *piVar3;
   char cVar4;
   byte bVar5;
   int iVar6;
   int iVar7;
   char *pcVar8;
-  int iVar9;
-  int iVar10;
-  int *piVar11;
-  int iVar12;
+  int period_id;
+  int npc_offset;
+  int *sprite_state_p;
+  int sprite_state;
   int iVar13;
   undefined2 unaff_DS;
   int local_14;
@@ -786,234 +797,237 @@ void FUN_0000_0db4(undefined2 param_1)
   uint local_c;
   uint local_a;
   int local_6;
-  int local_4;
-  
+  int npc_slot;
+ 
   local_14 = 0;
   *(undefined *)0x65be = 0;
   *(undefined *)0x65bf = 0;
-  local_4 = 1;
-  do {
-    if (0x1f < local_4) {
-      return;
+
+  for (npc_slot = 1; npc_slot < MAX_NPCS; npc_slot++) {
+    if (NPC_TYPES[npc_slot] == 0) continue;
+
+    period_id = get_period_id(hour,npc_slot);
+    npc_offset = npc_slot * 0x10;
+    sprite_state_p = &SPRITE_STATES[npc_offset];
+
+    bool at_destination = *sprite_state_p < 2;
+    bool active_this_hour = update_sprite_state(hour,npc_slot);
+
+    if (at_destination && !active_this_hour)) {
+      if (SPRITE_Z_COORDS[npc_offset] == *PARTY_Z_COORD) {
+        run_behavior(period_id, npc_slot);
+      }
+      continue;
     }
-    if (*(char *)(local_4 + 0x659e) != '\0') {
-      iVar9 = FUN_0000_12e0(param_1,local_4);
-      iVar10 = local_4 * 0x10;
-      piVar11 = (int *)(iVar10 + 0x5f5e);
-      if ((*piVar11 < 2) && (iVar12 = FUN_0000_0938(param_1,local_4), iVar12 == 0)) {
-        if (*(uint *)(iVar10 + 0x5f64) == (uint)*(byte *)0x5895) {
-LAB_0000_1261:
-          FUN_0000_0d00(iVar9,local_4);
+
+    sprite_state = *sprite_state_p;
+    if (sprite_state < 4) {
+      sprite_state = npc_slot * 2;
+      if (MOVEMENT_LIST_PTRS[sprite_state]) < 0x8000) &&
+         (iVar13 = npc_slot * 0x20,
+         *(MOVEMENT_LIST_PTRS[sprite_state] + iVar13 + MOVEMENT_LIST_TABLE) != 0)) {
+        *0x5876 = *(npc_offset + SPRITE_X_COORDS);
+        *0x5878 = *(npc_offset + SPRITE_Y_COORDS);
+        FUN_0000_0632(*(*(sprite_state + MOVEMENT_LIST_PTRS) + iVar13 + 0x615f));
+        local_a = *0x5876;
+        local_c = *0x5878;
+        iVar6 = metascore_move(period_id,npc_slot,local_c,*(undefined2 *)0x5876);
+        if (iVar6 == 0) {
+          npc_offset = npc_slot * 2;
+          piVar3 = (npc_offset + 0x65c2);
+          *piVar3 = *piVar3 + 1;
+          FUN_0000_0c50(npc_slot * 0x10 + NPC_SCHEDULES,npc_slot,period_id,0,npc_slot * 0x10 + SPRITE_STATES);
+          if (3 < *(int *)(npc_offset + 0x65c2)) {
+            *(npc_offset + MOVEMENT_LIST_PTRS) = 0xffff;
+LAB_0000_10d6:
+            *(npc_slot * 2 + 0x65c2) = 0;
+          }
+        }
+        else { // iVar6 != 0
+          iVar7 = *(int *)(npc_offset + SPRITE_ANIM) * 8;
+          *(undefined *)(iVar7 + OTHER_X_COORDS) = (undefined)local_a;
+          *(uint *)(npc_offset + SPRITE_X_COORDS) = local_a & 0xff;
+          *(undefined *)(iVar7 + OTHER_Y_COORDS) = (undefined)local_c;
+          *(uint *)(npc_offset + SPRITE_Y_COORDS) = local_c & 0xff;
+          pbVar1 = (byte *)0x24e6;
+          *pbVar1 = *pbVar1 | 2;
+          pcVar8 = (char *)(*(int *)(sprite_state + MOVEMENT_LIST_PTRS) + iVar13 + MOVEMENT_LIST_TABLE);
+          target_z_p = pcVar8;
+          *target_z_p = *target_z_p + -1;
+          *(undefined2 *)(sprite_state + 0x65c2) = 0;
+          if (*pcVar8 == '\0') {
+            piVar3 = (int *)(sprite_state + MOVEMENT_LIST_PTRS);
+            *piVar3 = *piVar3 + 1;
+            iVar7 = *(int *)(sprite_state + MOVEMENT_LIST_PTRS);
+            piVar3 = (int *)(sprite_state + MOVEMENT_LIST_PTRS);
+            *piVar3 = *piVar3 + 1;
+            *(undefined *)(iVar7 + iVar13 + MOVEMENT_LIST_TABLE) = 0;
+            if ((0x1f < *(int *)(sprite_state + MOVEMENT_LIST_PTRS)) ||
+               (*(char *)(*(int *)(sprite_state + MOVEMENT_LIST_PTRS) + iVar13 + MOVEMENT_LIST_TABLE) == '\0')) {
+              *(undefined2 *)(npc_slot * 2 + MOVEMENT_LIST_PTRS) = 0xffff;
+            }
+            if (iVar6 == 2) {
+              *(int *)(npc_offset + SPRITE_ACTIVE) = period_id;
+              *sprite_state_p = 1;
+              *(undefined2 *)(npc_slot * 2 + MOVEMENT_LIST_PTRS) = 0xffff;
+            }
+          }
         }
       }
-      else {
-        iVar12 = *piVar11;
-        if (iVar12 < 4) {
-          iVar12 = local_4 * 2;
-          if ((*(uint *)(iVar12 + 0x655e) < 0x8000) &&
-             (iVar13 = local_4 * 0x20,
-             *(char *)(*(int *)(iVar12 + 0x655e) + iVar13 + 0x615e) != '\0')) {
-            *(undefined2 *)0x5876 = *(undefined2 *)(iVar10 + 0x5f60);
-            *(undefined2 *)0x5878 = *(undefined2 *)(iVar10 + 0x5f62);
-            FUN_0000_0632(*(undefined *)(*(int *)(iVar12 + 0x655e) + iVar13 + 0x615f));
-            local_a = *(uint *)0x5876;
-            local_c = *(uint *)0x5878;
-            iVar6 = FUN_0000_0b9e(iVar9,local_4,local_c,*(undefined2 *)0x5876);
-            if (iVar6 == 0) {
-              iVar10 = local_4 * 2;
-              piVar3 = (int *)(iVar10 + 0x65c2);
-              *piVar3 = *piVar3 + 1;
-              FUN_0000_0c50(local_4 * 0x10 + 0x5d5e,local_4,iVar9,0,local_4 * 0x10 + 0x5f5e);
-              if (3 < *(int *)(iVar10 + 0x65c2)) {
-                *(undefined2 *)(iVar10 + 0x655e) = 0xffff;
-LAB_0000_10d6:
-                *(undefined2 *)(local_4 * 2 + 0x65c2) = 0;
+      else {  // Nothing in the movement list pointers table?
+        if ((*(int *)(npc_slot * 2 + MOVEMENT_LIST_PTRS) == -1) && (*sprite_state_p == 3)) {
+          period_id = get_period_id(hour,npc_slot);
+          cVar4 = *PARTY_Z_COORD;
+          target_z_p = NPC_SCHED_Z_COORDS[period_id + npc_slot * 0x10];
+          if (cVar4 < *target_z_p) {
+            *sprite_state_p = SS_GOING_UP;
+          } else {
+            *sprite_state_p = SS_GOING_DOWN;
+          }
+          return;
+        }
+        if (local_14 < 1) {
+          if (*sprite_state_p != 1) {
+            int an_offset = *(int *)(npc_slot * 2 + 0x65c2);
+            if ((an_offset < 200) &&
+               ((an_offset == 0 || func_0x00007e02(2,0) == 1))) {
+              if (*(int *)(npc_slot * 2 + MOVEMENT_LIST_PTRS) == -1) {
+                local_14 = local_14 + 1;
+                int some_offset = npc_slot * 0x10 + period_id;
+                npc_offset = FUN_0000_032c(npc_slot,0,*(some_offset + NPC_SCHED_Y_COORDS),
+                                       *(undefined *)(some_offset + NPC_SCHED_X_COORDS),
+                                       *(undefined2 *)(npc_offset + SPRITE_Y_COORDS),
+                                       *(undefined2 *)(npc_offset + SPRITE_X_COORDS));
+                if (npc_offset != 0) {
+                  FUN_0000_04ac(*(some_offset + NPC_SCHED_Y_COORDS),*(some_offset + NPC_SCHED_X_COORDS), 0,npc_slot);
+                  goto LAB_0000_10d6;
+                }
+                *(undefined2 *)(npc_slot * 2 + 0x65c2) = 200;
               }
+              FUN_0000_0c50(npc_slot * 0x10 + NPC_SCHEDULES,npc_slot,period_id,0,npc_slot * 0x10 + SPRITE_STATES);
             }
             else {
-              iVar7 = *(int *)(iVar10 + 0x5f6a) * 8;
-              *(undefined *)(iVar7 + 0x5c5c) = (undefined)local_a;
-              *(uint *)(iVar10 + 0x5f60) = local_a & 0xff;
-              *(undefined *)(iVar7 + 0x5c5d) = (undefined)local_c;
-              *(uint *)(iVar10 + 0x5f62) = local_c & 0xff;
-              pbVar1 = (byte *)0x24e6;
-              *pbVar1 = *pbVar1 | 2;
-              pcVar8 = (char *)(*(int *)(iVar12 + 0x655e) + iVar13 + 0x615e);
-              pcVar2 = pcVar8;
-              *pcVar2 = *pcVar2 + -1;
-              *(undefined2 *)(iVar12 + 0x65c2) = 0;
-              if (*pcVar8 == '\0') {
-                piVar3 = (int *)(iVar12 + 0x655e);
+              sprite_state_p = (int *)(npc_slot * 2 + 0x65c2);
+              if (199 < *sprite_state_p) {
+                piVar3 = sprite_state_p;
                 *piVar3 = *piVar3 + 1;
-                iVar7 = *(int *)(iVar12 + 0x655e);
-                piVar3 = (int *)(iVar12 + 0x655e);
-                *piVar3 = *piVar3 + 1;
-                *(undefined *)(iVar7 + iVar13 + 0x615e) = 0;
-                if ((0x1f < *(int *)(iVar12 + 0x655e)) ||
-                   (*(char *)(*(int *)(iVar12 + 0x655e) + iVar13 + 0x615e) == '\0')) {
-                  *(undefined2 *)(local_4 * 2 + 0x655e) = 0xffff;
-                }
-                if (iVar6 == 2) {
-                  *(int *)(iVar10 + 0x5f6c) = iVar9;
-                  *piVar11 = 1;
-                  *(undefined2 *)(local_4 * 2 + 0x655e) = 0xffff;
-                }
               }
-            }
-          }
-          else {
-            if ((*(int *)(local_4 * 2 + 0x655e) == -1) && (*piVar11 == 3)) {
-              iVar9 = FUN_0000_12e0(param_1,local_4);
-              cVar4 = *(char *)0x5895;
-              pcVar2 = (char *)(iVar9 + local_4 * 0x10 + 0x5d67);
-              if (*pcVar2 != cVar4 && cVar4 <= *pcVar2) {
-                *piVar11 = 6;
-                return;
+              sprite_state_p = (int *)(npc_slot * 2 + 0x65c2);
+              if (0xcc < *sprite_state_p) {
+                *sprite_state_p = 0;
               }
-              *piVar11 = 7;
-              return;
-            }
-            if (local_14 < 1) {
-              if (*piVar11 != 1) {
-                iVar12 = *(int *)(local_4 * 2 + 0x65c2);
-                if ((iVar12 < 200) &&
-                   ((iVar12 == 0 || (iVar12 = func_0x00007e02(2,0), iVar12 == 1)))) {
-                  if (*(int *)(local_4 * 2 + 0x655e) == -1) {
-                    local_14 = local_14 + 1;
-                    iVar12 = local_4 * 0x10 + iVar9;
-                    iVar10 = FUN_0000_032c(local_4,0,*(undefined *)(iVar12 + 0x5d64),
-                                           *(undefined *)(iVar12 + 0x5d61),
-                                           *(undefined2 *)(iVar10 + 0x5f62),
-                                           *(undefined2 *)(iVar10 + 0x5f60));
-                    if (iVar10 != 0) {
-                      FUN_0000_04ac(*(undefined *)(iVar12 + 0x5d64),*(undefined *)(iVar12 + 0x5d61),
-                                    0,local_4);
-                      goto LAB_0000_10d6;
-                    }
-                    *(undefined2 *)(local_4 * 2 + 0x65c2) = 200;
-                  }
-                  FUN_0000_0c50(local_4 * 0x10 + 0x5d5e,local_4,iVar9,0,local_4 * 0x10 + 0x5f5e);
-                }
-                else {
-                  piVar11 = (int *)(local_4 * 2 + 0x65c2);
-                  if (199 < *piVar11) {
-                    piVar3 = piVar11;
-                    *piVar3 = *piVar3 + 1;
-                  }
-                  piVar11 = (int *)(local_4 * 2 + 0x65c2);
-                  if (0xcc < *piVar11) {
-                    *piVar11 = 0;
-                  }
-                }
-              }
-            }
-            else if (*(uint *)(iVar10 + 0x5f64) == (uint)*(byte *)0x5895) {
-              iVar9 = *(int *)(iVar10 + 0x5f6c);
-              goto LAB_0000_1261;
             }
           }
         }
-        else if ((iVar12 == 4) || (iVar12 == 5)) {
-          if (local_14 != 1) {
-            local_14 = 1;
-            if (*piVar11 == 4) {
-              local_6 = 3;
-            }
-            else {
-              local_6 = 4;
-            }
-            iVar10 = local_4 * 0x10 + iVar9;
-            local_10 = FUN_0000_01a0(local_4,local_6 == 3,*(undefined *)(iVar10 + 0x5d64),
-                                     *(undefined *)(iVar10 + 0x5d61));
-            if (local_10 != 0) {
-              local_a = *(uint *)0x5876;
-              local_c = *(uint *)0x5878;
-              local_10 = FUN_0000_032c(local_4,local_6,*(undefined *)(iVar10 + 0x5d64),
-                                       *(undefined *)(iVar10 + 0x5d61),local_c,local_a);
-            }
-            if (local_10 != 0) {
-              iVar9 = local_4 * 0x10 + iVar9;
-              FUN_0000_04ac(*(undefined *)(iVar9 + 0x5d64),*(undefined *)(iVar9 + 0x5d61),local_6,
-                            local_4);
-              bVar5 = *(byte *)(local_a + local_c * 0x20 + 0x6608);
-              if ((((local_6 == 3) && (bVar5 == 200)) || ((local_6 == 4 && (bVar5 == 0xc9)))) ||
-                 ((bVar5 & 0xfc) == 0xc4)) {
-                func_0x0000d89a(*(undefined *)0x5895,local_c,local_a,local_4);
-              }
-              *piVar11 = 2;
-            }
-          }
+        else if (SPRITE_Z_COORDS[npc_offset] == *PARTY_Z_COORD) {
+          FUN_0000_0d00(SPRITE_ACTIVE[npc_offset], npc_slot);
+        }
+      }
+    }
+    else if ((sprite_state == 4) || (sprite_state == 5)) {
+      if (local_14 != 1) {
+        local_14 = 1;
+        if (*sprite_state_p == 4) {
+          local_6 = 3;
         }
         else {
-          iVar12 = *piVar11;
-          if (((iVar12 == 6) || (iVar12 == 7)) &&
-             (iVar12 = FUN_0000_0a4a(iVar9,local_4), iVar12 == 0)) {
-            iVar9 = *piVar11;
-            if ((iVar9 != 2) && (local_14 != 1)) {
-              local_14 = 1;
-              if (iVar9 == 6) {
-                local_6 = 1;
-              }
-              else {
-                local_6 = 2;
-              }
-              local_10 = FUN_0000_01a0(local_4,local_6 == 1,*(undefined2 *)(iVar10 + 0x5f62),
-                                       *(undefined2 *)(iVar10 + 0x5f60));
-              if (local_10 != 0) {
-                local_a = *(uint *)0x5876;
-                local_c = *(uint *)0x5878;
-                local_10 = FUN_0000_032c(local_4,local_6,local_c,local_a,
-                                         *(undefined2 *)(iVar10 + 0x5f62),
-                                         *(undefined2 *)(iVar10 + 0x5f60));
-              }
-              if (local_10 != 0) {
-                FUN_0000_04ac(local_c,local_a,local_6,local_4);
-                *piVar11 = 3;
-              }
-            }
+          local_6 = 4;
+        }
+        npc_offset = npc_slot * 0x10 + period_id;
+        local_10 = FUN_0000_01a0(npc_slot,local_6 == 3,*(undefined *)(npc_offset + NPC_SCHED_Y_COORDS),
+                                 *(undefined *)(npc_offset + NPC_SCHED_X_COORDS));
+        if (local_10 != 0) {
+          local_a = *(uint *)0x5876;
+          local_c = *(uint *)0x5878;
+          local_10 = FUN_0000_032c(npc_slot,local_6,*(undefined *)(npc_offset + NPC_SCHED_Y_COORDS),
+                                   *(undefined *)(npc_offset + NPC_SCHED_X_COORDS),local_c,local_a);
+        }
+        if (local_10 != 0) {
+          period_id = npc_slot * 0x10 + period_id;
+          FUN_0000_04ac(*(undefined *)(period_id + NPC_SCHED_Y_COORDS),*(undefined *)(period_id + NPC_SCHED_X_COORDS),local_6,
+                        npc_slot);
+          bVar5 = *(byte *)(local_a + local_c * 0x20 + GROUND_TILES);
+          if ((((local_6 == 3) && (bVar5 == 200)) || ((local_6 == 4 && (bVar5 == 0xc9)))) ||
+             ((bVar5 & 0xfc) == 0xc4)) {
+            func_0x0000d89a(*(undefined *)PARTY_Z_COORD,local_c,local_a,npc_slot);
           }
-          else {
-            iVar12 = local_4 * 0x10 + iVar9;
-            func_0x0000d89a(*(undefined *)(iVar12 + 0x5d67),*(undefined *)(iVar12 + 0x5d64),
-                            *(undefined *)(iVar12 + 0x5d61),local_4);
-            *(int *)(iVar10 + 0x5f6c) = iVar9;
-            *(undefined2 *)(local_4 * 2 + 0x655e) = 0xffff;
-            *piVar11 = 1;
-          }
+          *sprite_state_p = 2;
         }
       }
     }
-    local_4 = local_4 + 1;
-  } while( true );
+    else {
+      sprite_state = *sprite_state_p;
+      if ((sprite_state == SS_GOING_UP) || (sprite_state == SS_GOING_DOWN) &&
+          is_desirable_vertical_route(period_id,npc_slot) == 0)) {
+        period_id = *sprite_state_p;
+        if ((period_id != 2) && (local_14 != 1)) {
+          local_14 = 1;
+          if (period_id == 6) {
+            local_6 = 1;
+          }
+          else {
+            local_6 = 2;
+          }
+          local_10 = FUN_0000_01a0(npc_slot,local_6 == 1,*(undefined2 *)(npc_offset + SPRITE_Y_COORDS),
+                                   *(undefined2 *)(npc_offset + SPRITE_X_COORDS));
+          if (local_10 != 0) {
+            local_a = *(uint *)0x5876;
+            local_c = *(uint *)0x5878;
+            local_10 = FUN_0000_032c(npc_slot,local_6,local_c,local_a,
+                                     *(undefined2 *)(npc_offset + SPRITE_Y_COORDS),
+                                     *(undefined2 *)(npc_offset + SPRITE_X_COORDS));
+          }
+          if (local_10 != 0) {
+            FUN_0000_04ac(local_c,local_a,local_6,npc_slot);
+            *sprite_state_p = 3;
+          }
+        }
+      } else {
+        npc_offset = npc_slot * 0x10 + period_id;
+        func_0x0000d89a(NPC_SCHED_Z_COORDS[npc_offset], NPC_SCHED_Y_COORDS[npc_offset],
+                        NPC_SCHED_X_COORDS[npc_offset], npc_slot);
+        SPRITE_ACTIVE[npc_offset] = period_id;
+        MOVEMENT_LIST_PTRS[npc_slot * 2] = 0xffff;
+        *sprite_state_p = 1;
+      }
+    }
+  }
 }
 
+// NPC life goes: period 0, period 1, period 2, period 1, repeat forever
+int get_period_id(int hour, int npc_slot) {
+  int hours_into_period_0;
+  int hours_into_period_1;
+  int hours_into_period_2;
+  int hours_into_period_3;
 
+  npc_slot *= 0x10;
+  hours_into_period_0 = hour - NPC_SCHED_PERIOD_0[npc_slot];
+  hours_into_period_1 = hour - NPC_SCHED_PERIOD_1[npc_slot];
+  hours_into_period_2 = hour - NPC_SCHED_PERIOD_2[npc_slot];
+  hours_into_period_3 = hour - NPC_SCHED_PERIOD_3[npc_slot];
 
-undefined FUN_0000_12e0(char param_1,int param_2)
+  int period_id;
+  int min_hours;
 
-{
-  byte bVar1;
-  byte bVar2;
-  undefined uVar3;
-  byte bVar4;
-  undefined2 unaff_DS;
-  
-  param_2 = param_2 * 0x10;
-  bVar1 = param_1 - *(char *)(param_2 + 0x5d6a);
-  bVar2 = param_1 - *(char *)(param_2 + 0x5d6b);
-  bVar4 = param_1 - *(char *)(param_2 + 0x5d6c);
-  uVar3 = bVar2 < bVar1;
-  if ((bool)uVar3) {
-    bVar1 = bVar2;
+  if (hours_into_period_1 >= hours_into_period_0) {
+    period_id = 0;
+    min_hours = hours_into_period_0;
+  } else {
+    period_id = 1;
+    min_hours = hours_into_period_1;
   }
-  if (bVar4 < bVar1) {
-    uVar3 = 2;
-    bVar1 = bVar4;
+
+  if (hours_into_period_2 < min_hours) {
+    period_id = 2;
+    min_hours = hours_into_period_2;
   }
-  if ((byte)(param_1 - *(char *)(param_2 + 0x5d6d)) < bVar1) {
-    uVar3 = 1;
+
+  if (hours_into_period_3 < min_hours) {
+    period_id = 1;
   }
-  return uVar3;
+
+  return period_id;
 }
 
 
