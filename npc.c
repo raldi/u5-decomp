@@ -1,17 +1,17 @@
 #define MAX_NPCS 32
 
-#define NPC_TYPES 0x659e
-#define SPRITE_ACTIVE 0x5f6c
-#define SPRITE_TILES 0x5f66
-#define SPRITE_ANIM 0x5f6a
-#define SPRITE_X_COORDS 0x5f60
-#define SPRITE_Y_COORDS 0x5f62
-#define SPRITE_Z_COORDS 0x5f64
+#define NPC_TYPES MEM(0x659e)
+#define SPRITE_ACTIVE SAVED_GAM(0x09c6)
+#define SPRITE_TILES SAVED_GAM(0x09c0)
+#define SPRITE_ANIM SAVED_GAM(0x09c4)
+#define SPRITE_X_COORDS SAVED_GAM(0x09ba)
+#define SPRITE_Y_COORDS SAVED_GAM(0x09bc)
+#define SPRITE_Z_COORDS SAVED_GAM(0x09be)
 
-#define OTHER_X_COORDS 0x5c5c
-#define OTHER_Y_COORDS 0x5c5d
+#define OTHER_X_COORDS SAVED_GAM(0x06b6)
+#define OTHER_Y_COORDS SAVED_GAM(0x06b7)
 
-#define SPRITE_STATES 0x5f5e
+#define SPRITE_STATES SAVED_GAM(0x09b8)
 
 #define SS_CONTINUE 0
 #define SS_START_ACTIVITY 1
@@ -24,24 +24,24 @@
 #define SS_GOING_DOWN 7
 #define SS_WARP_TO_TARGET 8
 
-#define PARTY_Z_COORD 0x5895
+#define PARTY_Z_COORD SAVED_GAM(0x02ef)
 
-#define MOVEMENT_LIST_PTRS 0x655e
-#define MOVEMENT_LIST_TABLE 0x615e
+#define MOVEMENT_LIST_PTRS MEM(0x655e)
+#define MOVEMENT_LIST_TABLE MEM(0x615e)
 
-#define NPC_SCHEDULES 0x5d5e
-#define NPC_SCHED_X_COORDS 0x5d61
-#define NPC_SCHED_Y_COORDS 0x5d64
-#define NPC_SCHED_Z_COORDS 0x5d67
-#define NPC_SCHED_PERIOD_0 0x5d6a
-#define NPC_SCHED_PERIOD_1 0x5d6b
-#define NPC_SCHED_PERIOD_2 0x5d6c
-#define NPC_SCHED_PERIOD_3 0x5d6d
+#define NPC_SCHEDULES SAVED_GAM(0x07b8)
+#define NPC_SCHED_X_COORDS SAVED_GAM(0x07bb)
+#define NPC_SCHED_Y_COORDS SAVED_GAM(0x07be)
+#define NPC_SCHED_Z_COORDS SAVED_GAM(0x07c1)
+#define NPC_SCHED_PERIOD_0 SAVED_GAM(0x07c4)
+#define NPC_SCHED_PERIOD_1 SAVED_GAM(0x07c5)
+#define NPC_SCHED_PERIOD_2 SAVED_GAM(0x07c6)
+#define NPC_SCHED_PERIOD_3 SAVED_GAM(0x07c7)
 
-#define NPC_BEHAVIOR_JUMP_TABLE 0xb02c
+#define NPC_BEHAVIOR_JUMP_TABLE DATA_OVL(0x0b62)
 
-#define SEEKING_LADDER_UP 0xffff
-#define SEEKING_LADDER_DOWN 0xfffe
+#define SEEKING_LADDER_UP MEM(0xffff)
+#define SEEKING_LADDER_DOWN MEM(0xfffe)
 
 #define LADDER_UP 200
 #define LADDER_DOWN 201
@@ -51,9 +51,9 @@
 #define RAT 144
 #define SHADOWLORD 252
 
-#define NPC_WALKABLE_BITMAP 0x367e
+#define NPC_WALKABLE_BITMAP DATA_OVL(0x368e)
 
-#define GROUND_TILES 0x6608
+#define GROUND_TILES MEM(0x6608)
 
 void init_npcs_upon_party_arrival(int hour) {
   int period_id;
@@ -69,9 +69,9 @@ void init_npcs_upon_party_arrival(int hour) {
   sprite_state_p = &SPRITE_STATES[1];
   int last_sprite_state_p;
   offset = 0x10;
-  local_10 = (undefined2 *)0x6560;
-  local_12 = (undefined *)0x617e;
-  local_14 = (undefined2 *)0x65c4;
+  local_10 = (undefined2 *)MEM(0x6560);
+  local_12 = (undefined *)MEM(0x617e);
+  local_14 = (undefined2 *)MEM(0x65c4);
   for (npc_slot = 1; npc_slot < 0x20; npc_slot++) {
     last_sprite_state_p = sprite_state_p;
     if (NPC_TYPES[npc_slot] != 0) {
@@ -85,7 +85,7 @@ void init_npcs_upon_party_arrival(int hour) {
       SPRITE_TILES[offset] = NPC_TYPES[npc_slot];
       SPRITE_ACTIVE[offset] = period_id;
       SPRITE_ANIM[offset] = 0;
-      *local_10 = 0xffff;
+      *local_10 = MEM(0xffff);
       *local_12 = 0;
       last_sprite_state_p = local_14;
     }
@@ -135,7 +135,7 @@ void FUN_0000_01d2(int npc_slot,uint param_2,int param_3,int param_4,int y,int x
   if (param_2 == SEEKING_LADDER_DOWN) {
     ladder_sought = LADDER_DOWN;
   }
-  period_id = get_period_id(*(undefined *)0x587f,npc_slot);
+  period_id = get_period_id(*(undefined *)SAVED_GAM(0x02d9),npc_slot);
   y = 0;
   local_16 = 0;
   do {
@@ -143,13 +143,13 @@ void FUN_0000_01d2(int npc_slot,uint param_2,int param_3,int param_4,int y,int x
     do {
       iVar2 = score_potential_move(period_id,npc_slot,*PARTY_Z_COORD,y,x);
       if (iVar2 == 0) {
-        *(undefined *)(local_16 + *(int *)0xb11c + x) = 0x90;
+        *(undefined *)(local_16 + *(int *)DATA_OVL(0x0c52) + x) = 0x90;
       }
       else {
-        *(undefined *)(local_16 + *(int *)0xb11c + x) = 0;
+        *(undefined *)(local_16 + *(int *)DATA_OVL(0x0c52) + x) = 0;
       }
       if (((int)param_2 < 0) && (*(char *)(local_16 + x + GROUND_TILES) == ladder_sought)) {
-        *(undefined *)(*(int *)0xb11c + local_16 + x) = 5;
+        *(undefined *)(*(int *)DATA_OVL(0x0c52) + local_16 + x) = 5;
       }
       x = x + 1;
     } while (x < 0x20);
@@ -157,28 +157,28 @@ void FUN_0000_01d2(int npc_slot,uint param_2,int param_3,int param_4,int y,int x
     y = y + 1;
   } while (y < 0x20);
   npc_slot = npc_slot * 0x10;
-  pbVar6 = (byte *)0x5d52;
+  pbVar6 = (byte *)SAVED_GAM(0x07ac);
   do {
     if (0x3f < *pbVar6) {
       x = FUN_0000_06a0(*(undefined2 *)(npc_slot + SPRITE_Y_COORDS),*(undefined2 *)(npc_slot + SPRITE_X_COORDS),
                             pbVar6[3],pbVar6[2]);
       if (x < 4) {
-        *(undefined *)((uint)pbVar6[3] * 0x20 + (uint)pbVar6[2] + *(int *)0xb11c) = 0x90;
+        *(undefined *)((uint)pbVar6[3] * 0x20 + (uint)pbVar6[2] + *(int *)DATA_OVL(0x0c52)) = 0x90;
       }
     }
     pbVar6 = pbVar6 + -8;
-  } while ((byte *)0x5c5a < pbVar6);
+  } while ((byte *)SAVED_GAM(0x06b4) < pbVar6);
   uVar3 = (uint)*(byte *)OTHER_Y_COORDS;
   uVar4 = (uint)*(byte *)OTHER_X_COORDS;
   x = FUN_0000_06a0(*(undefined2 *)(npc_slot + SPRITE_Y_COORDS),*(undefined2 *)(npc_slot + SPRITE_X_COORDS),uVar3,
                         uVar4);
   if (x < 4) {
-    *(undefined *)(uVar3 * 0x20 + *(int *)0xb11c + uVar4) = 0x90;
+    *(undefined *)(uVar3 * 0x20 + *(int *)DATA_OVL(0x0c52) + uVar4) = 0x90;
   }
-  if (param_2 < 0x8000) {
-    *(undefined *)(param_3 * 0x20 + param_4 + *(int *)0xb11c) = 5;
+  if (param_2 < MEM(0x8000)) {
+    *(undefined *)(param_3 * 0x20 + param_4 + *(int *)DATA_OVL(0x0c52)) = 5;
   }
-  *(undefined *)(y * 0x20 + x + *(int *)0xb11c) = 0x46;
+  *(undefined *)(y * 0x20 + x + *(int *)DATA_OVL(0x0c52)) = 0x46;
   return;
 }
 
@@ -215,7 +215,7 @@ bool FUN_0000_032c(undefined2 npc_slot,undefined2 param_2,undefined2 param_3,und
     if (local_e != 0) break;
     local_a = (uint)local_2e[local_c];
     local_8 = (uint)local_50[local_c];
-    local_30 = (uint)(*(byte *)(local_8 * 0x20 + *(int *)0xb11c + local_a) >> 4);
+    local_30 = (uint)(*(byte *)(local_8 * 0x20 + *(int *)DATA_OVL(0x0c52) + local_a) >> 4);
     local_6 = 0;
     do {
       bVar3 = false;
@@ -256,14 +256,14 @@ LAB_0000_03b9:
         }
       }
 LAB_0000_03bc:
-      if ((!bVar3) && (*(byte *)(local_8 * 0x20 + *(int *)0xb11c + local_a) < 0x10)) {
-        pbVar4 = (byte *)(local_8 * 0x20 + *(int *)0xb11c + local_a);
+      if ((!bVar3) && (*(byte *)(local_8 * 0x20 + *(int *)DATA_OVL(0x0c52) + local_a) < 0x10)) {
+        pbVar4 = (byte *)(local_8 * 0x20 + *(int *)DATA_OVL(0x0c52) + local_a);
         bVar1 = *pbVar4;
         *pbVar4 = (char)local_30 << 4;
         if ((bVar1 & 0xf) == 5) {
           local_e = 1;
-          *(uint *)0x5876 = local_a;
-          *(uint *)0x5878 = local_8;
+          *(uint *)SAVED_GAM(0x02d0) = local_a;
+          *(uint *)SAVED_GAM(0x02d2) = local_8;
           break;
         }
         if (local_4 != local_c) {
@@ -312,7 +312,7 @@ int FUN_0000_04ac(int param_1,int param_2,undefined2 param_3_00,int param_3)
   cVar2 = '\0';
   iVar9 = 0;
   *(undefined2 *)(param_3 * 2 + MOVEMENT_LIST_PTRS) = 0;
-  bVar12 = *(byte *)(param_1 * 0x20 + param_2 + *(int *)0xb11c);
+  bVar12 = *(byte *)(param_1 * 0x20 + param_2 + *(int *)DATA_OVL(0x0c52));
   bVar11 = bVar12 >> 4;
   bVar3 = bVar11;
   do {
@@ -334,13 +334,13 @@ int FUN_0000_04ac(int param_1,int param_2,undefined2 param_3_00,int param_3)
     }
     if ((bVar3 != bVar11) || (bVar12 == 6)) {
       *(char *)(param_3 * 0x20 + iVar9 + MOVEMENT_LIST_TABLE) = cVar2;
-      *(byte *)(param_3 * 0x20 + iVar9 + 0x615f) = bVar3;
+      *(byte *)(param_3 * 0x20 + iVar9 + MEM(0x615f)) = bVar3;
       iVar9 = iVar9 + 2;
       if (bVar12 == 6) break;
       cVar2 = '\x01';
       bVar3 = bVar11;
     }
-    bVar12 = *(byte *)(param_1 * 0x20 + param_2 + *(int *)0xb11c);
+    bVar12 = *(byte *)(param_1 * 0x20 + param_2 + *(int *)DATA_OVL(0x0c52));
     bVar11 = bVar12 >> 4;
   } while (iVar9 < 0x20);
   iVar4 = iVar9 + -2;
@@ -353,9 +353,9 @@ int FUN_0000_04ac(int param_1,int param_2,undefined2 param_3_00,int param_3)
       puVar6 = (undefined *)(param_3 + iVar4 + MOVEMENT_LIST_TABLE);
       *puVar5 = *puVar6;
       *puVar6 = uVar1;
-      pcVar7 = (char *)(param_3 + iVar10 + 0x615f);
+      pcVar7 = (char *)(param_3 + iVar10 + MEM(0x615f));
       cVar2 = *pcVar7;
-      pcVar8 = (char *)(param_3 + iVar4 + 0x615f);
+      pcVar8 = (char *)(param_3 + iVar4 + MEM(0x615f));
       *pcVar7 = (*pcVar8 + 1U & 3) + 1;
       *pcVar8 = (cVar2 + 1U & 3) + 1;
       iVar10 = iVar10 + 2;
@@ -374,29 +374,29 @@ void FUN_0000_0632(int param_1)
   undefined2 unaff_DS;
   
   if (param_1 == 1) {
-    piVar1 = (int *)0x5876;
+    piVar1 = (int *)SAVED_GAM(0x02d0);
     *piVar1 = *piVar1 + 1;
-    if (0x20 < *(int *)0x5878) {
-      *(undefined2 *)0x5876 = 0x20;
+    if (0x20 < *(int *)SAVED_GAM(0x02d2)) {
+      *(undefined2 *)SAVED_GAM(0x02d0) = 0x20;
     }
   }
   else if (param_1 == 2) {
-    piVar1 = (int *)0x5878;
+    piVar1 = (int *)SAVED_GAM(0x02d2);
     *piVar1 = *piVar1 + -1;
-    if (*(int *)0x5876 < 0) {
-      *(undefined2 *)0x5878 = 0;
+    if (*(int *)SAVED_GAM(0x02d0) < 0) {
+      *(undefined2 *)SAVED_GAM(0x02d2) = 0;
     }
   }
   else if (param_1 == 3) {
-    piVar1 = (int *)0x5876;
+    piVar1 = (int *)SAVED_GAM(0x02d0);
     *piVar1 = *piVar1 + -1;
-    if (*(int *)0x5878 < 0) {
-      *(undefined2 *)0x5876 = 0;
+    if (*(int *)SAVED_GAM(0x02d2) < 0) {
+      *(undefined2 *)SAVED_GAM(0x02d0) = 0;
     }
   }
-  else if ((param_1 == 4) && (piVar1 = (int *)0x5878, *piVar1 = *piVar1 + 1, 0x20 < *(int *)0x5876))
+  else if ((param_1 == 4) && (piVar1 = (int *)SAVED_GAM(0x02d2), *piVar1 = *piVar1 + 1, 0x20 < *(int *)SAVED_GAM(0x02d0)))
   {
-    *(undefined2 *)0x5878 = 0x20;
+    *(undefined2 *)SAVED_GAM(0x02d2) = 0x20;
   }
   return;
 }
@@ -450,7 +450,7 @@ void FUN_0000_06e4(int param_1,int param_2)
   int local_6;
   uint local_4;
   
-  local_18 = 0x5c5a;
+  local_18 = SAVED_GAM(0x06b4);
   iVar6 = param_2 * 0x10;
   local_8 = iVar6 + SPRITE_STATES;
   local_4 = (uint)*(byte *)(param_1 + iVar6 + NPC_SCHEDULES);
@@ -459,12 +459,12 @@ void FUN_0000_06e4(int param_1,int param_2)
   if ((local_6 == 1) && (3 < (int)local_4)) {
     if ((local_4 == 4) || (local_4 == 5)) {
       if (*(int *)(local_8 + 10) == 0) goto LAB_0000_075a;
-      *(undefined *)0x65be = 0x74;
+      *(undefined *)MEM(0x65be) = 0x74;
     }
     else {
-      *(undefined *)0x65be = 0x61;
+      *(undefined *)MEM(0x65be) = 0x61;
     }
-    *(undefined *)0x65bf = (undefined)param_2;
+    *(undefined *)MEM(0x65bf) = (undefined)param_2;
   }
   else {
 LAB_0000_075a:
@@ -474,12 +474,12 @@ LAB_0000_075a:
     piVar9 = local_10;
     local_24 = local_10;
     do {
-      *(undefined2 *)0x5876 = *(undefined2 *)(local_8 + 2);
-      *(undefined2 *)0x5878 = *(undefined2 *)(local_8 + 4);
+      *(undefined2 *)SAVED_GAM(0x02d0) = *(undefined2 *)(local_8 + 2);
+      *(undefined2 *)SAVED_GAM(0x02d2) = *(undefined2 *)(local_8 + 4);
       FUN_0000_0632(local_16);
-      local_12 = *(undefined2 *)0x5876;
-      local_14 = *(undefined2 *)0x5878;
-      iVar6 = metascore_move(0xffff,param_2,local_14,*(undefined2 *)0x5876);
+      local_12 = *(undefined2 *)SAVED_GAM(0x02d0);
+      local_14 = *(undefined2 *)SAVED_GAM(0x02d2);
+      iVar6 = metascore_move(MEM(0xffff),param_2,local_14,*(undefined2 *)SAVED_GAM(0x02d0));
       if (iVar6 == 0) {
         *local_24 = 99;
       }
@@ -491,7 +491,7 @@ LAB_0000_075a:
       local_24 = local_24 + 1;
       local_16 = local_16 + 1;
     } while ((int)local_16 < 5);
-    uVar8 = 0xffff;
+    uVar8 = MEM(0xffff);
     local_6 = FUN_0000_06a0(*(undefined2 *)(local_8 + 4),*(undefined2 *)(local_8 + 2),
                             *(undefined *)(local_18 + 3),*(undefined *)(local_18 + 2));
     uVar7 = 1;
@@ -504,7 +504,7 @@ LAB_0000_075a:
         if (local_4 == 3) {
           piVar1 = local_24;
           if (*piVar1 != local_6 && local_6 <= *piVar1) {
-            if ((uVar8 == 0xffff) || (iVar6 = func_0x00007e02(1,0), iVar6 != 0)) {
+            if ((uVar8 == MEM(0xffff)) || (iVar6 = func_0x00007e02(1,0), iVar6 != 0)) {
               uVar8 = uVar7;
             }
             local_1a = uVar8;
@@ -541,18 +541,18 @@ LAB_0000_075a:
       local_1a = local_1c;
       local_16 = uVar8;
     }
-    if (local_1a < 0x8000) {
-      *(undefined2 *)0x5876 = *(undefined2 *)(local_8 + 2);
-      *(undefined2 *)0x5878 = *(undefined2 *)(local_8 + 4);
+    if (local_1a < MEM(0x8000)) {
+      *(undefined2 *)SAVED_GAM(0x02d0) = *(undefined2 *)(local_8 + 2);
+      *(undefined2 *)SAVED_GAM(0x02d2) = *(undefined2 *)(local_8 + 4);
       FUN_0000_0632(local_1a);
       iVar6 = *(int *)(local_8 + 0xc) * 8;
-      uVar3 = *(undefined2 *)0x5876;
+      uVar3 = *(undefined2 *)SAVED_GAM(0x02d0);
       *(undefined2 *)(local_8 + 2) = uVar3;
       *(undefined *)(iVar6 + OTHER_X_COORDS) = (char)uVar3;
-      uVar3 = *(undefined2 *)0x5878;
+      uVar3 = *(undefined2 *)SAVED_GAM(0x02d2);
       *(undefined2 *)(local_8 + 4) = uVar3;
       *(undefined *)(iVar6 + OTHER_Y_COORDS) = (char)uVar3;
-      pbVar2 = (byte *)0x24e6;
+      pbVar2 = (byte *)MEM(0x24e6);
       *pbVar2 = *pbVar2 | 2;
     }
   }
@@ -657,7 +657,7 @@ int score_potential_move(uint period_id, int npc_slot, uint z, uint y, uint x)
   byte tile;
   int iVar2;
 
-  if ((((period_id < 0x8000) &&
+  if ((((period_id < MEM(0x8000)) &&
        (iVar2 = NPC_SCHEDULES[period_id + npc_slot * 0x10],
         iVar2[3] == x)) &&
         iVar2[6] == y)) &&
@@ -667,7 +667,7 @@ int score_potential_move(uint period_id, int npc_slot, uint z, uint y, uint x)
 
   if (x < 0 || y < 0 || x > 0x1f || y > 0x1f) {
     // Off the map; this seems to use a stone column in that case
-    tile = *0x6a07;
+    tile = *MEM(0x6a07);
   } else {
     tile = GROUND_TILES[x + y * 0x20];
   }
@@ -735,23 +735,23 @@ void FUN_0000_0c50(int param_1,undefined2 param_2,int param_3,int param_4,int pa
   uVar4 = func_0x00007e02(0xff,0);
   if ((uVar4 & 8) != 0) {
     uVar4 = func_0x0000981e(0x40);
-    *(undefined2 *)0x5876 = *(undefined2 *)(param_5 + 2);
-    *(undefined2 *)0x5878 = *(undefined2 *)(param_5 + 4);
+    *(undefined2 *)SAVED_GAM(0x02d0) = *(undefined2 *)(param_5 + 2);
+    *(undefined2 *)SAVED_GAM(0x02d2) = *(undefined2 *)(param_5 + 4);
     FUN_0000_0632((uVar4 & 3) + 1);
-    uVar2 = *(undefined2 *)0x5876;
-    uVar3 = *(undefined2 *)0x5878;
+    uVar2 = *(undefined2 *)SAVED_GAM(0x02d0);
+    uVar3 = *(undefined2 *)SAVED_GAM(0x02d2);
     if (((param_4 == 0) ||
-        (iVar5 = FUN_0000_06a0(*(undefined2 *)0x5878,*(undefined2 *)0x5876,
+        (iVar5 = FUN_0000_06a0(*(undefined2 *)SAVED_GAM(0x02d2),*(undefined2 *)SAVED_GAM(0x02d0),
                                *(undefined *)(param_3 + param_1 + 6),
                                *(undefined *)(param_3 + param_1 + 3)), iVar5 <= param_4)) &&
-       (iVar5 = metascore_move(param_3,param_2,*(undefined2 *)0x5878,*(undefined2 *)0x5876),
+       (iVar5 = metascore_move(param_3,param_2,*(undefined2 *)SAVED_GAM(0x02d2),*(undefined2 *)SAVED_GAM(0x02d0)),
        iVar5 != 0)) {
       iVar5 = *(int *)(param_5 + 0xc) * 8;
       *(undefined2 *)(param_5 + 2) = uVar2;
       *(undefined *)(iVar5 + OTHER_X_COORDS) = (char)uVar2;
       *(undefined2 *)(param_5 + 4) = uVar3;
       *(undefined *)(iVar5 + OTHER_Y_COORDS) = (char)uVar3;
-      pbVar1 = (byte *)0x24e6;
+      pbVar1 = (byte *)MEM(0x24e6);
       *pbVar1 = *pbVar1 | 2;
     }
   }
@@ -767,10 +767,10 @@ void run_behavior(int period_id, int npc_slot)
   if (behavior < 8) {
     //   WARNING: Could not emulate address calculation at 0x00000d30
     //   WARNING: Treating indirect jump as call
-    //   (**(code **)(uVar1 * 2 + -0x4fd4))();
+    //   (**(code **)(uVar1 * 2 + DATA_OVL(0x0b62)))();
     // ...which I'm interpreting as follows.
-    // Weirdly, -0x4fd4 (i.e., 0xb02c) is supposed to correspond to DATA.OVL
-    // offset 0x0b62, but that's smack in the middle of a bunch of location
+    // Weirdly, DATA_OVL(0x0b62) (i.e., DATA_OVL(0x0b62)) is supposed to correspond to DATA.OVL
+    // offset MEM(0x0b62), but that's smack in the middle of a bunch of location
     // name text strings.
     NPC_BEHAVIOR_JUMP_TABLE[behavior * 2]();
   }
@@ -800,8 +800,8 @@ void update_npcs_behaviors(int hour) {
   int npc_slot;
  
   local_14 = 0;
-  *(undefined *)0x65be = 0;
-  *(undefined *)0x65bf = 0;
+  *(undefined *)MEM(0x65be) = 0;
+  *(undefined *)MEM(0x65bf) = 0;
 
   for (npc_slot = 1; npc_slot < MAX_NPCS; npc_slot++) {
     if (NPC_TYPES[npc_slot] == 0) continue;
@@ -823,24 +823,24 @@ void update_npcs_behaviors(int hour) {
     sprite_state = *sprite_state_p;
     if (sprite_state < 4) {
       sprite_state = npc_slot * 2;
-      if (MOVEMENT_LIST_PTRS[sprite_state]) < 0x8000) &&
+      if (MOVEMENT_LIST_PTRS[sprite_state]) < MEM(0x8000)) &&
          (iVar13 = npc_slot * 0x20,
          *(MOVEMENT_LIST_PTRS[sprite_state] + iVar13 + MOVEMENT_LIST_TABLE) != 0)) {
-        *0x5876 = *(npc_offset + SPRITE_X_COORDS);
-        *0x5878 = *(npc_offset + SPRITE_Y_COORDS);
-        FUN_0000_0632(*(*(sprite_state + MOVEMENT_LIST_PTRS) + iVar13 + 0x615f));
-        local_a = *0x5876;
-        local_c = *0x5878;
-        iVar6 = metascore_move(period_id,npc_slot,local_c,*(undefined2 *)0x5876);
+        *SAVED_GAM(0x02d0) = *(npc_offset + SPRITE_X_COORDS);
+        *SAVED_GAM(0x02d2) = *(npc_offset + SPRITE_Y_COORDS);
+        FUN_0000_0632(*(*(sprite_state + MOVEMENT_LIST_PTRS) + iVar13 + MEM(0x615f)));
+        local_a = *SAVED_GAM(0x02d0);
+        local_c = *SAVED_GAM(0x02d2);
+        iVar6 = metascore_move(period_id,npc_slot,local_c,*(undefined2 *)SAVED_GAM(0x02d0));
         if (iVar6 == 0) {
           npc_offset = npc_slot * 2;
-          piVar3 = (npc_offset + 0x65c2);
+          piVar3 = (npc_offset + MEM(0x65c2));
           *piVar3 = *piVar3 + 1;
           FUN_0000_0c50(npc_slot * 0x10 + NPC_SCHEDULES,npc_slot,period_id,0,npc_slot * 0x10 + SPRITE_STATES);
-          if (3 < *(int *)(npc_offset + 0x65c2)) {
-            *(npc_offset + MOVEMENT_LIST_PTRS) = 0xffff;
+          if (3 < *(int *)(npc_offset + MEM(0x65c2))) {
+            *(npc_offset + MOVEMENT_LIST_PTRS) = MEM(0xffff);
 LAB_0000_10d6:
-            *(npc_slot * 2 + 0x65c2) = 0;
+            *(npc_slot * 2 + MEM(0x65c2)) = 0;
           }
         }
         else { // iVar6 != 0
@@ -849,12 +849,12 @@ LAB_0000_10d6:
           *(uint *)(npc_offset + SPRITE_X_COORDS) = local_a & 0xff;
           *(undefined *)(iVar7 + OTHER_Y_COORDS) = (undefined)local_c;
           *(uint *)(npc_offset + SPRITE_Y_COORDS) = local_c & 0xff;
-          pbVar1 = (byte *)0x24e6;
+          pbVar1 = (byte *)MEM(0x24e6);
           *pbVar1 = *pbVar1 | 2;
           pcVar8 = (char *)(*(int *)(sprite_state + MOVEMENT_LIST_PTRS) + iVar13 + MOVEMENT_LIST_TABLE);
           target_z_p = pcVar8;
           *target_z_p = *target_z_p + -1;
-          *(undefined2 *)(sprite_state + 0x65c2) = 0;
+          *(undefined2 *)(sprite_state + MEM(0x65c2)) = 0;
           if (*pcVar8 == '\0') {
             piVar3 = (int *)(sprite_state + MOVEMENT_LIST_PTRS);
             *piVar3 = *piVar3 + 1;
@@ -864,12 +864,12 @@ LAB_0000_10d6:
             *(undefined *)(iVar7 + iVar13 + MOVEMENT_LIST_TABLE) = 0;
             if ((0x1f < *(int *)(sprite_state + MOVEMENT_LIST_PTRS)) ||
                (*(char *)(*(int *)(sprite_state + MOVEMENT_LIST_PTRS) + iVar13 + MOVEMENT_LIST_TABLE) == '\0')) {
-              *(undefined2 *)(npc_slot * 2 + MOVEMENT_LIST_PTRS) = 0xffff;
+              *(undefined2 *)(npc_slot * 2 + MOVEMENT_LIST_PTRS) = MEM(0xffff);
             }
             if (iVar6 == 2) {
               *(int *)(npc_offset + SPRITE_ACTIVE) = period_id;
               *sprite_state_p = 1;
-              *(undefined2 *)(npc_slot * 2 + MOVEMENT_LIST_PTRS) = 0xffff;
+              *(undefined2 *)(npc_slot * 2 + MOVEMENT_LIST_PTRS) = MEM(0xffff);
             }
           }
         }
@@ -888,7 +888,7 @@ LAB_0000_10d6:
         }
         if (local_14 < 1) {
           if (*sprite_state_p != 1) {
-            int an_offset = *(int *)(npc_slot * 2 + 0x65c2);
+            int an_offset = *(int *)(npc_slot * 2 + MEM(0x65c2));
             if ((an_offset < 200) &&
                ((an_offset == 0 || func_0x00007e02(2,0) == 1))) {
               if (*(int *)(npc_slot * 2 + MOVEMENT_LIST_PTRS) == -1) {
@@ -902,17 +902,17 @@ LAB_0000_10d6:
                   FUN_0000_04ac(*(some_offset + NPC_SCHED_Y_COORDS),*(some_offset + NPC_SCHED_X_COORDS), 0,npc_slot);
                   goto LAB_0000_10d6;
                 }
-                *(undefined2 *)(npc_slot * 2 + 0x65c2) = 200;
+                *(undefined2 *)(npc_slot * 2 + MEM(0x65c2)) = 200;
               }
               FUN_0000_0c50(npc_slot * 0x10 + NPC_SCHEDULES,npc_slot,period_id,0,npc_slot * 0x10 + SPRITE_STATES);
             }
             else {
-              sprite_state_p = (int *)(npc_slot * 2 + 0x65c2);
+              sprite_state_p = (int *)(npc_slot * 2 + MEM(0x65c2));
               if (199 < *sprite_state_p) {
                 piVar3 = sprite_state_p;
                 *piVar3 = *piVar3 + 1;
               }
-              sprite_state_p = (int *)(npc_slot * 2 + 0x65c2);
+              sprite_state_p = (int *)(npc_slot * 2 + MEM(0x65c2));
               if (0xcc < *sprite_state_p) {
                 *sprite_state_p = 0;
               }
@@ -937,8 +937,8 @@ LAB_0000_10d6:
         local_10 = FUN_0000_01a0(npc_slot,local_6 == 3,*(undefined *)(npc_offset + NPC_SCHED_Y_COORDS),
                                  *(undefined *)(npc_offset + NPC_SCHED_X_COORDS));
         if (local_10 != 0) {
-          local_a = *(uint *)0x5876;
-          local_c = *(uint *)0x5878;
+          local_a = *(uint *)SAVED_GAM(0x02d0);
+          local_c = *(uint *)SAVED_GAM(0x02d2);
           local_10 = FUN_0000_032c(npc_slot,local_6,*(undefined *)(npc_offset + NPC_SCHED_Y_COORDS),
                                    *(undefined *)(npc_offset + NPC_SCHED_X_COORDS),local_c,local_a);
         }
@@ -971,8 +971,8 @@ LAB_0000_10d6:
           local_10 = FUN_0000_01a0(npc_slot,local_6 == 1,*(undefined2 *)(npc_offset + SPRITE_Y_COORDS),
                                    *(undefined2 *)(npc_offset + SPRITE_X_COORDS));
           if (local_10 != 0) {
-            local_a = *(uint *)0x5876;
-            local_c = *(uint *)0x5878;
+            local_a = *(uint *)SAVED_GAM(0x02d0);
+            local_c = *(uint *)SAVED_GAM(0x02d2);
             local_10 = FUN_0000_032c(npc_slot,local_6,local_c,local_a,
                                      *(undefined2 *)(npc_offset + SPRITE_Y_COORDS),
                                      *(undefined2 *)(npc_offset + SPRITE_X_COORDS));
@@ -987,7 +987,7 @@ LAB_0000_10d6:
         func_0x0000d89a(NPC_SCHED_Z_COORDS[npc_offset], NPC_SCHED_Y_COORDS[npc_offset],
                         NPC_SCHED_X_COORDS[npc_offset], npc_slot);
         SPRITE_ACTIVE[npc_offset] = period_id;
-        MOVEMENT_LIST_PTRS[npc_slot * 2] = 0xffff;
+        MOVEMENT_LIST_PTRS[npc_slot * 2] = MEM(0xffff);
         *sprite_state_p = 1;
       }
     }
