@@ -197,10 +197,11 @@ LAB_0000_0283:
   }
   if (*(char *)SAILING_DIRECTION == '\0') {
     if ((0x1f < *(byte *)MODE_OF_TRANSPORTATION) && ((local_6 & 0xfc) == 0xec)) {
+      // Party is on any kind of boat and has reached a whirlpool
       return 0;
     }
     func_0x00009680(MEM(0x29ae));
-    if (cVar2 == '/') {
+    if (cVar2 == '/') { // Cactus?
       func_0x00009680(MEM(0x29b8));
       func_0x0000a8d8();
     }
@@ -210,7 +211,7 @@ LAB_0000_0283:
     func_0x00009946();
     return 0;
   }
-  if (cVar2 == '\x03') {
+  if (cVar2 == '\x03') { // Shallow water
     uVar5 = MEM(0x298b);
   }
   else {
@@ -219,7 +220,7 @@ LAB_0000_0283:
   }
   func_0x00009680(uVar5);
 LAB_0000_02df:
-  if (cVar2 == 'G') {
+  if (cVar2 == 'G') { // Pier?
     func_0x00009680(MEM(0x29a5));
     pcVar1 = (char *)MODE_OF_TRANSPORTATION;
     *pcVar1 = *pcVar1 + '\x04';
@@ -406,8 +407,8 @@ uint __cdecl16near FUN_0000_0598(void)
     func_0x0000a730();
     *(undefined *)MEM(0xa9fa) = 0;
   }
-  if ((*(byte *)MEM(0xabc7) & 0xfc) == 0xd4) {
-    func_0x0000f972();
+  if (*MEM(0xabc7) & 0xfc == WATERFALL) {
+    waterfall();
     local_6 = 0;
   }
   else {
@@ -828,7 +829,7 @@ LAB_0000_0aba:
           FUN_0000_109e();
         }
         if ((ground_tile_id & 0xfc) == WATERFALL) {
-          func_0x0000f972();
+          waterfall();
         }
         FUN_0000_1a60();
       }
@@ -944,7 +945,7 @@ undefined FUN_0000_0e4e(int param_1)
         return *(undefined *)(iVar1 + MEM(0x2bda));
       }
       if ((param_1 == 1) && (iVar1 = RANDOM(7, false), iVar1 == 7)) {
-        return 0xec;
+        return 0xec; // Whirlpool
       }
       iVar1 = FUN_0000_0e04(MEM(0x2bf0));
       return *(undefined *)(iVar1 + MEM(0x2bd4));
@@ -1159,8 +1160,8 @@ void FUN_0000_1248(int param_1)
   byte *pbVar2;
   undefined2 unaff_DS;
   
-  if ((*(byte *)(param_1 * 8 + SAVED_GAM(0x06b4)) & 0xfc) == 0xec) {
-    if (*(char *)MODE_OF_TRANSPORTATION != '\x1c') {
+  if ((*(byte *)(param_1 * 8 + SAVED_GAM(0x06b4)) & 0xfc) == 0xec) { // Whirlpool
+    if (*(char *)MODE_OF_TRANSPORTATION != '\x1c') { // Not on foot
       *(undefined *)(param_1 * 8 + SAVED_GAM(0x06b5)) = 0;
       *(undefined *)(param_1 * 8 + SAVED_GAM(0x06b4)) = 0;
       func_0x00009680(MEM(0x6b04));
@@ -1540,7 +1541,7 @@ void FUN_0000_198c(int param_1)
   undefined2 unaff_DS;
   
   bVar3 = *(byte *)(param_1 * 8 + SAVED_GAM(0x06b4));
-  if ((bVar3 & 0xfc) == 0xec) {
+  if ((bVar3 & 0xfc) == 0xec) { // Whirlpool
     pbVar1 = (byte *)(param_1 * 8 + SAVED_GAM(0x06b9));
     *pbVar1 = *pbVar1 ^ 1;
     if (*pbVar1 == 0) {

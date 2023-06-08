@@ -1,8 +1,4 @@
-typedef unsigned char   undefined;
-
-typedef unsigned char    undefined1;
-typedef unsigned int    undefined2;
-
+#define HARPSICHORD 141
 
 /*
 Unable to decompile 'FUN_0000_0000'
@@ -927,7 +923,7 @@ undefined2 FUN_0000_0e34(int param_1)
   undefined2 local_4;
   
   local_4 = 3;
-  if (*(char *)MEM(0xabc7) == -0x73) {
+  if (*(char *)MEM(0xabc7) == HARPSICHORD) {
     uVar3 = param_1 - 0x30;
     if (*(char *)MEM(0xa9ce) != '\0') {
       func_0x00009fc2(MEM(0xfffc),20000,4000,1,*(undefined2 *)(uVar3 * 2 + MEM(0x2746)));
