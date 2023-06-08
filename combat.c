@@ -1384,7 +1384,7 @@ LAB_0000_152f:
 
 
 
-char FUN_0000_1574(uint param_1,int param_2)
+char FUN_0000_1574(uint damage, int target_id)
 
 {
   int *piVar1;
@@ -1392,8 +1392,8 @@ char FUN_0000_1574(uint param_1,int param_2)
   byte bVar3;
   byte bVar4;
   char cVar5;
-  int iVar6;
-  byte *pbVar7;
+  int target_offset;
+  byte *target_hp_p;
   uint uVar8;
   uint uVar9;
   undefined *puVar10;
@@ -1403,108 +1403,108 @@ char FUN_0000_1574(uint param_1,int param_2)
   undefined2 unaff_DS;
   int local_c;
   
-  cVar5 = '\0';
-  iVar6 = param_2 * 8;
-  pbVar7 = (byte *)(iVar6 + -0x45ec);
-  if ((int)param_1 < 1) {
-    *COMBAT_FLAG_2FC = 0x20;
-    param_1 = 0;
+  cVar5 = 0;
+  target_offset = target_id * 8;
+  target_hp_p = (target_offset + -0x45ec);
+  if (damage < 1) {
+    *COMBAT_FLAG_2FC = 0x20;  // Maybe triggers "grazed" sound
+    damage = 0;
   }
-  if ((*(byte *)(iVar6 + -0x45ea) & 0x80) == 0) {
-    if ((MONSTER_FLAGS[(iVar6 + -0x45e9) * 2] & MF_UNDEAD) != 0) &&
+  if ((*(byte *)(target_offset + -0x45ea) & 0x80) == 0) {
+    if ((MONSTER_FLAGS[(target_offset + -0x45e9) * 2] & MF_UNDEAD) != 0) &&
        (*COMBAT_FLAG_2EA == 0)) {
-      param_1 = (int)param_1 / 2;
+      damage /= 2;
     }
-    if (MONSTER_FLAGS[(iVar6 + -0x45e9) * 2] & MF_GLASS_IMMUNE) != 0) {
-      param_1 = 0;
+    if (MONSTER_FLAGS[(target_offset + -0x45e9) * 2] & MF_GLASS_IMMUNE) != 0) {
+      damage = 0;
     }
-    if (*pbVar7 < param_1) {
-      *pbVar7 = 0;
+    if (*target_hp_p < damage) {
+      *target_hp_p = 0;
     }
     else {
-      pbVar2 = pbVar7;
-      *pbVar2 = *pbVar2 - (char)param_1;
+      pbVar2 = target_hp_p;
+      *pbVar2 = *pbVar2 - (char)damage;
     }
-    if ((*pbVar7 == 0) || (param_1 == 99)) {
-      uVar11 = (uint)*(byte *)(iVar6 + -0x45e9);
+    if ((*target_hp_p == 0) || (damage == 99)) {
+      uVar11 = (uint)*(byte *)(target_offset + -0x45e9);
       iVar13 = uVar11 * 8;
       cVar5 = (*(byte *)(iVar13 + 0x13c1) >> 2) + 1;
       bVar3 = *(byte *)(iVar13 + 0x13c3);
-      *(undefined *)(iVar6 + -0x45ea) = 0x20;
-      *pbVar7 = 0;
-      uVar8 = (uint)*(byte *)(iVar6 + -0x45e6);
-      uVar9 = (uint)*(byte *)(iVar6 + -0x45e5);
+      *(undefined *)(target_offset + -0x45ea) = 0x20;
+      *target_hp_p = 0;
+      uVar8 = (uint)*(byte *)(target_offset + -0x45e6);
+      uVar9 = (uint)*(byte *)(target_offset + -0x45e5);
       bVar4 = *(byte *)(uVar9 * 0x20 + uVar8 + -0x52ec);
       if (MONSTER_FLAGS[uVar11 * 2] & (MF_VANISH|MF_NO_TRACE) == 0) {
-        if (*(char *)(iVar6 + -0x45e9) == '\x1c') {
-          iVar6 = (uint)*(byte *)(iVar6 + -0x45e8) * 8;
-          *(undefined *)(iVar6 + 0x5c5b) = 0x1f;
-          *(undefined *)(iVar6 + 0x5c5a) = 0x1f;
+        if (*(char *)(target_offset + -0x45e9) == '\x1c') {
+          target_offset = (uint)*(byte *)(target_offset + -0x45e8) * 8;
+          *(undefined *)(target_offset + 0x5c5b) = 0x1f;
+          *(undefined *)(target_offset + 0x5c5a) = 0x1f;
           func_0x0000c276(*(undefined *)0x5895,uVar9,uVar8,0,0x1f);
           func_0x0000b680();
           return cVar5;
         }
-        if (*(char *)(iVar6 + -0x45e9) == '\x1e') {
+        if (*(char *)(target_offset + -0x45e9) == '\x1e') {
           puVar10 = (undefined *)get_sprite_at_coords(uVar9,uVar8);
           *puVar10 = 0x4c;
         }
         else if ((bVar4 != 0x87) && (3 < bVar4)) {
           iVar13 = func_0x0000982e();
           if ((int)(uint)bVar3 < iVar13) {
-            iVar6 = (uint)*(byte *)(iVar6 + -0x45e8) * 8;
-            *(undefined *)(iVar6 + 0x5c5b) = 0x1f;
-            *(undefined *)(iVar6 + 0x5c5a) = 0x1f;
+            target_offset = (uint)*(byte *)(target_offset + -0x45e8) * 8;
+            *(undefined *)(target_offset + 0x5c5b) = 0x1f;
+            *(undefined *)(target_offset + 0x5c5a) = 0x1f;
             return cVar5;
           }
-          iVar13 = (uint)*(byte *)(iVar6 + -0x45e8) * 8;
+          iVar13 = (uint)*(byte *)(target_offset + -0x45e8) * 8;
           *(undefined *)(iVar13 + 0x5c5b) = 1;
           *(undefined *)(iVar13 + 0x5c5a) = 1;
           *(byte *)(iVar13 + 0x5c5f) = bVar3;
-          iVar6 = func_0x0000982e();
-          if ((int)(uint)bVar3 <= iVar6) {
+          target_offset = func_0x0000982e();
+          if ((int)(uint)bVar3 <= target_offset) {
             return cVar5;
           }
           pbVar2 = (byte *)(iVar13 + 0x5c5f);
           *pbVar2 = *pbVar2 | 0x80;
           return cVar5;
         }
-        iVar6 = -1 - param_2;
+        target_offset = -1 - target_id;
       }
       else {
-        iVar13 = (uint)*(byte *)(iVar6 + -0x45e9) * 2;
+        iVar13 = (uint)*(byte *)(target_offset + -0x45e9) * 2;
         if (MONSTER_FLAGS[iVar13] & MF_VANISH) != 0) {
           func_0x000075c0(*(undefined2 *)(iVar13 + 0x1856));
           func_0x000075c0(0x6f36);
           *COMBAT_FLAG_2FC = 2;
-          iVar13 = (uint)*(byte *)(iVar6 + -0x45e8) * 8;
+          iVar13 = (uint)*(byte *)(target_offset + -0x45e8) * 8;
           *(undefined *)(iVar13 + 0x5c5b) = 0x16;
           *(undefined *)(iVar13 + 0x5c5a) = 0x16;
-          uVar11 = (uint)*(byte *)(iVar6 + -0x45e6);
-          uVar8 = (uint)*(byte *)(iVar6 + -0x45e5);
+          uVar11 = (uint)*(byte *)(target_offset + -0x45e6);
+          uVar8 = (uint)*(byte *)(target_offset + -0x45e5);
           func_0x00006dd8(uVar8,uVar11,*(undefined *)(uVar8 * 0x20 + uVar11 + -0x52ec));
-          FUN_0000_1236(-(param_2 + 1));
+          FUN_0000_1236(-(target_id + 1));
           func_0x0000dbee();
           return cVar5;
         }
-        iVar6 = -(param_2 + 1);
+        target_offset = -(target_id + 1);
       }
-      FUN_0000_1236(iVar6);
+      FUN_0000_1236(target_offset);
     }
-    else if (MONSTER_FLAGS[(iVar6 + -0x45e9) * 2] & MF_DIVIDE) != 0) {
+    else if (MONSTER_FLAGS[(target_offset + -0x45e9) * 2] & MF_DIVIDE) != 0) {
       local_c = 0;
       do {
-        func_0x0000dc4e(*(undefined *)(iVar6 + -0x45e5),*(undefined *)(iVar6 + -0x45e6));
+        func_0x0000dc4e(*(undefined *)(target_offset + -0x45e5),*(undefined *)(target_offset + -0x45e6));
         uVar11 = *(uint *)0x5876;
         uVar8 = *(uint *)0x5878;
         iVar13 = draw_monsters_for_coords
                            (uVar8,uVar11,
-                            (uint)*(byte *)((uint)*(byte *)(iVar6 + -0x45e8) * 8 + 0x5c5a));
+                            (uint)*(byte *)((uint)*(byte *)(target_offset + -0x45e8) * 8 + 0x5c5a));
         if ((iVar13 != 0) &&
            (iVar13 = func_0x0000c276(*(undefined *)0x5895,uVar8,uVar11,0,
-                                     *(byte *)((uint)*(byte *)(iVar6 + -0x45e8) * 8 + 0x5c5a) - 0x40
+                                     *(byte *)((uint)*(byte *)(target_offset + -0x45e8) * 8 + 0x5c5a) - 0x40
                                      >> 2), -1 < iVar13)) {
-          *(byte *)(iVar13 * 8 + -0x45ec) = *pbVar7;
-          func_0x000075c0(*(undefined2 *)((uint)*(byte *)(iVar6 + -0x45e9) * 2 + 0x1856));
+          *(byte *)(iVar13 * 8 + -0x45ec) = *target_hp_p;
+          func_0x000075c0(*(undefined2 *)((uint)*(byte *)(target_offset + -0x45e9) * 2 + 0x1856));
           func_0x000075c0(0x6f42);
           return '\0';
         }
@@ -1513,19 +1513,19 @@ char FUN_0000_1574(uint param_1,int param_2)
     }
   }
   else {
-    piVar12 = (int *)((uint)*(byte *)(iVar6 + -0x45e9) * 0x20 + 0x55b8);
+    piVar12 = (int *)((uint)*(byte *)(target_offset + -0x45e9) * 0x20 + 0x55b8);
     piVar1 = piVar12;
-    *piVar1 = *piVar1 - param_1;
-    if ((*piVar12 < 1) || (param_1 == 99)) {
-      iVar13 = (uint)*(byte *)(iVar6 + -0x45e9) * 0x20;
+    *piVar1 = *piVar1 - damage;
+    if ((*piVar12 < 1) || (damage == 99)) {
+      iVar13 = (uint)*(byte *)(target_offset + -0x45e9) * 0x20;
       *(undefined2 *)(iVar13 + 0x55b8) = 0;
-      pbVar2 = (byte *)(iVar6 + -0x45ea);
+      pbVar2 = (byte *)(target_offset + -0x45ea);
       *pbVar2 = *pbVar2 | 0x20;
       *(undefined *)(iVar13 + 0x55b3) = 0x44;
-      iVar13 = (uint)*(byte *)(iVar6 + -0x45e8) * 8;
+      iVar13 = (uint)*(byte *)(target_offset + -0x45e8) * 8;
       *(undefined *)(iVar13 + 0x5c5b) = 0x1e;
       *(undefined *)(iVar13 + 0x5c5a) = 0x1e;
-      if (*(char *)(iVar6 + -0x45e9) == *(char *)0x587b) {
+      if (*(char *)(target_offset + -0x45e9) == *(char *)0x587b) {
         *(undefined *)0x587b = 0xff;
       }
     }
