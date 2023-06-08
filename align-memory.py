@@ -13,13 +13,18 @@ def annotate(i):
     label = 'DATA_OVL'
     i -= 0x10000
     i += 0x5b36
-  elif 0x5000 <= i <= 0x5fff:
+  elif 0x55a6 <= i <= 0x6600:
     label = 'SAVED_GAM'
     i -= 0x55a6
   else:
     label = 'MEM'
 
-  return '%s(0x%0.4x)' % (label, i)
+  if i < 0:
+    i = -i
+    sign = '-'
+  else:
+    sign = ''
+  return '%s(%s0x%0.4x)' % (label, sign, i)
 
 
 def annotate_memory_references(c_code):

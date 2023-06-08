@@ -38,7 +38,7 @@ void __cdecl16near FUN_0000_0552(void)
     do {
       func_0x0000bb32(*(undefined *)SAVED_GAM(0x02d9));
       func_0x00009990();
-      if (*(char *)MEM(0x65be) == 'a') {
+      if (*(char *)SAVED_GAM(0x1018) == 'a') {
         return;
       }
       iVar6 = iVar6 + 1;
@@ -736,7 +736,7 @@ undefined2 FUN_0000_1030(undefined2 param_1)
       iVar9 = 0x1f;
       do {
         iVar5 = iVar9;
-        if (*(char *)(iVar5 + MEM(0x659e)) == '\0') break;
+        if (*(char *)(iVar5 + SAVED_GAM(0x0ff8)) == '\0') break;
         iVar9 = iVar5 + -1;
         iVar5 = 0x1f;
       } while (-1 < iVar9);
@@ -762,7 +762,7 @@ undefined2 FUN_0000_1030(undefined2 param_1)
         *(undefined *)(iVar8 + SAVED_GAM(0x07c1)) = *(undefined *)SAVED_GAM(0x02ef);
         iVar9 = iVar9 + 1;
       } while (iVar9 < 3);
-      *(undefined *)(iVar5 + MEM(0x659e)) = 0xfc;
+      *(undefined *)(iVar5 + SAVED_GAM(0x0ff8)) = 0xfc;
       func_0x000058d0(DATA_OVL(0x4435));
       func_0x00006212(2,2000,30000,1,MEM(0x28a0));
       iVar3 = iVar3 * 8;

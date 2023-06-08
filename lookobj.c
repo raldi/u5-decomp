@@ -694,7 +694,7 @@ void FUN_0000_0cf4(uint param_1)
   piVar7 = &local_a;
   local_1a = &local_a;
   piVar6 = &local_a;
-  iVar4 = *(int *)SAVED_GAM(0x-02de);
+  iVar4 = *(int *)MEM(0x52c8);
   do {
     if ((((byte)param_1 & 0xf0) == 0x60) && ((bVar3 & uVar5) == 0)) {
       *piVar7 = iVar2 + 8;
@@ -729,7 +729,7 @@ void __cdecl16near FUN_0000_0dda(void)
   int iVar1;
   undefined2 unaff_DS;
   
-  if ((*(int *)SAVED_GAM(0x-02de) == 0) || (*(int *)SAVED_GAM(0x-02de) == 3)) {
+  if ((*(int *)MEM(0x52c8) == 0) || (*(int *)MEM(0x52c8) == 3)) {
     iVar1 = *(int *)MEM(0x13b6);
   }
   else {
@@ -752,7 +752,7 @@ void __cdecl16near FUN_0000_0e16(void)
   func_0x000067e0(*(int *)MEM(0x13b4) + 8);
   func_0x000069d4(*(undefined2 *)SAVED_GAM(0x02d2),*(int *)SAVED_GAM(0x02d0) + 1);
   func_0x000069d4(*(int *)SAVED_GAM(0x02d2) + 1,*(int *)SAVED_GAM(0x02d0) + 3);
-  if ((*(int *)SAVED_GAM(0x-02de) == 0) || (*(int *)SAVED_GAM(0x-02de) == 3)) {
+  if ((*(int *)MEM(0x52c8) == 0) || (*(int *)MEM(0x52c8) == 3)) {
     iVar1 = *(int *)MEM(0x13b6);
   }
   else {
@@ -843,7 +843,7 @@ void FUN_0000_0f7e(undefined2 param_1,undefined2 param_2,int param_3)
     }
   }
   else if (uVar1 == 0xc) {
-    if ((*(int *)SAVED_GAM(0x-02de) == 0) || (*(int *)SAVED_GAM(0x-02de) == 3)) {
+    if ((*(int *)MEM(0x52c8) == 0) || (*(int *)MEM(0x52c8) == 3)) {
       iVar2 = *(int *)MEM(0x13b6);
     }
     else {

@@ -105,7 +105,7 @@ void __cdecl16near FUN_0000_06a8(void)
   func_0x00007962(0xc,0xc);
   func_0x00007a0e(1);
   func_0x00007a3a(*(int *)MEM(0x13b4) + 8);
-  if (*(int *)SAVED_GAM(0x-02de) == 3) {
+  if (*(int *)MEM(0x52c8) == 3) {
     func_0x00007a3a(*(undefined2 *)MEM(0x13b0));
   }
   func_0x0000742a(0x60);

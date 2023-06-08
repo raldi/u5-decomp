@@ -22,7 +22,7 @@ void FUN_0000_0052(int param_1)
   bool bVar6;
   
   if (((-1 < param_1) && (param_1 < 0x20)) &&
-     (((bVar2 = *(byte *)(param_1 + MEM(0x659e)) & 0xfc, bVar2 != 0x70 && (bVar2 < 0x80)) ||
+     (((bVar2 = *(byte *)(param_1 + SAVED_GAM(0x0ff8)) & 0xfc, bVar2 != 0x70 && (bVar2 < 0x80)) ||
       (bVar2 == 0xb4)))) {
     iVar5 = (uint)*(byte *)SAVED_GAM(0x02ed) * 4;
     uVar3 = 1;
@@ -67,7 +67,7 @@ void FUN_0000_00b0(int param_1)
   *(undefined *)(iVar3 + SAVED_GAM(0x07ba)) = 0;
   *(undefined *)(iVar3 + SAVED_GAM(0x07b9)) = 0;
   *(undefined *)(iVar3 + SAVED_GAM(0x07b8)) = 0;
-  *(undefined *)(param_1 + MEM(0x659e)) = 0;
+  *(undefined *)(param_1 + SAVED_GAM(0x0ff8)) = 0;
   pbVar1 = (byte *)MEM(0x24e6);
   *pbVar1 = *pbVar1 | 2;
   return;
@@ -86,7 +86,7 @@ int FUN_0000_011e(int param_1)
   iVar1 = 0;
   piVar2 = (int *)SAVED_GAM(0x09c4);
   local_a = (int *)SAVED_GAM(0x09b8);
-  while (((*piVar2 != param_1 || (*(char *)(iVar1 + MEM(0x659e)) == '\0')) || (*local_a == 0))) {
+  while (((*piVar2 != param_1 || (*(char *)(iVar1 + SAVED_GAM(0x0ff8)) == '\0')) || (*local_a == 0))) {
     piVar2 = piVar2 + 8;
     local_a = local_a + 8;
     iVar1 = iVar1 + 1;
@@ -231,7 +231,7 @@ void __cdecl16near FUN_0000_02ae(void)
     iVar7 = 0x1f;
     do {
       iVar6 = iVar7;
-      if (*(char *)(iVar6 + MEM(0x659e)) == '\0') break;
+      if (*(char *)(iVar6 + SAVED_GAM(0x0ff8)) == '\0') break;
       iVar7 = iVar6 + -1;
       iVar6 = 0x1f;
     } while (-1 < iVar7);
@@ -265,7 +265,7 @@ void __cdecl16near FUN_0000_02ae(void)
       *(undefined *)(iVar4 + SAVED_GAM(0x07c1)) = 0;
       iVar7 = iVar7 + 1;
     } while (iVar7 < 3);
-    *(undefined *)(iVar6 + MEM(0x659e)) = 0xfc;
+    *(undefined *)(iVar6 + SAVED_GAM(0x0ff8)) = 0xfc;
   }
   return;
 }
@@ -547,7 +547,7 @@ void FUN_0000_085e(int param_1)
   undefined2 unaff_DS;
   byte local_4;
   
-  if (*(byte *)(param_1 + MEM(0x659e)) < 0x2f) {
+  if (*(byte *)(param_1 + SAVED_GAM(0x0ff8)) < 0x2f) {
     local_4 = 6;
   }
   else {
@@ -589,7 +589,7 @@ void FUN_0000_08d4(int param_1)
     }
     iVar3 = iVar3 + 1;
   } while (iVar3 < 4);
-  if (((*(byte *)(param_1 + MEM(0x659e)) < 0x74) && (0x3f < *(byte *)(param_1 + MEM(0x659e)))) &&
+  if (((*(byte *)(param_1 + SAVED_GAM(0x0ff8)) < 0x74) && (0x3f < *(byte *)(param_1 + SAVED_GAM(0x0ff8)))) &&
      ((*(int *)(param_1 * 0x10 + SAVED_GAM(0x09c2)) == 0xfe || (bVar2)))) {
     *(undefined2 *)(param_1 * 0x10 + SAVED_GAM(0x09c2)) = 0xfd;
     puVar4 = (undefined2 *)(param_1 * 0x10 + SAVED_GAM(0x07b8));
@@ -618,7 +618,7 @@ void __cdecl16near FUN_0000_0958(void)
   local_8 = (int *)SAVED_GAM(0x09b8);
   do {
     if (*local_8 != 0) {
-      cVar1 = *(char *)(iVar3 + MEM(0x659e));
+      cVar1 = *(char *)(iVar3 + SAVED_GAM(0x0ff8));
       if (((cVar1 == -4) || (cVar1 == -0x28)) || (cVar1 == 'p')) {
         FUN_0000_085e(iVar3);
       }
@@ -1101,7 +1101,7 @@ undefined2 FUN_0000_10f2(int param_1)
     }
     iVar2 = iVar3 + 1;
   } while (iVar3 + 1 < 4);
-  bVar1 = *(byte *)(iVar3 + MEM(0x659f));
+  bVar1 = *(byte *)(iVar3 + SAVED_GAM(0x0ff9));
   if ((bVar1 < 0x40) || (0x73 < bVar1)) {
     local_4 = 0;
   }
@@ -1283,12 +1283,12 @@ void FUN_0000_1352(int param_1)
   int local_4;
   
   local_4 = 0;
-  iVar2 = *(int *)((uint)*(byte *)MEM(0x65bf) * 0x10 + SAVED_GAM(0x09c4));
+  iVar2 = *(int *)((uint)*(byte *)SAVED_GAM(0x1019) * 0x10 + SAVED_GAM(0x09c4));
   func_0x0000d740();
-  if (*(char *)MEM(0x65be) == 'a') {
-    if (*(int *)((uint)*(byte *)MEM(0x65bf) * 0x10 + SAVED_GAM(0x09c2)) == 0xfe) {
+  if (*(char *)SAVED_GAM(0x1018) == 'a') {
+    if (*(int *)((uint)*(byte *)SAVED_GAM(0x1019) * 0x10 + SAVED_GAM(0x09c2)) == 0xfe) {
       func_0x000094ea(10);
-      FUN_0000_10da(*(undefined *)MEM(0x65bf));
+      FUN_0000_10da(*(undefined *)SAVED_GAM(0x1019));
       goto LAB_0000_13dc;
     }
     if (*(char *)(iVar2 * 8 + SAVED_GAM(0x06b4)) != 'p') {
@@ -1297,7 +1297,7 @@ void FUN_0000_1352(int param_1)
     }
   }
   else if (param_1 == 0) {
-    uVar1 = (uint)*(byte *)MEM(0x65bf);
+    uVar1 = (uint)*(byte *)SAVED_GAM(0x1019);
     if (*(int *)(uVar1 * 0x10 + SAVED_GAM(0x09c2)) == 0) goto LAB_0000_13dc;
     iVar2 = func_0x0000f912(uVar1);
     if (iVar2 == 0) goto LAB_0000_13dc;
@@ -1305,12 +1305,12 @@ void FUN_0000_1352(int param_1)
   local_4 = FUN_0000_12ae();
 LAB_0000_13dc:
   if (local_4 != 0) {
-    if (*(byte *)(*(int *)((uint)*(byte *)MEM(0x65bf) * 0x10 + SAVED_GAM(0x09c4)) * 8 + SAVED_GAM(0x06b4)) < 0x40) {
-      FUN_0000_00b0(*(undefined *)MEM(0x65bf));
+    if (*(byte *)(*(int *)((uint)*(byte *)SAVED_GAM(0x1019) * 0x10 + SAVED_GAM(0x09c4)) * 8 + SAVED_GAM(0x06b4)) < 0x40) {
+      FUN_0000_00b0(*(undefined *)SAVED_GAM(0x1019));
     }
     else {
       func_0x00009680(MEM(0x2881));
-      FUN_0000_09bc(*(undefined *)MEM(0x65bf));
+      FUN_0000_09bc(*(undefined *)SAVED_GAM(0x1019));
     }
   }
   return;
@@ -1411,7 +1411,7 @@ void __cdecl16near FUN_0000_141e(void)
         if (local_c < 2) {
           func_0x0000f8e2(*(undefined *)SAVED_GAM(0x02d9));
         }
-        if ((*(char *)MEM(0x65bf) != '\0') || (local_c == 2)) {
+        if ((*(char *)SAVED_GAM(0x1019) != '\0') || (local_c == 2)) {
           FUN_0000_1352(local_c + -1);
         }
       }
@@ -1443,9 +1443,9 @@ void __cdecl16near FUN_0000_1694(void)
   } while (iVar3 < 0x20);
   iVar3 = 1;
   iVar5 = 0x10;
-  local_a = (undefined2 *)MEM(0x6560);
+  local_a = (undefined2 *)SAVED_GAM(0x0fba);
   do {
-    if (*(char *)(iVar3 + MEM(0x659e)) != '\0') {
+    if (*(char *)(iVar3 + SAVED_GAM(0x0ff8)) != '\0') {
       iVar1 = func_0x0000f966(*(undefined *)SAVED_GAM(0x02d9),iVar3);
       iVar2 = iVar5 + iVar1;
       FUN_0000_1726(*(undefined *)(iVar2 + SAVED_GAM(0x07c1)),*(undefined *)(iVar2 + SAVED_GAM(0x07be)),
@@ -1477,7 +1477,7 @@ void FUN_0000_1726(uint param_1,undefined2 param_2,undefined2 param_3,int param_
   bool bVar8;
   undefined2 local_8;
   
-  if (*(char *)(param_4 + MEM(0x659e)) != '\0') {
+  if (*(char *)(param_4 + SAVED_GAM(0x0ff8)) != '\0') {
     iVar2 = param_4 * 0x10;
     if ((param_1 != *(byte *)SAVED_GAM(0x02ef)) && (*(int *)(iVar2 + SAVED_GAM(0x09c4)) != 0)) {
       *(undefined *)(*(int *)(iVar2 + SAVED_GAM(0x09c4)) * 8 + SAVED_GAM(0x06b4)) = 0;
@@ -1485,7 +1485,7 @@ void FUN_0000_1726(uint param_1,undefined2 param_2,undefined2 param_3,int param_
     }
     if ((param_1 == *(byte *)SAVED_GAM(0x02ef)) && (*(int *)(iVar2 + SAVED_GAM(0x09c4)) == 0)) {
       iVar7 = func_0x0000b714();
-      if (*(char *)(param_4 + MEM(0x659e)) == '\x01') {
+      if (*(char *)(param_4 + SAVED_GAM(0x0ff8)) == '\x01') {
         local_8 = 0x1e;
       }
       else {
@@ -1504,7 +1504,7 @@ void FUN_0000_1726(uint param_1,undefined2 param_2,undefined2 param_3,int param_
           local_8 = 0xff;
         }
       }
-      uVar1 = *(undefined *)(param_4 + MEM(0x659e));
+      uVar1 = *(undefined *)(param_4 + SAVED_GAM(0x0ff8));
       func_0x0000b8a4(iVar7,local_8,param_1,param_2,param_3,uVar1,uVar1);
       *(undefined *)(iVar7 * 8 + SAVED_GAM(0x06ba)) = 0;
       *(int *)(iVar2 + SAVED_GAM(0x09c4)) = iVar7;

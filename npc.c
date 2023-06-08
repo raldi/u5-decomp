@@ -1,6 +1,6 @@
 #define MAX_NPCS 32
 
-#define NPC_TYPES MEM(0x659e)
+#define NPC_TYPES SAVED_GAM(0x0ff8)
 #define SPRITE_ACTIVE SAVED_GAM(0x09c6)
 #define SPRITE_TILES SAVED_GAM(0x09c0)
 #define SPRITE_ANIM SAVED_GAM(0x09c4)
@@ -26,8 +26,8 @@
 
 #define PARTY_Z_COORD SAVED_GAM(0x02ef)
 
-#define MOVEMENT_LIST_PTRS MEM(0x655e)
-#define MOVEMENT_LIST_TABLE MEM(0x615e)
+#define MOVEMENT_LIST_PTRS SAVED_GAM(0x0fb8)
+#define MOVEMENT_LIST_TABLE SAVED_GAM(0x0bb8)
 
 #define NPC_SCHEDULES SAVED_GAM(0x07b8)
 #define NPC_SCHED_X_COORDS SAVED_GAM(0x07bb)
@@ -69,9 +69,9 @@ void init_npcs_upon_party_arrival(int hour) {
   sprite_state_p = &SPRITE_STATES[1];
   int last_sprite_state_p;
   offset = 0x10;
-  local_10 = (undefined2 *)MEM(0x6560);
-  local_12 = (undefined *)MEM(0x617e);
-  local_14 = (undefined2 *)MEM(0x65c4);
+  local_10 = (undefined2 *)SAVED_GAM(0x0fba);
+  local_12 = (undefined *)SAVED_GAM(0x0bd8);
+  local_14 = (undefined2 *)SAVED_GAM(0x101e);
   for (npc_slot = 1; npc_slot < 0x20; npc_slot++) {
     last_sprite_state_p = sprite_state_p;
     if (NPC_TYPES[npc_slot] != 0) {
@@ -334,7 +334,7 @@ int FUN_0000_04ac(int param_1,int param_2,undefined2 param_3_00,int param_3)
     }
     if ((bVar3 != bVar11) || (bVar12 == 6)) {
       *(char *)(param_3 * 0x20 + iVar9 + MOVEMENT_LIST_TABLE) = cVar2;
-      *(byte *)(param_3 * 0x20 + iVar9 + MEM(0x615f)) = bVar3;
+      *(byte *)(param_3 * 0x20 + iVar9 + SAVED_GAM(0x0bb9)) = bVar3;
       iVar9 = iVar9 + 2;
       if (bVar12 == 6) break;
       cVar2 = '\x01';
@@ -353,9 +353,9 @@ int FUN_0000_04ac(int param_1,int param_2,undefined2 param_3_00,int param_3)
       puVar6 = (undefined *)(param_3 + iVar4 + MOVEMENT_LIST_TABLE);
       *puVar5 = *puVar6;
       *puVar6 = uVar1;
-      pcVar7 = (char *)(param_3 + iVar10 + MEM(0x615f));
+      pcVar7 = (char *)(param_3 + iVar10 + SAVED_GAM(0x0bb9));
       cVar2 = *pcVar7;
-      pcVar8 = (char *)(param_3 + iVar4 + MEM(0x615f));
+      pcVar8 = (char *)(param_3 + iVar4 + SAVED_GAM(0x0bb9));
       *pcVar7 = (*pcVar8 + 1U & 3) + 1;
       *pcVar8 = (cVar2 + 1U & 3) + 1;
       iVar10 = iVar10 + 2;
@@ -459,12 +459,12 @@ void FUN_0000_06e4(int param_1,int param_2)
   if ((local_6 == 1) && (3 < (int)local_4)) {
     if ((local_4 == 4) || (local_4 == 5)) {
       if (*(int *)(local_8 + 10) == 0) goto LAB_0000_075a;
-      *(undefined *)MEM(0x65be) = 0x74;
+      *(undefined *)SAVED_GAM(0x1018) = 0x74;
     }
     else {
-      *(undefined *)MEM(0x65be) = 0x61;
+      *(undefined *)SAVED_GAM(0x1018) = 0x61;
     }
-    *(undefined *)MEM(0x65bf) = (undefined)param_2;
+    *(undefined *)SAVED_GAM(0x1019) = (undefined)param_2;
   }
   else {
 LAB_0000_075a:
@@ -800,8 +800,8 @@ void update_npcs_behaviors(int hour) {
   int npc_slot;
  
   local_14 = 0;
-  *(undefined *)MEM(0x65be) = 0;
-  *(undefined *)MEM(0x65bf) = 0;
+  *(undefined *)SAVED_GAM(0x1018) = 0;
+  *(undefined *)SAVED_GAM(0x1019) = 0;
 
   for (npc_slot = 1; npc_slot < MAX_NPCS; npc_slot++) {
     if (NPC_TYPES[npc_slot] == 0) continue;
@@ -828,19 +828,19 @@ void update_npcs_behaviors(int hour) {
          *(MOVEMENT_LIST_PTRS[sprite_state] + iVar13 + MOVEMENT_LIST_TABLE) != 0)) {
         *SAVED_GAM(0x02d0) = *(npc_offset + SPRITE_X_COORDS);
         *SAVED_GAM(0x02d2) = *(npc_offset + SPRITE_Y_COORDS);
-        FUN_0000_0632(*(*(sprite_state + MOVEMENT_LIST_PTRS) + iVar13 + MEM(0x615f)));
+        FUN_0000_0632(*(*(sprite_state + MOVEMENT_LIST_PTRS) + iVar13 + SAVED_GAM(0x0bb9)));
         local_a = *SAVED_GAM(0x02d0);
         local_c = *SAVED_GAM(0x02d2);
         iVar6 = metascore_move(period_id,npc_slot,local_c,*(undefined2 *)SAVED_GAM(0x02d0));
         if (iVar6 == 0) {
           npc_offset = npc_slot * 2;
-          piVar3 = (npc_offset + MEM(0x65c2));
+          piVar3 = (npc_offset + SAVED_GAM(0x101c));
           *piVar3 = *piVar3 + 1;
           FUN_0000_0c50(npc_slot * 0x10 + NPC_SCHEDULES,npc_slot,period_id,0,npc_slot * 0x10 + SPRITE_STATES);
-          if (3 < *(int *)(npc_offset + MEM(0x65c2))) {
+          if (3 < *(int *)(npc_offset + SAVED_GAM(0x101c))) {
             *(npc_offset + MOVEMENT_LIST_PTRS) = MEM(0xffff);
 LAB_0000_10d6:
-            *(npc_slot * 2 + MEM(0x65c2)) = 0;
+            *(npc_slot * 2 + SAVED_GAM(0x101c)) = 0;
           }
         }
         else { // iVar6 != 0
@@ -854,7 +854,7 @@ LAB_0000_10d6:
           pcVar8 = (char *)(*(int *)(sprite_state + MOVEMENT_LIST_PTRS) + iVar13 + MOVEMENT_LIST_TABLE);
           target_z_p = pcVar8;
           *target_z_p = *target_z_p + -1;
-          *(undefined2 *)(sprite_state + MEM(0x65c2)) = 0;
+          *(undefined2 *)(sprite_state + SAVED_GAM(0x101c)) = 0;
           if (*pcVar8 == '\0') {
             piVar3 = (int *)(sprite_state + MOVEMENT_LIST_PTRS);
             *piVar3 = *piVar3 + 1;
@@ -888,7 +888,7 @@ LAB_0000_10d6:
         }
         if (local_14 < 1) {
           if (*sprite_state_p != 1) {
-            int an_offset = *(int *)(npc_slot * 2 + MEM(0x65c2));
+            int an_offset = *(int *)(npc_slot * 2 + SAVED_GAM(0x101c));
             if ((an_offset < 200) &&
                ((an_offset == 0 || func_0x00007e02(2,0) == 1))) {
               if (*(int *)(npc_slot * 2 + MOVEMENT_LIST_PTRS) == -1) {
@@ -902,17 +902,17 @@ LAB_0000_10d6:
                   FUN_0000_04ac(*(some_offset + NPC_SCHED_Y_COORDS),*(some_offset + NPC_SCHED_X_COORDS), 0,npc_slot);
                   goto LAB_0000_10d6;
                 }
-                *(undefined2 *)(npc_slot * 2 + MEM(0x65c2)) = 200;
+                *(undefined2 *)(npc_slot * 2 + SAVED_GAM(0x101c)) = 200;
               }
               FUN_0000_0c50(npc_slot * 0x10 + NPC_SCHEDULES,npc_slot,period_id,0,npc_slot * 0x10 + SPRITE_STATES);
             }
             else {
-              sprite_state_p = (int *)(npc_slot * 2 + MEM(0x65c2));
+              sprite_state_p = (int *)(npc_slot * 2 + SAVED_GAM(0x101c));
               if (199 < *sprite_state_p) {
                 piVar3 = sprite_state_p;
                 *piVar3 = *piVar3 + 1;
               }
-              sprite_state_p = (int *)(npc_slot * 2 + MEM(0x65c2));
+              sprite_state_p = (int *)(npc_slot * 2 + SAVED_GAM(0x101c));
               if (0xcc < *sprite_state_p) {
                 *sprite_state_p = 0;
               }

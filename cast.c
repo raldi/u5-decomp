@@ -1476,7 +1476,7 @@ void FUN_0000_1f60(undefined2 param_1,int param_2,int param_3)
     local_10a = DATA_OVL(0x4b10);
   }
   else {
-    local_10a = SAVED_GAM(0x-0466);
+    local_10a = MEM(0x5140);
   }
   func_0x000062bc(700,local_10a,800);
   iVar5 = FUN_0000_1c36(uVar4,param_3,param_1,local_102,local_82);

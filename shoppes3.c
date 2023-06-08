@@ -531,7 +531,7 @@ LAB_0000_06a4:
   uVar10 = (uint)*(byte *)SAVED_GAM(0x02b5);
   if ((int)uVar10 < local_34) {
     puVar14 = (undefined2 *)(local_34 * 0x20 + SAVED_GAM(0x0002));
-    puVar16 = (undefined2 *)(local_34 * 0x20 + SAVED_GAM(0x-001e));
+    puVar16 = (undefined2 *)(local_34 * 0x20 + MEM(0x5588));
     local_34 = local_34 - uVar10;
     do {
       puVar15 = puVar16;
@@ -565,7 +565,7 @@ LAB_0000_06a4:
   if (*(char *)(iVar9 + SAVED_GAM(0x000d)) == 'P') {
     *(undefined *)(iVar9 + SAVED_GAM(0x000d)) = 0x44;
     *(undefined2 *)(iVar9 + SAVED_GAM(0x0012)) = 0;
-    uVar11 = SAVED_GAM(0x-05a1);
+    uVar11 = MEM(0x5005);
     goto LAB_0000_088b;
   }
   *(undefined2 *)(iVar9 + SAVED_GAM(0x0012)) = *(undefined2 *)(iVar9 + SAVED_GAM(0x0014));
@@ -583,10 +583,10 @@ LAB_0000_0885:
     }
     if (cVar5 == 'M') goto LAB_0000_0880;
   }
-  uVar11 = SAVED_GAM(0x-057e);
+  uVar11 = MEM(0x5028);
 LAB_0000_088b:
   func_0x00003670(uVar11);
-  func_0x00009d8e(SAVED_GAM(0x-0551));
+  func_0x00009d8e(MEM(0x5055));
   func_0x00004720();
   return 1;
 }
@@ -622,18 +622,18 @@ void FUN_0000_08b4(int param_1)
         local_e = 'N';
       }
       if (local_e == 'N') {
-        uVar4 = SAVED_GAM(0x-0547);
+        uVar4 = MEM(0x505f);
 LAB_0000_08fb:
         func_0x00003670(uVar4);
       }
       else if (local_e == 'Y') {
-        uVar4 = SAVED_GAM(0x-0544);
+        uVar4 = MEM(0x5062);
         goto LAB_0000_08fb;
       }
     } while ((local_e != 'N') && (local_e != 'Y'));
     if (local_e == 'N') break;
-    func_0x00009d8e(SAVED_GAM(0x-0540));
-    func_0x00003670(SAVED_GAM(0x-0518));
+    func_0x00009d8e(MEM(0x5066));
+    func_0x00003670(MEM(0x508e));
     do {
       local_e = func_0x0000448c();
       iVar5 = local_a;
@@ -666,7 +666,7 @@ LAB_0000_097f:
       }
     } while (local_e == '\0');
     if (!bVar3) {
-      func_0x00003670(SAVED_GAM(0x-04e9));
+      func_0x00003670(MEM(0x50bd));
     }
   }
   func_0x00009e12(local_a);

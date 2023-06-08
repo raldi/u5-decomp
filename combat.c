@@ -720,8 +720,8 @@ LAB_0000_0a41:
             }
             if (uVar8 != 0xfc) goto LAB_0000_0ab7;
             func_0x000075c0(MEM(0x6dd2),uVar15);
-            uVar8 = (uint)(*(int *)SAVED_GAM(0x-021a) == 0);
-            *(uint *)SAVED_GAM(0x-021a) = uVar8;
+            uVar8 = (uint)(*(int *)MEM(0x538c) == 0);
+            *(uint *)MEM(0x538c) = uVar8;
             if (uVar8 == 0) {
               uVar7 = MEM(0x6de0);
             }
