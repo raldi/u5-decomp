@@ -1,7 +1,35 @@
-typedef unsigned char   undefined;
+#define OUTSIDE 0
+#define SURFACE 0
 
-typedef unsigned char    undefined1;
-typedef unsigned int    undefined2;
+#define ROUGH_SEAS 1
+#define SWAMP 4
+#define EW_BRIDGE 106
+#define NS_BRIDGE 107
+#define LAVA 143
+#define WATERFALL 212
+
+#define OCCUPIED_EAST_CARPET 20
+#define OCCUPIED_WEST_CARPET 21
+#define SKIFF_NORTH 40
+
+#define IS_BRIDGE(n) (n & 0xfe == EW_BRIDGE)
+
+#define TROLL 228
+
+#define ON_FOOT 28
+
+#define ORDAINED_SHRINE_QUESTS SAVED_GAM(0x0326)
+
+#define PARTY_X SAVED_GAM(0x02f0)
+#define PARTY_Y SAVED_GAM(0x02f1)
+#define PARTY_Z SAVED_GAM(0x02ef)
+
+#define MODE_OF_TRANSPORTATION SAVED_GAM(0x02d6)
+#define IS_OCCUPIED_CARPET(n) (n & 0xfe == OCCUPIED_EAST_CARPET)
+#define IS_SKIFF(n) (n & 0xfc == SKIFF_NORTH)
+
+#define SEXTANT_OJ 233
+#define SEXTANT_OL 235
 
 
 /*
@@ -19,11 +47,11 @@ void __cdecl16near FUN_0000_007a(void)
   uint uVar4;
   undefined2 unaff_DS;
   
-  uVar1 = (uint)*(byte *)SAVED_GAM(0x02f0) - (uint)*(byte *)SAVED_GAM(0x06be);
+  uVar1 = (uint)*(byte *)PARTY_X - (uint)*(byte *)SAVED_GAM(0x06be);
   uVar3 = (int)uVar1 >> 0xf;
-  uVar2 = (uint)*(byte *)SAVED_GAM(0x02f1) - (uint)*(byte *)SAVED_GAM(0x06bf);
+  uVar2 = (uint)*(byte *)PARTY_Y - (uint)*(byte *)SAVED_GAM(0x06bf);
   uVar4 = (int)uVar2 >> 0xf;
-  if ((((*(char *)SAVED_GAM(0x06bc) != '\0') && (*(char *)SAVED_GAM(0x06c0) == *(char *)SAVED_GAM(0x02ef))) &&
+  if ((((*(char *)SAVED_GAM(0x06bc) != '\0') && (*(char *)SAVED_GAM(0x06c0) == *(char *)PARTY_Z)) &&
       ((int)((uVar1 ^ uVar3) - uVar3) < 6)) && ((int)((uVar2 ^ uVar4) - uVar4) < 6)) {
     func_0x0000b916(1);
   }
@@ -41,29 +69,29 @@ undefined2 FUN_0000_00da(int param_1)
   undefined2 uVar4;
   undefined2 unaff_DS;
   
-  bVar2 = *(byte *)SAVED_GAM(0x02d6) & 0xfc;
+  bVar2 = *(byte *)MODE_OF_TRANSPORTATION & 0xfc;
   if (bVar2 == 0x10) {
     func_0x00009680(MEM(0x2946));
     if (param_1 == 1) {
-      *(undefined *)SAVED_GAM(0x02d6) = 0x12;
+      *(undefined *)MODE_OF_TRANSPORTATION = 0x12;
       return 0;
     }
     if (param_1 != 3) {
       return 0;
     }
-    *(undefined *)SAVED_GAM(0x02d6) = 0x13;
+    *(undefined *)MODE_OF_TRANSPORTATION = 0x13;
     return 0;
   }
   if (bVar2 == 0x14) {
     func_0x00009680(MEM(0x294c));
     if (param_1 == 1) {
-      *(undefined *)SAVED_GAM(0x02d6) = 0x14;
+      *(undefined *)MODE_OF_TRANSPORTATION = 0x14;
       return 0;
     }
     if (param_1 != 3) {
       return 0;
     }
-    *(undefined *)SAVED_GAM(0x02d6) = 0x15;
+    *(undefined *)MODE_OF_TRANSPORTATION = 0x15;
     return 0;
   }
   if ((bVar2 != 0x20) && (bVar2 != 0x24)) {
@@ -71,14 +99,14 @@ undefined2 FUN_0000_00da(int param_1)
       return 0;
     }
     func_0x00009680(MEM(0x2951));
-    *(char *)SAVED_GAM(0x02d6) = (char)param_1 + (*(byte *)SAVED_GAM(0x02d6) & 0xfc);
+    *(char *)MODE_OF_TRANSPORTATION = (char)param_1 + (*(byte *)MODE_OF_TRANSPORTATION & 0xfc);
     return 0;
   }
-  cVar1 = *(char *)SAVED_GAM(0x02d6);
-  cVar3 = (char)param_1 + (*(byte *)SAVED_GAM(0x02d6) & 0xfc);
-  *(char *)SAVED_GAM(0x02d6) = cVar3;
+  cVar1 = *(char *)MODE_OF_TRANSPORTATION;
+  cVar3 = (char)param_1 + (*(byte *)MODE_OF_TRANSPORTATION & 0xfc);
+  *(char *)MODE_OF_TRANSPORTATION = cVar3;
   if (cVar1 == cVar3) {
-    if (0x23 < *(byte *)SAVED_GAM(0x02d6)) {
+    if (0x23 < *(byte *)MODE_OF_TRANSPORTATION) {
       return 0;
     }
     if (*(char *)SAVED_GAM(0x02ec) != '\0') {
@@ -122,17 +150,17 @@ int FUN_0000_01fe(int param_1,int param_2)
   undefined2 unaff_DS;
   byte local_6;
   
-  if ((*(byte *)SAVED_GAM(0x02d6) & 0xfc) == 0x24) {
+  if ((*(byte *)MODE_OF_TRANSPORTATION & 0xfc) == 0x24) {
     func_0x00009680(MEM(0x2982));
   }
   bVar3 = true;
-  iVar4 = func_0x0000b4be(*(undefined *)SAVED_GAM(0x02ef),param_1 + (uint)*(byte *)SAVED_GAM(0x02f1),
-                          param_2 + (uint)*(byte *)SAVED_GAM(0x02f0));
+  iVar4 = func_0x0000b4be(*(undefined *)PARTY_Z,param_1 + (uint)*(byte *)PARTY_Y,
+                          param_2 + (uint)*(byte *)PARTY_X);
   local_6 = (byte)iVar4;
   if (iVar4 != 0) {
     bVar3 = false;
-    if ((*(byte *)SAVED_GAM(0x02d6) < 0x30) && (0x1f < *(byte *)SAVED_GAM(0x02d6))) {
-      if ((0x27 < *(byte *)SAVED_GAM(0x02d6)) && ((0x23 < iVar4 && (iVar4 < 0x28)))) {
+    if ((*(byte *)MODE_OF_TRANSPORTATION < 0x30) && (0x1f < *(byte *)MODE_OF_TRANSPORTATION)) {
+      if ((0x27 < *(byte *)MODE_OF_TRANSPORTATION) && ((0x23 < iVar4 && (iVar4 < 0x28)))) {
 LAB_0000_0283:
         bVar3 = true;
       }
@@ -141,7 +169,7 @@ LAB_0000_0283:
     goto LAB_0000_0283;
   }
   cVar2 = *(char *)(param_2 + param_1 * 0x20 + MEM(0xaba7));
-  if ((bVar3) && (iVar4 = func_0x0000aa7c(cVar2,*(undefined *)SAVED_GAM(0x02d6)), iVar4 != 0)) {
+  if ((bVar3) && (iVar4 = func_0x0000aa7c(cVar2,*(undefined *)MODE_OF_TRANSPORTATION), iVar4 != 0)) {
     iVar4 = 1;
   }
   else {
@@ -151,7 +179,7 @@ LAB_0000_0283:
     return iVar4;
   }
   if (*(char *)SAVED_GAM(0x03af) == '\0') {
-    if ((0x1f < *(byte *)SAVED_GAM(0x02d6)) && ((local_6 & 0xfc) == 0xec)) {
+    if ((0x1f < *(byte *)MODE_OF_TRANSPORTATION) && ((local_6 & 0xfc) == 0xec)) {
       return 0;
     }
     func_0x00009680(MEM(0x29ae));
@@ -176,7 +204,7 @@ LAB_0000_0283:
 LAB_0000_02df:
   if (cVar2 == 'G') {
     func_0x00009680(MEM(0x29a5));
-    pcVar1 = (char *)SAVED_GAM(0x02d6);
+    pcVar1 = (char *)MODE_OF_TRANSPORTATION;
     *pcVar1 = *pcVar1 + '\x04';
   }
   else {
@@ -198,13 +226,13 @@ void FUN_0000_0354(undefined2 param_1,undefined2 param_2)
   byte bVar3;
   undefined2 unaff_DS;
   
-  pcVar1 = (char *)SAVED_GAM(0x02f0);
+  pcVar1 = (char *)PARTY_X;
   *pcVar1 = *pcVar1 + (char)param_2;
-  pcVar1 = (char *)SAVED_GAM(0x02f1);
+  pcVar1 = (char *)PARTY_Y;
   *pcVar1 = *pcVar1 + (char)param_1;
   *(undefined *)MEM(0x24e6) = 1;
-  bVar2 = *(char *)SAVED_GAM(0x02f0) - *(char *)SAVED_GAM(0x02f5) & 0x1f;
-  bVar3 = *(char *)SAVED_GAM(0x02f1) - *(char *)SAVED_GAM(0x02f6) & 0x1f;
+  bVar2 = *(char *)PARTY_X - *(char *)SAVED_GAM(0x02f5) & 0x1f;
+  bVar3 = *(char *)PARTY_Y - *(char *)SAVED_GAM(0x02f6) & 0x1f;
   if ((((bVar2 < 5) || (0x1a < bVar2)) || (bVar3 < 5)) || (0x1a < bVar3)) {
     func_0x0000fa02(param_1,param_2,bVar3);
     *(byte *)SAVED_GAM(0x02f5) = (char)param_2 * '\x10' + *(char *)SAVED_GAM(0x02f5) & 0xf0;
@@ -228,7 +256,7 @@ void __cdecl16near FUN_0000_03e0(void)
   undefined2 unaff_DS;
   int local_6;
   
-  pbVar2 = (byte *)func_0x0000c232(*(undefined *)SAVED_GAM(0x02f1),*(undefined *)SAVED_GAM(0x02f0));
+  pbVar2 = (byte *)func_0x0000c232(*(undefined *)PARTY_Y,*(undefined *)PARTY_X);
   bVar1 = *pbVar2;
   if (bVar1 == 5) {
 LAB_0000_0406:
@@ -281,14 +309,14 @@ int FUN_0000_0490(int param_1,uint param_2)
   undefined2 uVar3;
   undefined2 uVar4;
   
-  if ((*(byte *)SAVED_GAM(0x02d6) & 0xfc) == 0x20) {
+  if ((*(byte *)MODE_OF_TRANSPORTATION & 0xfc) == 0x20) {
     if (param_2 != *(byte *)SAVED_GAM(0x03af)) {
       *(undefined *)SAVED_GAM(0x03af) = (undefined)param_2;
       *(undefined *)SAVED_GAM(0x02dd) = 0;
     }
     *(undefined *)SAVED_GAM(0x03b0) = 0;
   }
-  if ((*(char *)SAVED_GAM(0x02d6) == '\x1c') || ((*(byte *)SAVED_GAM(0x02d6) & 0xfe) == 0x12)) {
+  if ((*(char *)MODE_OF_TRANSPORTATION == '\x1c') || ((*(byte *)MODE_OF_TRANSPORTATION & 0xfe) == 0x12)) {
     func_0x0000c16e();
   }
   uVar3 = 0;
@@ -334,7 +362,7 @@ int FUN_0000_0490(int param_1,uint param_2)
 LAB_0000_050e:
   iVar1 = FUN_0000_01fe(uVar3,uVar4);
   if ((param_1 == 0) && (iVar1 != 0)) {
-    if ((*(byte *)SAVED_GAM(0x02d6) & 0xfe) == 0x12) {
+    if ((*(byte *)MODE_OF_TRANSPORTATION & 0xfe) == 0x12) {
       func_0x0000c16e();
     }
     FUN_0000_0354(uVar3,uVar4);
@@ -438,17 +466,17 @@ undefined2 __cdecl16near FUN_0000_06ec(void)
   undefined2 unaff_DS;
   
   func_0x00009680(MEM(0x29fe));
-  pbVar1 = (byte *)func_0x0000c232(*(undefined *)SAVED_GAM(0x02f1),*(undefined *)SAVED_GAM(0x02f0));
-  if ((*pbVar1 < 4) && (((*(byte *)SAVED_GAM(0x02d6) & 0xfc) == 0x28 || ((*(byte *)SAVED_GAM(0x02d6) & 0xfe) == 0x14)))) {
+  pbVar1 = (byte *)func_0x0000c232(*(undefined *)PARTY_Y,*(undefined *)PARTY_X);
+  if ((*pbVar1 < 4) && (((*(byte *)MODE_OF_TRANSPORTATION & 0xfc) == 0x28 || ((*(byte *)MODE_OF_TRANSPORTATION & 0xfe) == 0x14)))) {
     func_0x00009680(MEM(0x2a06));
   }
   else {
     iVar2 = func_0x0000b41c();
     if (iVar2 != 0) {
-      iVar3 = (uint)*(byte *)SAVED_GAM(0x02f0) + *(int *)SAVED_GAM(0x02d0);
-      iVar4 = (uint)*(byte *)SAVED_GAM(0x02f1) + *(int *)SAVED_GAM(0x02d2);
+      iVar3 = (uint)*(byte *)PARTY_X + *(int *)SAVED_GAM(0x02d0);
+      iVar4 = (uint)*(byte *)PARTY_Y + *(int *)SAVED_GAM(0x02d2);
       iVar2 = iVar4;
-      uVar5 = func_0x0000b4be(*(undefined *)SAVED_GAM(0x02ef),iVar4,iVar3);
+      uVar5 = func_0x0000b4be(*(undefined *)PARTY_Z,iVar4,iVar3);
       uVar5 = uVar5 & 0xfc;
       if ((uVar5 == 0x2c) || (((uVar5 != 0xb4 && (uVar5 != 0xe8)) && (0x3f < uVar5)))) {
         func_0x0000df80(*(undefined2 *)SAVED_GAM(0x02d0));
@@ -475,12 +503,12 @@ undefined2 FUN_0000_0790(undefined2 param_1)
   func_0x00009680(param_1);
   iVar3 = 0x20;
   do {
-    if ((*(char *)(iVar3 + MEM(0x1e8a)) == *(char *)SAVED_GAM(0x02f0)) &&
-       (*(char *)(iVar3 + MEM(0x1eb2)) == *(char *)SAVED_GAM(0x02f1))) break;
+    if ((*(char *)(iVar3 + MEM(0x1e8a)) == *(char *)PARTY_X) &&
+       (*(char *)(iVar3 + MEM(0x1eb2)) == *(char *)PARTY_Y)) break;
     iVar3 = iVar3 + 1;
   } while (iVar3 < 0x28);
   if (iVar3 < 0x28) {
-    if (*(char *)SAVED_GAM(0x02d6) != '\x1c') {
+    if (*(char *)MODE_OF_TRANSPORTATION != '\x1c') {
       uVar1 = func_0x00009680(MEM(0x2a24));
       return uVar1;
     }
@@ -512,19 +540,19 @@ undefined2 FUN_0000_0790(undefined2 param_1)
     func_0x0000a39e(iVar3 * MEM(0x0200) + MEM(0xc000),MEM(0x0200),SAVED_GAM(0x03b4),MEM(0x2a53));
     local_4 = (char)iVar3;
     *(char *)SAVED_GAM(0x02ed) = local_4 + '\x01';
-    if ((*(char *)SAVED_GAM(0x02ef) == '\0') || ((char)(local_4 + '\x01') == '(')) {
-      *(undefined *)SAVED_GAM(0x02ef) = 0;
-      *(undefined *)SAVED_GAM(0x02f1) = 1;
-      *(undefined *)SAVED_GAM(0x02f0) = 1;
+    if ((*(char *)PARTY_Z == '\0') || ((char)(local_4 + '\x01') == '(')) {
+      *(undefined *)PARTY_Z = 0;
+      *(undefined *)PARTY_Y = 1;
+      *(undefined *)PARTY_X = 1;
       *(undefined *)MEM(0x6603) = 1;
       *(undefined *)MEM(0x6602) = 5;
     }
     else {
-      *(undefined *)SAVED_GAM(0x02ef) = 7;
+      *(undefined *)PARTY_Z = 7;
       *(undefined *)MEM(0x6603) = 3;
       *(undefined *)MEM(0x6602) = 4;
-      *(undefined *)SAVED_GAM(0x02f1) = 7;
-      *(undefined *)SAVED_GAM(0x02f0) = 7;
+      *(undefined *)PARTY_Y = 7;
+      *(undefined *)PARTY_X = 7;
     }
   }
   else {
@@ -546,7 +574,7 @@ undefined2 __cdecl16near FUN_0000_08de(void)
   undefined2 local_4;
   
   func_0x00009680(MEM(0x2a6f));
-  pbVar2 = (byte *)func_0x0000c232(*(undefined *)SAVED_GAM(0x02f1),*(undefined *)SAVED_GAM(0x02f0));
+  pbVar2 = (byte *)func_0x0000c232(*(undefined *)PARTY_Y,*(undefined *)PARTY_X);
   bVar1 = *pbVar2;
   if (bVar1 == 0x16) {
     uVar3 = MEM(0x2abd);
@@ -583,8 +611,8 @@ LAB_0000_09ab:
         func_0x00009680(MEM(0x2a76));
         iVar4 = 0;
         do {
-          if ((*(char *)(iVar4 + MEM(0x1f6e)) == *(char *)SAVED_GAM(0x02f0)) &&
-             (*(char *)(iVar4 + MEM(0x1f76)) == *(char *)SAVED_GAM(0x02f1))) break;
+          if ((*(char *)(iVar4 + MEM(0x1f6e)) == *(char *)PARTY_X) &&
+             (*(char *)(iVar4 + MEM(0x1f76)) == *(char *)PARTY_Y)) break;
           iVar4 = iVar4 + 1;
         } while (iVar4 < 8);
         func_0x00009680(*(undefined2 *)(iVar4 * 2 + MEM(0x1f4e)));
@@ -635,7 +663,7 @@ int FUN_0000_0a1a(int param_1)
   char *pcVar1;
   undefined2 unaff_DS;
   
-  pcVar1 = (char *)func_0x0000c232(*(undefined *)SAVED_GAM(0x02f1),*(undefined *)SAVED_GAM(0x02f0));
+  pcVar1 = (char *)func_0x0000c232(*(undefined *)PARTY_Y,*(undefined *)PARTY_X);
   if ((*pcVar1 == -1) && (*(char *)SAVED_GAM(0x02d4) != '\x0e')) {
     *(undefined *)SAVED_GAM(0x02ff) = 0;
     if (param_1 == 0) {
@@ -658,7 +686,7 @@ void __cdecl16near FUN_0000_0a60(void)
   int iVar1;
   undefined2 unaff_DS;
   
-  if (*(char *)SAVED_GAM(0x02ef) != '\0') {
+  if (*(char *)PARTY_Z != '\0') {
     iVar1 = func_0x00009ec2(0xff,0);
     if (iVar1 == 0x69) {
       func_0x00009680(MEM(0x2b1d));
@@ -674,13 +702,13 @@ void __cdecl16near FUN_0000_0a60(void)
 void __cdecl16near FUN_0000_0a84(void)
 
 {
-  char *pcVar1;
+  char *party_y_p;
   bool bVar2;
-  byte bVar3;
+  byte misc;
   int iVar4;
   undefined2 uVar5;
-  byte *pbVar6;
-  uint uVar7;
+  byte *ground_tile_id_p;
+  uint ground_tile_id;
   undefined2 unaff_DS;
   undefined2 uVar8;
   int local_a;
@@ -722,53 +750,53 @@ LAB_0000_0aba:
       if (*(char *)SAVED_GAM(0x02ed) != '\0') {
         return;
       }
-      bVar3 = FUN_0000_0598();
-      if (bVar3 < 0x20) {
-        if (bVar3 < 0x17) {
+      misc = FUN_0000_0598();
+      if (misc < 0x20) {
+        if (misc < 0x17) {
                     // WARNING: Could not emulate address calculation at 0x00000b2e
                     // WARNING: Treating indirect jump as call
-          (**(code **)((uint)bVar3 * 2 + MEM(0x8d8e)))();
+          (**(code **)((uint)misc * 2 + MEM(0x8d8e)))();
           return;
         }
         uVar5 = MEM(0x2b64);
         goto LAB_0000_0aba;
       }
-      if ((bVar3 < 0x30) || (0x39 < bVar3)) {
+      if ((misc < 0x30) || (0x39 < misc)) {
         uVar8 = MEM(0x0c03);
-        local_a = func_0x0000afa8(bVar3);
+        local_a = func_0x0000afa8(misc);
       }
       else {
         uVar8 = MEM(0x0c0f);
-        local_a = func_0x0000beb0(bVar3);
+        local_a = func_0x0000beb0(misc);
       }
     }
-    if ((*(byte *)SAVED_GAM(0x02d6) & 0xfc) != 0x20) {
+    if ((*(byte *)MODE_OF_TRANSPORTATION & 0xfc) != 0x20) {
       *(undefined *)SAVED_GAM(0x03af) = 0;
     }
     if (*(char *)SAVED_GAM(0x02ed) == '\0') {
       if (local_a != 0) {
         func_0x0000cdac(2,uVar8);
-        pbVar6 = (byte *)func_0x0000c232(*(undefined *)SAVED_GAM(0x02f1),*(undefined *)SAVED_GAM(0x02f0));
-        bVar3 = *pbVar6;
-        uVar7 = (uint)bVar3;
-        if ((bVar3 & 0xfe) == 0x6a) {
-          FUN_0000_1be8();
+        ground_tile_id_p = (byte *)func_0x0000c232(*(undefined *)PARTY_Y,*(undefined *)PARTY_X);
+        int ground_tile_id_2 = *ground_tile_id_p;
+        if (IS_BRIDGE(ground_tile_id_2) {
+          check_for_trolls();
         }
-        else if ((uVar7 == 4) && (*(char *)SAVED_GAM(0x02d6) == '\x1c')) {
+        else if ((ground_tile_id_2 == SWAMP) && *MODE_OF_TRANSPORTATION == ON_FOOT)) {
           func_0x0000f97e();
           func_0x0000b916(1);
         }
-        else if (uVar7 == 0x8f) {
+        else if (ground_tile_id_2 == LAVA) {
           func_0x0000f98a();
         }
-        else if ((((*(char *)SAVED_GAM(0x02f0) == -0x17) && (*(char *)SAVED_GAM(0x02f1) == -0x15)) &&
-                 (*(char *)SAVED_GAM(0x02ef) == '\0')) && (*(char *)SAVED_GAM(0x02ed) == '\0')) {
+        else if ((((*PARTY_X == SEXTANT_OJ) && (*PARTY_Y == SEXTANT_OL)) &&
+                 (*PARTY_Z == SURFACE)) && (*SAVED_GAM(0x02ed) == OUTSIDE)) {
+          // Between the Guardians
           func_0x00009680(MEM(0x2b6b));
-          if (*(char *)SAVED_GAM(0x0326) == '\0') {
+          if (*ORDAINED_SHRINE_QUESTS == 0) {
             func_0x00009680(MEM(0x2b7e));
             func_0x00009680(MEM(0x2ba1));
-            pcVar1 = (char *)SAVED_GAM(0x02f1);
-            *pcVar1 = *pcVar1 + '\x01';
+            party_y_p = (char *)PARTY_Y;
+            *party_y_p += 1;
           }
           else {
             func_0x00009680(MEM(0x2b6e));
@@ -776,13 +804,14 @@ LAB_0000_0aba:
         }
         FUN_0000_0a60();
         func_0x0000a918();
-        if ((uVar7 == 1) &&
-           (((*(byte *)SAVED_GAM(0x02d6) & 0xfc) == 0x28 || ((*(byte *)SAVED_GAM(0x02d6) & 0xfe) == 0x14)))) {
+        if ((ground_tile_id == ROUGH_SEAS) &&
+           (IS_SKIFF(*MODE_OF_TRANSPORTATION) || 
+            IS_OCCUPIED_CARPET(MODE_OF_TRANSPORTATION))) {
           func_0x00009680(MEM(0x2bb3));
-          func_0x0000b352(*(undefined *)SAVED_GAM(0x02f1),*(undefined *)SAVED_GAM(0x02f0));
+          func_0x0000b352(*(undefined *)PARTY_Y,*(undefined *)PARTY_X);
           FUN_0000_109e();
         }
-        if (((byte)uVar7 & 0xfc) == 0xd4) {
+        if ((ground_tile_id & 0xfc) == WATERFALL) {
           func_0x0000f972();
         }
         FUN_0000_1a60();
@@ -839,8 +868,8 @@ int __cdecl16near FUN_0000_0d8c(void)
   undefined2 unaff_DS;
   int local_4;
   
-  if (*(byte *)SAVED_GAM(0x02ef) < 0x80) {
-    pbVar2 = (byte *)func_0x0000c232(*(undefined *)SAVED_GAM(0x02f1),*(undefined *)SAVED_GAM(0x02f0));
+  if (*(byte *)PARTY_Z < 0x80) {
+    pbVar2 = (byte *)func_0x0000c232(*(undefined *)PARTY_Y,*(undefined *)PARTY_X);
     bVar1 = *pbVar2;
     if ((bVar1 < 0x20) || (0x26 < bVar1)) {
       if ((bVar1 == 4) || ((8 < bVar1 && (bVar1 < 0x10)))) {
@@ -894,7 +923,7 @@ undefined FUN_0000_0e4e(int param_1)
       ((0xd3 < param_1 && (param_1 < 0xd8)))) || ((0xe3 < param_1 && (param_1 < 0xe8)))) {
     iVar1 = func_0x00009ec2(0x40,0);
     if (iVar1 < 0x10) {
-      if (0x7f < *(byte *)SAVED_GAM(0x02ef)) {
+      if (0x7f < *(byte *)PARTY_Z) {
         iVar1 = FUN_0000_0e04(MEM(0x2bf6));
         return *(undefined *)(iVar1 + MEM(0x2bda));
       }
@@ -912,12 +941,12 @@ undefined FUN_0000_0e4e(int param_1)
     }
   }
   else {
-    if ((param_1 == 4) && (*(char *)SAVED_GAM(0x02ef) == -1)) {
+    if ((param_1 == 4) && (*(char *)PARTY_Z == -1)) {
       return 0xf8;
     }
     if (((param_1 != 0xc) && (param_1 != 0xd)) &&
        ((param_1 < 0x10 || (((byte)param_1 & 0xfc) == 0x30)))) {
-      if (*(byte *)SAVED_GAM(0x02ef) < 0x80) {
+      if (*(byte *)PARTY_Z < 0x80) {
         iVar1 = FUN_0000_0e04(MEM(0x2bdc));
         return *(undefined *)(iVar1 + MEM(0x2bc0));
       }
@@ -944,15 +973,15 @@ void __cdecl16near FUN_0000_0f4e(void)
       *(uint *)SAVED_GAM(0x02d0) = (uint)(byte)(cVar1 + *(char *)SAVED_GAM(0x02f5));
       cVar1 = func_0x00009ec2(0x1f,0);
       *(uint *)SAVED_GAM(0x02d2) = (uint)(byte)(cVar1 + *(char *)SAVED_GAM(0x02f6));
-      uVar2 = *(int *)SAVED_GAM(0x02d0) - (uint)*(byte *)SAVED_GAM(0x02f0);
+      uVar2 = *(int *)SAVED_GAM(0x02d0) - (uint)*(byte *)PARTY_X;
       uVar3 = (int)uVar2 >> 0xf;
     } while ((int)((uVar2 ^ uVar3) - uVar3) < 7);
-    uVar2 = *(int *)SAVED_GAM(0x02d2) - (uint)*(byte *)SAVED_GAM(0x02f1);
+    uVar2 = *(int *)SAVED_GAM(0x02d2) - (uint)*(byte *)PARTY_Y;
     uVar3 = (int)uVar2 >> 0xf;
   } while ((((int)((uVar2 ^ uVar3) - uVar3) < 7) ||
-           (uVar2 = *(int *)SAVED_GAM(0x02d0) - (uint)*(byte *)SAVED_GAM(0x02f0), uVar3 = (int)uVar2 >> 0xf,
+           (uVar2 = *(int *)SAVED_GAM(0x02d0) - (uint)*(byte *)PARTY_X, uVar3 = (int)uVar2 >> 0xf,
            0xf9 < (int)((uVar2 ^ uVar3) - uVar3))) ||
-          (uVar2 = *(int *)SAVED_GAM(0x02d2) - (uint)*(byte *)SAVED_GAM(0x02f1), uVar3 = (int)uVar2 >> 0xf,
+          (uVar2 = *(int *)SAVED_GAM(0x02d2) - (uint)*(byte *)PARTY_Y, uVar3 = (int)uVar2 >> 0xf,
           0xf9 < (int)((uVar2 ^ uVar3) - uVar3)));
   return;
 }
@@ -985,7 +1014,7 @@ void __cdecl16near FUN_0000_0fc4(void)
   } while (local_6 < 0x80);
   if (local_6 != 0x80) {
     iVar6 = func_0x0000b714();
-    func_0x0000b8a4(iVar6,0,*(undefined *)SAVED_GAM(0x02ef),uVar2,uVar1,cVar3,cVar3);
+    func_0x0000b8a4(iVar6,0,*(undefined *)PARTY_Z,uVar2,uVar1,cVar3,cVar3);
     if (cVar3 == ',') {
       *(undefined *)(iVar6 * 8 + SAVED_GAM(0x06b9)) = 100;
     }
@@ -1023,7 +1052,7 @@ void __cdecl16near FUN_0000_109e(void)
   undefined2 unaff_DS;
   char local_4;
   
-  if ((*(byte *)SAVED_GAM(0x02d6) & 0xf8) == 0x20) {
+  if ((*(byte *)MODE_OF_TRANSPORTATION & 0xf8) == 0x20) {
     uVar3 = func_0x00009ec2(0x1e,1);
     if (uVar3 < *(byte *)SAVED_GAM(0x06b9)) {
       local_4 = (char)uVar3;
@@ -1035,7 +1064,7 @@ void __cdecl16near FUN_0000_109e(void)
       func_0x00009680(MEM(0x6ada));
       uVar3 = (uint)*(byte *)SAVED_GAM(0x06bb);
       if ((uVar3 == 0) && (*(char *)SAVED_GAM(0x020a) == '\0')) {
-        *(undefined *)SAVED_GAM(0x02d6) = 0;
+        *(undefined *)MODE_OF_TRANSPORTATION = 0;
         func_0x0000a730();
         func_0x0000d740();
         func_0x0000c1de(MEM(0x1e78),0x28,0x96,MEM(0x0294));
@@ -1043,7 +1072,7 @@ void __cdecl16near FUN_0000_109e(void)
         while( true ) {
           iVar4 = func_0x0000b82c();
           if (iVar4 == -1) break;
-          func_0x0000b352(*(undefined *)SAVED_GAM(0x02f1),*(undefined *)SAVED_GAM(0x02f0));
+          func_0x0000b352(*(undefined *)PARTY_Y,*(undefined *)PARTY_X);
           func_0x0000a8d8();
         }
       }
@@ -1056,9 +1085,9 @@ void __cdecl16near FUN_0000_109e(void)
           cVar2 = cVar2 + '\x14';
         }
         else {
-          cVar2 = (*(byte *)SAVED_GAM(0x02d6) & 3) + 0x28;
+          cVar2 = (*(byte *)MODE_OF_TRANSPORTATION & 3) + 0x28;
         }
-        *(char *)SAVED_GAM(0x02d6) = cVar2;
+        *(char *)MODE_OF_TRANSPORTATION = cVar2;
         *(undefined *)MEM(0xa9fa) = 1;
       }
     }
@@ -1095,11 +1124,11 @@ void FUN_0000_1168(int param_1,int param_2,int param_3)
   }
   func_0x0000d740();
   func_0x0000c1de(100,5,300,MEM(0x0514));
-  iVar3 = func_0x0000fa1a(1,5,5,(*(char *)(param_3 * 8 + SAVED_GAM(0x06b7)) - *(char *)SAVED_GAM(0x02f1)) + '\x05',
-                          (*(char *)(param_3 * 8 + SAVED_GAM(0x06b6)) - *(char *)SAVED_GAM(0x02f0)) + '\x05');
+  iVar3 = func_0x0000fa1a(1,5,5,(*(char *)(param_3 * 8 + SAVED_GAM(0x06b7)) - *(char *)PARTY_Y) + '\x05',
+                          (*(char *)(param_3 * 8 + SAVED_GAM(0x06b6)) - *(char *)PARTY_X) + '\x05');
   if (iVar3 != 0) {
     func_0x0000d740();
-    func_0x0000b352(*(undefined *)SAVED_GAM(0x02f1),*(undefined *)SAVED_GAM(0x02f0));
+    func_0x0000b352(*(undefined *)PARTY_Y,*(undefined *)PARTY_X);
     FUN_0000_109e();
   }
   return;
@@ -1115,19 +1144,19 @@ void FUN_0000_1248(int param_1)
   undefined2 unaff_DS;
   
   if ((*(byte *)(param_1 * 8 + SAVED_GAM(0x06b4)) & 0xfc) == 0xec) {
-    if (*(char *)SAVED_GAM(0x02d6) != '\x1c') {
+    if (*(char *)MODE_OF_TRANSPORTATION != '\x1c') {
       *(undefined *)(param_1 * 8 + SAVED_GAM(0x06b5)) = 0;
       *(undefined *)(param_1 * 8 + SAVED_GAM(0x06b4)) = 0;
       func_0x00009680(MEM(0x6b04));
-      uVar1 = *(undefined *)SAVED_GAM(0x02d6);
-      *(undefined *)SAVED_GAM(0x02d6) = 0xec;
+      uVar1 = *(undefined *)MODE_OF_TRANSPORTATION;
+      *(undefined *)MODE_OF_TRANSPORTATION = 0xec;
       func_0x0000d740();
       func_0x0000c1de(MEM(0x1e78),0x28,0x96,MEM(0x0294));
-      *(undefined *)SAVED_GAM(0x02d6) = uVar1;
+      *(undefined *)MODE_OF_TRANSPORTATION = uVar1;
       FUN_0000_109e();
-      *(undefined *)SAVED_GAM(0x02ef) = 0xff;
-      *(undefined *)SAVED_GAM(0x02f0) = 0x22;
-      *(undefined *)SAVED_GAM(0x02f1) = 0x12;
+      *(undefined *)PARTY_Z = 0xff;
+      *(undefined *)PARTY_X = 0x22;
+      *(undefined *)PARTY_Y = 0x12;
       FUN_0000_0000();
       return;
     }
@@ -1135,8 +1164,8 @@ void FUN_0000_1248(int param_1)
   else if ((*(byte *)(param_1 * 8 + SAVED_GAM(0x06b4)) & 0xfc) != 0xe0) {
     func_0x0000d740();
     func_0x00009680(MEM(0x6b12));
-    pbVar2 = (byte *)func_0x0000c232(*(undefined *)SAVED_GAM(0x02f1),*(undefined *)SAVED_GAM(0x02f0));
-    if ((3 < *pbVar2) || (((*(byte *)SAVED_GAM(0x02d6) & 0xfe) != 0x14 && ((*(byte *)SAVED_GAM(0x02d6) & 0xfc) != 0x28))))
+    pbVar2 = (byte *)func_0x0000c232(*(undefined *)PARTY_Y,*(undefined *)PARTY_X);
+    if ((3 < *pbVar2) || (((*(byte *)MODE_OF_TRANSPORTATION & 0xfe) != 0x14 && ((*(byte *)MODE_OF_TRANSPORTATION & 0xfc) != 0x28))))
     {
       func_0x0000df80(param_1);
       return;
@@ -1161,13 +1190,13 @@ undefined2 FUN_0000_131a(int param_1)
   int local_6;
   
   bVar1 = *(byte *)(param_1 * 8 + SAVED_GAM(0x06b4));
-  uVar2 = (uint)*(byte *)(param_1 * 8 + SAVED_GAM(0x06b6)) - (uint)*(byte *)SAVED_GAM(0x02f0);
+  uVar2 = (uint)*(byte *)(param_1 * 8 + SAVED_GAM(0x06b6)) - (uint)*(byte *)PARTY_X;
   uVar5 = (int)uVar2 >> 0xf;
   local_6 = (uVar2 ^ uVar5) - uVar5;
   if (0x7f < local_6) {
     local_6 = MEM(0x0100) - local_6;
   }
-  uVar2 = (uint)*(byte *)(param_1 * 8 + SAVED_GAM(0x06b7)) - (uint)*(byte *)SAVED_GAM(0x02f1);
+  uVar2 = (uint)*(byte *)(param_1 * 8 + SAVED_GAM(0x06b7)) - (uint)*(byte *)PARTY_Y;
   uVar5 = (int)uVar2 >> 0xf;
   local_8 = (uVar2 ^ uVar5) - uVar5;
   if (0x7f < local_8) {
@@ -1183,10 +1212,10 @@ LAB_0000_139c:
       if ((local_6 < 4) && ((local_8 < 4 && (iVar4 = func_0x00009ec2(7,0), iVar4 == 0)))) {
         func_0x0000d740();
         func_0x0000c1de(100,5,300,MEM(0x0514));
-        iVar4 = func_0x0000fa1a(3,5,5,(*(char *)(param_1 * 8 + SAVED_GAM(0x06b7)) - *(char *)SAVED_GAM(0x02f1)) + '\x05',
-                                (*(char *)(param_1 * 8 + SAVED_GAM(0x06b6)) - *(char *)SAVED_GAM(0x02f0)) + '\x05');
+        iVar4 = func_0x0000fa1a(3,5,5,(*(char *)(param_1 * 8 + SAVED_GAM(0x06b7)) - *(char *)PARTY_Y) + '\x05',
+                                (*(char *)(param_1 * 8 + SAVED_GAM(0x06b6)) - *(char *)PARTY_X) + '\x05');
         if (iVar4 != 0) {
-          func_0x0000b352(*(undefined *)SAVED_GAM(0x02f1),*(undefined *)SAVED_GAM(0x02f0));
+          func_0x0000b352(*(undefined *)PARTY_Y,*(undefined *)PARTY_X);
           FUN_0000_109e();
         }
         goto LAB_0000_139c;
@@ -1214,7 +1243,7 @@ undefined2 FUN_0000_1482(undefined2 param_1,undefined2 param_2,int param_3)
   
   puVar1 = (undefined *)func_0x0000c232(param_1,param_2,*(undefined *)(param_3 * 8 + SAVED_GAM(0x06b4)));
   iVar2 = func_0x0000aa7c(*puVar1);
-  if ((iVar2 != 0) && (iVar2 = func_0x0000b532(*(undefined *)SAVED_GAM(0x02ef),param_1,param_2), iVar2 == 0)) {
+  if ((iVar2 != 0) && (iVar2 = func_0x0000b532(*(undefined *)PARTY_Z,param_1,param_2), iVar2 == 0)) {
     return 1;
   }
   return 0;
@@ -1249,13 +1278,13 @@ undefined FUN_0000_14ea(int param_1)
   int local_6;
   int local_4;
   
-  uVar2 = (uint)*(byte *)(param_1 * 8 + SAVED_GAM(0x06b6)) - (uint)*(byte *)SAVED_GAM(0x02f0);
+  uVar2 = (uint)*(byte *)(param_1 * 8 + SAVED_GAM(0x06b6)) - (uint)*(byte *)PARTY_X;
   uVar3 = (int)uVar2 >> 0xf;
   local_4 = (uVar2 ^ uVar3) - uVar3;
   if (0x7f < local_4) {
     local_4 = MEM(0x0100) - local_4;
   }
-  uVar2 = (uint)*(byte *)(param_1 * 8 + SAVED_GAM(0x06b7)) - (uint)*(byte *)SAVED_GAM(0x02f1);
+  uVar2 = (uint)*(byte *)(param_1 * 8 + SAVED_GAM(0x06b7)) - (uint)*(byte *)PARTY_Y;
   uVar3 = (int)uVar2 >> 0xf;
   local_6 = (uVar2 ^ uVar3) - uVar3;
   if (0x7f < local_6) {
@@ -1412,12 +1441,12 @@ void FUN_0000_17d4(undefined2 param_1,int param_2)
   bVar1 = *(byte *)(param_2 * 8 + SAVED_GAM(0x06b6));
   uVar2 = (uint)bVar1;
   uVar3 = (uint)*(byte *)(param_2 * 8 + SAVED_GAM(0x06b7));
-  bVar1 = bVar1 - *(char *)SAVED_GAM(0x02f0);
+  bVar1 = bVar1 - *(char *)PARTY_X;
   local_a = (uint)bVar1;
   if (0x7f < bVar1) {
     local_a = local_a - MEM(0x0100);
   }
-  bVar1 = *(char *)(param_2 * 8 + SAVED_GAM(0x06b7)) - *(char *)SAVED_GAM(0x02f1);
+  bVar1 = *(char *)(param_2 * 8 + SAVED_GAM(0x06b7)) - *(char *)PARTY_Y;
   local_e = (uint)bVar1;
   if (0x7f < bVar1) {
     local_e = local_e - MEM(0x0100);
@@ -1561,7 +1590,7 @@ LAB_0000_1a74:
       *pbVar1 = *pbVar1 ^ 1;
       if (*pbVar1 != 0) goto LAB_0000_1a74;
     }
-    bVar2 = *(byte *)SAVED_GAM(0x02d6) & 0xfe;
+    bVar2 = *(byte *)MODE_OF_TRANSPORTATION & 0xfe;
     if ((bVar2 == 0x12) || (bVar2 == 0x14)) {
       pbVar1 = (byte *)MEM(0x2c57);
       *pbVar1 = *pbVar1 ^ 1;
@@ -1608,9 +1637,7 @@ LAB_0000_1a74:
 
 
 
-void __cdecl16near FUN_0000_1b3e(void)
-
-{
+void troll_demand(void) {
   int *piVar1;
   char cVar2;
   int iVar3;
@@ -1639,60 +1666,53 @@ void __cdecl16near FUN_0000_1b3e(void)
     *piVar1 = *piVar1 - iVar3;
   }
   uVar4 = func_0x0000b714();
-  func_0x0000b8a4(uVar4,0,0,*(undefined *)SAVED_GAM(0x02f1),*(undefined *)SAVED_GAM(0x02f0),0,0xe4);
+  func_0x0000b8a4(uVar4,0,0, *PARTY_Y, *PARTY_X, 0, TROLL);
   func_0x0000df80(uVar4);
   return;
 }
 
 
 
-void __cdecl16near FUN_0000_1be8(void)
-
-{
+void check_for_trolls(void) {
   int iVar1;
   uint uVar2;
-  char *pcVar3;
+  char *pc_status_p;
   undefined2 unaff_DS;
-  byte *local_e;
-  int local_c;
-  uint local_4;
+  byte *pc_dex_p;
+  int pc_name_p;
   
   iVar1 = func_0x00009ec2(7,0);
-  if ((iVar1 == 0) && (*(char *)SAVED_GAM(0x02d6) == '\x1c')) {
-    func_0x0000d740();
-    func_0x00009680(MEM(0x6b64));
-    func_0x0000b916(10);
-    local_4 = 0;
-    if (*(char *)SAVED_GAM(0x02b5) != '\0') {
-      pcVar3 = (char *)SAVED_GAM(0x000d);
-      local_c = SAVED_GAM(0x0002);
-      local_e = (byte *)SAVED_GAM(0x000f);
+  if (iVar1 != 0 || *MODE_OF_TRANSPORTATION != ON_FOOT) return;
+
+  func_0x0000d740();
+  func_0x00009680(MEM(0x6b64));
+  func_0x0000b916(10);
+  if (*PARTY_SIZE == 0) continue;  // Um, what?
+  pc_status_p = PC_STATUS;
+  pc_name_p = PC_NAME;
+  pc_dex_p = PC_DEX;
+  for (int i = 0; i < *PARTY_SIZE; i++) {
+    if ((*pc_status_p != 'D') && (*pc_status_p != 'S')) {
+      func_0x00009680(pc_name_p);
+      func_0x00009680(MEM(0x6b8c));
+      iVar1 = 3;
       do {
-        if ((*pcVar3 != 'D') && (*pcVar3 != 'S')) {
-          func_0x00009680(local_c);
-          func_0x00009680(MEM(0x6b8c));
-          iVar1 = 3;
-          do {
-            func_0x0000b916(5);
-            func_0x000094ea(0x2e);
-            iVar1 = iVar1 + -1;
-          } while (iVar1 != 0);
-          func_0x00009680(MEM(0x6b9c));
-          uVar2 = func_0x00009ec2(0x1e,1);
-          if (*local_e < uVar2) {
-            FUN_0000_1b3e();
-            return;
-          }
-        }
-        pcVar3 = pcVar3 + 0x20;
-        local_c = local_c + 0x20;
-        local_e = local_e + 0x20;
-        local_4 = local_4 + 1;
-      } while (local_4 < *(byte *)SAVED_GAM(0x02b5));
+        func_0x0000b916(5);
+        func_0x000094ea(0x2e);
+      } while (--iVar1 != 0);
+      func_0x00009680(MEM(0x6b9c));
+      uVar2 = func_0x00009ec2(0x1e,1);
+      if (*pc_dex_p < uVar2) {
+        troll_demand();
+        return;
+      }
     }
-    func_0x00009680(MEM(0x6ba0));
+    pc_status_p = pc_status_p + 0x20;
+    pc_name_p = pc_name_p + 0x20;
+    pc_dex_p = pc_dex_p + 0x20;
+    local_4 = local_4 + 1;
   }
-  return;
+  func_0x00009680(MEM(0x6ba0));
 }
 
 
