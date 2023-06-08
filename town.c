@@ -166,12 +166,12 @@ void __cdecl16near FUN_0000_0212(void)
       do {
         cVar2 = *(char *)(local_e + iVar5 + MEM(0x6608));
         if (cVar2 == '-') {
-          iVar3 = func_0x00009ec2(7,0);
+          iVar3 = RANDOM(7, false);
           if (iVar3 != 0) {
             *(undefined *)(local_e + iVar5 + MEM(0x6608)) = 0x2c;
           }
         }
-        else if ((cVar2 == '.') && (iVar3 = func_0x00009ec2(7,0), iVar3 != 0)) {
+        else if ((cVar2 == '.') && (iVar3 = RANDOM(7, false), iVar3 != 0)) {
           *(undefined *)(local_e + iVar5 + MEM(0x6608)) = 0x2b;
         }
         iVar5 = iVar5 + 1;
@@ -623,7 +623,7 @@ void __cdecl16near FUN_0000_0958(void)
         FUN_0000_085e(iVar3);
       }
       else {
-        iVar2 = func_0x00009ec2(0xff,0);
+        iVar2 = RANDOM(255, false);
         if (iVar2 < 0x80) {
           FUN_0000_08d4(iVar3);
         }
@@ -835,20 +835,20 @@ void __cdecl16near FUN_0000_0c78(void)
   do {
     bVar2 = *local_10;
     if ((((bVar2 & 0xfe) == 0x10) && (local_10[4] == *(byte *)SAVED_GAM(0x02ef))) &&
-       (iVar3 = func_0x00009ec2(1,0), iVar3 == 0)) {
+       (iVar3 = RANDOM(1, false), iVar3 == 0)) {
       uVar6 = (uint)local_10[2];
       uVar5 = (uint)local_10[3];
       iVar3 = FUN_0000_0c4a(uVar5 + 1,uVar6);
       if (((iVar3 == 0) && (iVar3 = FUN_0000_0c4a(uVar5,uVar6 + 1), iVar3 == 0)) &&
          ((iVar3 = FUN_0000_0c4a(uVar5 - 1,uVar6), iVar3 == 0 &&
           (iVar3 = FUN_0000_0c4a(uVar5,uVar6 - 1), iVar3 == 0)))) {
-        iVar3 = func_0x00009ec2(1,0);
+        iVar3 = RANDOM(1, false);
         if (iVar3 == 0) {
-          iVar3 = func_0x00009ec2(1,0);
+          iVar3 = RANDOM(1, false);
           uVar5 = uVar5 + iVar3 * 2 + -1;
         }
         else {
-          iVar3 = func_0x00009ec2(1,0);
+          iVar3 = RANDOM(1, false);
           iVar3 = iVar3 * 2 + -1;
           uVar6 = uVar6 + iVar3;
           if (iVar3 < 1) {
@@ -902,13 +902,13 @@ uint FUN_0000_0dc4(int param_1)
   uVar2 = func_0x0000a49c();
   if (*(char *)SAVED_GAM(0x03b1) != '\0') {
     uVar2 = 0;
-    iVar3 = func_0x00009ec2(1);
+    iVar3 = RANDOM(1); // They seem to have forgotten to pass the second parameter.
     if (iVar3 != 0) {
       FUN_0000_0958();
       pcVar1 = (char *)SAVED_GAM(0x03b1);
       *pcVar1 = *pcVar1 + -1;
       func_0x00009680(MEM(0x273c));
-      iVar3 = func_0x00009ec2(3,0);
+      iVar3 = RANDOM(3, false);
       uVar2 = (uint)*(byte *)(iVar3 + MEM(0x2742));
     }
   }
@@ -985,7 +985,7 @@ void __cdecl16near FUN_0000_0f02(void)
     pcVar7 = (char *)SAVED_GAM(0x000d);
     uVar9 = 0;
     do {
-      if ((*pcVar7 == 'S') && (iVar6 = func_0x00009ec2(0xf,0), iVar6 == 0xf)) {
+      if ((*pcVar7 == 'S') && (iVar6 = RANDOM(15, false), iVar6 == 0xf)) {
         *pcVar7 = 'G';
       }
       pcVar7 = pcVar7 + 0x20;
@@ -1053,7 +1053,7 @@ void __cdecl16near FUN_0000_0f02(void)
       for (local_6 = 0; local_6 < *(byte *)SAVED_GAM(0x02b5); local_6 = local_6 + 1) {
         iVar6 = local_6 * 0x20;
         if (((*(char *)(iVar6 + SAVED_GAM(0x000d)) != 'D') && (*(char *)(iVar6 + SAVED_GAM(0x000d)) != 'P')) &&
-           (uVar9 = func_0x00009ec2(0x1d,0), *(byte *)(iVar6 + SAVED_GAM(0x000f)) < uVar9)) {
+           (uVar9 = RANDOM(29, false), *(byte *)(iVar6 + SAVED_GAM(0x000f)) < uVar9)) {
           func_0x00009680(MEM(0x2775));
           *(undefined *)(iVar6 + SAVED_GAM(0x000d)) = 0x50;
           func_0x0000a730();
@@ -1105,7 +1105,7 @@ undefined2 FUN_0000_10f2(int param_1)
   if ((bVar1 < 0x40) || (0x73 < bVar1)) {
     local_4 = 0;
   }
-  iVar2 = func_0x00009ec2(1,0);
+  iVar2 = RANDOM(1, false);
   if (iVar2 != 0) {
     local_4 = 0;
   }

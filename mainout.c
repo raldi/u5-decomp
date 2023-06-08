@@ -687,7 +687,7 @@ void __cdecl16near FUN_0000_0a60(void)
   undefined2 unaff_DS;
   
   if (*(char *)PARTY_Z != '\0') {
-    iVar1 = func_0x00009ec2(0xff,0);
+    iVar1 = RANDOM(255, false);
     if (iVar1 == 0x69) {
       func_0x00009680(MEM(0x2b1d));
       func_0x0000aea2();
@@ -902,7 +902,7 @@ int FUN_0000_0e04(int param_1)
   byte *pbVar3;
   undefined2 unaff_DS;
   
-  uVar1 = func_0x00009ec2(0xff,0);
+  uVar1 = RANDOM(255, false);
   iVar2 = 0;
   for (; *(byte *)(iVar2 + param_1) <= uVar1; uVar1 = uVar1 - *pbVar3) {
     pbVar3 = (byte *)(iVar2 + param_1);
@@ -921,13 +921,13 @@ undefined FUN_0000_0e4e(int param_1)
   
   if ((((param_1 < 4) || ((0x5f < param_1 && (param_1 < 0x70)))) ||
       ((0xd3 < param_1 && (param_1 < 0xd8)))) || ((0xe3 < param_1 && (param_1 < 0xe8)))) {
-    iVar1 = func_0x00009ec2(0x40,0);
+    iVar1 = RANDOM(64, false);
     if (iVar1 < 0x10) {
       if (0x7f < *(byte *)PARTY_Z) {
         iVar1 = FUN_0000_0e04(MEM(0x2bf6));
         return *(undefined *)(iVar1 + MEM(0x2bda));
       }
-      if ((param_1 == 1) && (iVar1 = func_0x00009ec2(7,0), iVar1 == 7)) {
+      if ((param_1 == 1) && (iVar1 = RANDOM(7, false), iVar1 == 7)) {
         return 0xec;
       }
       iVar1 = FUN_0000_0e04(MEM(0x2bf0));
@@ -935,7 +935,7 @@ undefined FUN_0000_0e4e(int param_1)
     }
   }
   else if (param_1 == 7) {
-    iVar1 = func_0x00009ec2(3,0);
+    iVar1 = RANDOM(3, false);
     if (iVar1 == 0) {
       return 0xe0;
     }
@@ -969,9 +969,9 @@ void __cdecl16near FUN_0000_0f4e(void)
   
   do {
     do {
-      cVar1 = func_0x00009ec2(0x1f,0);
+      cVar1 = RANDOM(31, false);
       *(uint *)SAVED_GAM(0x02d0) = (uint)(byte)(cVar1 + *(char *)SAVED_GAM(0x02f5));
-      cVar1 = func_0x00009ec2(0x1f,0);
+      cVar1 = RANDOM(31, false);
       *(uint *)SAVED_GAM(0x02d2) = (uint)(byte)(cVar1 + *(char *)SAVED_GAM(0x02f6));
       uVar2 = *(int *)SAVED_GAM(0x02d0) - (uint)*(byte *)PARTY_X;
       uVar3 = (int)uVar2 >> 0xf;
@@ -1053,7 +1053,7 @@ void __cdecl16near FUN_0000_109e(void)
   char local_4;
   
   if ((*(byte *)MODE_OF_TRANSPORTATION & 0xf8) == 0x20) {
-    uVar3 = func_0x00009ec2(0x1e,1);
+    uVar3 = RANDOM(30, true);
     if (uVar3 < *(byte *)SAVED_GAM(0x06b9)) {
       local_4 = (char)uVar3;
       pcVar1 = (char *)SAVED_GAM(0x06b9);
@@ -1081,7 +1081,7 @@ void __cdecl16near FUN_0000_109e(void)
         if ((int)uVar3 < 1) {
           pcVar1 = (char *)SAVED_GAM(0x020a);
           *pcVar1 = *pcVar1 + -1;
-          cVar2 = func_0x00009ec2(1,0);
+          cVar2 = RANDOM(1, false);
           cVar2 = cVar2 + '\x14';
         }
         else {
@@ -1111,14 +1111,14 @@ void FUN_0000_1168(int param_1,int param_2,int param_3)
   if (param_2 == 0) {
     cVar1 = *(char *)(param_3 * 8 + SAVED_GAM(0x06b5));
     if ((cVar1 == ',') || (cVar1 == '.')) {
-      bVar2 = func_0x00009ec2(3,0);
+      bVar2 = RANDOM(3, false);
       *(char *)(param_3 * 8 + SAVED_GAM(0x06b5)) = (bVar2 & 2) + 0x2d;
     }
   }
   if (param_1 == 0) {
     cVar1 = *(char *)(param_3 * 8 + SAVED_GAM(0x06b5));
     if ((cVar1 == '-') || (cVar1 == '/')) {
-      bVar2 = func_0x00009ec2(3,0);
+      bVar2 = RANDOM(3, false);
       *(char *)(param_3 * 8 + SAVED_GAM(0x06b5)) = (bVar2 & 2) + 0x2c;
     }
   }
@@ -1209,7 +1209,7 @@ LAB_0000_139c:
   }
   else {
     if ((bVar1 == 0x88) || (bVar1 == 0xdc)) {
-      if ((local_6 < 4) && ((local_8 < 4 && (iVar4 = func_0x00009ec2(7,0), iVar4 == 0)))) {
+      if ((local_6 < 4) && ((local_8 < 4 && (iVar4 = RANDOM(7, false), iVar4 == 0)))) {
         func_0x0000d740();
         func_0x0000c1de(100,5,300,MEM(0x0514));
         iVar4 = func_0x0000fa1a(3,5,5,(*(char *)(param_1 * 8 + SAVED_GAM(0x06b7)) - *(char *)PARTY_Y) + '\x05',
@@ -1378,7 +1378,7 @@ void FUN_0000_16fc(int param_1)
   uVar2 = (uint)*(byte *)(param_1 * 8 + SAVED_GAM(0x06b7));
   iVar6 = 0;
   while( true ) {
-    iVar3 = func_0x00009ec2(3,0);
+    iVar3 = RANDOM(3, false);
     if (iVar3 == 0) {
       iVar6 = FUN_0000_1482(uVar2 - 1,uVar1,param_1);
       if (iVar6 == 0) {
@@ -1473,7 +1473,7 @@ void FUN_0000_17d4(undefined2 param_1,int param_2)
   else {
     local_6 = -1;
   }
-  iVar4 = func_0x00009ec2(1,0);
+  iVar4 = RANDOM(1, false);
   if (iVar4 == 1) {
     if (local_4 != 0) {
       iVar4 = FUN_0000_1482(uVar3,uVar2 + local_4,param_2);
@@ -1530,7 +1530,7 @@ void FUN_0000_198c(int param_1)
     if (*pbVar1 == 0) {
       return;
     }
-    iVar5 = func_0x00009ec2(1,0);
+    iVar5 = RANDOM(1, false);
     if (iVar5 == 0) {
       FUN_0000_16fc(param_1);
       return;
@@ -1596,7 +1596,7 @@ LAB_0000_1a74:
       *pbVar1 = *pbVar1 ^ 1;
       if (*pbVar1 != 0) goto LAB_0000_1a74;
     }
-    iVar3 = func_0x00009ec2(0x1e,1);
+    iVar3 = RANDOM(30, true);
     iVar4 = FUN_0000_0d8c();
     if (iVar3 < iVar4) {
       FUN_0000_0fc4();
@@ -1681,7 +1681,7 @@ void check_for_trolls(void) {
   byte *pc_dex_p;
   int pc_name_p;
   
-  iVar1 = func_0x00009ec2(7,0);
+  iVar1 = RANDOM(7, false);
   if (iVar1 != 0 || *MODE_OF_TRANSPORTATION != ON_FOOT) return;
 
   func_0x0000d740();
@@ -1701,7 +1701,7 @@ void check_for_trolls(void) {
         func_0x000094ea(0x2e);
       } while (--iVar1 != 0);
       func_0x00009680(MEM(0x6b9c));
-      uVar2 = func_0x00009ec2(0x1e,1);
+      uVar2 = RANDOM(30, true);
       if (*pc_dex_p < uVar2) {
         troll_demand();
         return;
