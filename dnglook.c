@@ -785,7 +785,7 @@ LAB_0000_1248:
           local_14 = 0;
           uVar5 = bVar2 - 0x40 >> 2;
         }
-        if ((bVar2 & 0xfc) == 0)xec) {
+        if (bVar2 & 0xfc == 0xec) {  // Whirlpool
           uVar5 = local_8[bVar2 & 3];
         }
         iVar7 = func_0x0000c276(*(undefined *)SAVED_GAM(0x02ef),*(undefined *)(local_e + MEM(0xadf4)),

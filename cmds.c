@@ -320,7 +320,7 @@ void __cdecl16near FUN_0000_0962(void)
         local_16 = local_16 + iVar6;
         uVar3 = func_0x0000770e(*(undefined *)SAVED_GAM(0x02ef),local_16,uVar8);
         iVar5 = func_0x0000bc5e(uVar3);
-        if ((iVar5 != 0) && (local_c = (byte)uVar3, (local_c & 0xfc) != 0xec)) break;
+        if ((iVar5 != 0) && (local_c = (byte)uVar3, (local_c & 0xfc) != 0xec)) break; // 0xEC = Whirlpool
         local_e = local_e + 1;
         if (2 < local_e) {
           func_0x0000bc6a(1,iVar6 * 3 + 5,iVar4 * 3 + 5,5,5);
