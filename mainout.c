@@ -1,3 +1,9 @@
+#define NOT_SAILING 0
+#define WEST 1
+#define EAST 2
+#define NORTH 3
+#define SOUTH 4
+
 #define OUTSIDE 0
 #define SURFACE 0
 
@@ -21,9 +27,18 @@
 
 #define ORDAINED_SHRINE_QUESTS SAVED_GAM(0x0326)
 
+#define PARTY_SIZE SAVED_GAM(0x02b5)
+
+#define PC_NAME SAVED_GAM(0x0002)
+#define PC_STATUS SAVED_GAM(0x000d)
+#define PC_DEX SAVED_GAM(0x000f)
+
+#define PARTY_LOC SAVED_GAM(0x02ed)
 #define PARTY_X SAVED_GAM(0x02f0)
 #define PARTY_Y SAVED_GAM(0x02f1)
 #define PARTY_Z SAVED_GAM(0x02ef)
+
+#define SAILING_DIRECTION SAVED_GAM(0x03af)
 
 #define MODE_OF_TRANSPORTATION SAVED_GAM(0x02d6)
 #define IS_OCCUPIED_CARPET(n) (n & 0xfe == OCCUPIED_EAST_CARPET)
