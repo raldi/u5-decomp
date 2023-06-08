@@ -10,6 +10,7 @@
 
 #define OCCUPIED_EAST_CARPET 20
 #define OCCUPIED_WEST_CARPET 21
+#define FRIGATE_SAILING_NORTH 32
 #define SKIFF_NORTH 40
 
 #define IS_BRIDGE(n) (n & 0xfe == EW_BRIDGE)
@@ -27,6 +28,7 @@
 #define MODE_OF_TRANSPORTATION SAVED_GAM(0x02d6)
 #define IS_OCCUPIED_CARPET(n) (n & 0xfe == OCCUPIED_EAST_CARPET)
 #define IS_SKIFF(n) (n & 0xfc == SKIFF_NORTH)
+#define IS_SAILING_FRIGATE(n) (n & 0xfc == FRIGATE_SAILING_NORTH)
 
 #define SEXTANT_OJ 233
 #define SEXTANT_OL 235
@@ -178,7 +180,7 @@ LAB_0000_0283:
   if (iVar4 != 0) {
     return iVar4;
   }
-  if (*(char *)SAVED_GAM(0x03af) == '\0') {
+  if (*(char *)SAILING_DIRECTION == '\0') {
     if ((0x1f < *(byte *)MODE_OF_TRANSPORTATION) && ((local_6 & 0xfc) == 0xec)) {
       return 0;
     }
@@ -211,7 +213,7 @@ LAB_0000_02df:
     func_0x0000a06c(300,2000,100);
     FUN_0000_109e();
   }
-  *(undefined *)SAVED_GAM(0x03af) = 0;
+  *(undefined *)SAILING_DIRECTION = 0;
   *(undefined *)SAVED_GAM(0x03b0) = 1;
   return 0;
 }
@@ -310,8 +312,8 @@ int FUN_0000_0490(int param_1,uint param_2)
   undefined2 uVar4;
   
   if ((*(byte *)MODE_OF_TRANSPORTATION & 0xfc) == 0x20) {
-    if (param_2 != *(byte *)SAVED_GAM(0x03af)) {
-      *(undefined *)SAVED_GAM(0x03af) = (undefined)param_2;
+    if (param_2 != *(byte *)SAILING_DIRECTION) {
+      *(undefined *)SAILING_DIRECTION = (undefined)param_2;
       *(undefined *)SAVED_GAM(0x02dd) = 0;
     }
     *(undefined *)SAVED_GAM(0x03b0) = 0;
@@ -327,7 +329,7 @@ int FUN_0000_0490(int param_1,uint param_2)
     if (iVar1 != 0) {
       return iVar1;
     }
-    if (*(char *)SAVED_GAM(0x03af) != '\0') goto LAB_0000_050e;
+    if (*(char *)SAILING_DIRECTION != '\0') goto LAB_0000_050e;
     uVar2 = MEM(0x29ef);
   }
   else if (param_2 == 2) {
@@ -336,7 +338,7 @@ int FUN_0000_0490(int param_1,uint param_2)
     if (iVar1 != 0) {
       return iVar1;
     }
-    if (*(char *)SAVED_GAM(0x03af) != '\0') goto LAB_0000_050e;
+    if (*(char *)SAILING_DIRECTION != '\0') goto LAB_0000_050e;
     uVar2 = MEM(0x29e9);
   }
   else if (param_2 == 3) {
@@ -345,7 +347,7 @@ int FUN_0000_0490(int param_1,uint param_2)
     if (iVar1 != 0) {
       return iVar1;
     }
-    if (*(char *)SAVED_GAM(0x03af) != '\0') goto LAB_0000_050e;
+    if (*(char *)SAILING_DIRECTION != '\0') goto LAB_0000_050e;
     uVar2 = MEM(0x29db);
   }
   else {
@@ -355,7 +357,7 @@ int FUN_0000_0490(int param_1,uint param_2)
     if (iVar1 != 0) {
       return iVar1;
     }
-    if (*(char *)SAVED_GAM(0x03af) != '\0') goto LAB_0000_050e;
+    if (*(char *)SAILING_DIRECTION != '\0') goto LAB_0000_050e;
     uVar2 = MEM(0x29e2);
   }
   func_0x00009680(uVar2);
@@ -399,11 +401,11 @@ uint __cdecl16near FUN_0000_0598(void)
       func_0x0000ca5a();
     }
     *(undefined *)SAVED_GAM(0x03b0) = 1;
-    while (*(char *)SAVED_GAM(0x03af) != '\0') {
+    while (*(char *)SAILING_DIRECTION != '\0') {
       uVar4 = func_0x00009968();
       local_6 = func_0x00009e62(uVar4);
-      if ((local_6 != 0) && (local_6 != *(byte *)SAVED_GAM(0x03af))) break;
-      local_6 = (uint)*(byte *)SAVED_GAM(0x03af);
+      if ((local_6 != 0) && (local_6 != *(byte *)SAILING_DIRECTION)) break;
+      local_6 = (uint)*(byte *)SAILING_DIRECTION;
       if (*(char *)SAVED_GAM(0x02ec) != '\0') {
         cVar3 = '\0';
         cVar2 = '\0';
@@ -446,7 +448,7 @@ uint __cdecl16near FUN_0000_0598(void)
       pcVar1 = (char *)SAVED_GAM(0x02dd);
       *pcVar1 = *pcVar1 + '\x01';
     }
-    if (*(char *)SAVED_GAM(0x03af) == '\0') {
+    if (*(char *)SAILING_DIRECTION == '\0') {
       local_6 = func_0x0000a49c();
     }
   }
@@ -539,7 +541,7 @@ undefined2 FUN_0000_0790(undefined2 param_1)
     func_0x0000a34e(2);
     func_0x0000a39e(iVar3 * MEM(0x0200) + MEM(0xc000),MEM(0x0200),SAVED_GAM(0x03b4),MEM(0x2a53));
     local_4 = (char)iVar3;
-    *(char *)SAVED_GAM(0x02ed) = local_4 + '\x01';
+    *(char *)PARTY_LOC = local_4 + '\x01';
     if ((*(char *)PARTY_Z == '\0') || ((char)(local_4 + '\x01') == '(')) {
       *(undefined *)PARTY_Z = 0;
       *(undefined *)PARTY_Y = 1;
@@ -741,13 +743,12 @@ LAB_0000_0aba:
       func_0x0000f88e();
       bVar2 = true;
       local_a = 0;
-    }
-    else {
+    } else {
       iVar4 = func_0x0000c6d8();
       if (iVar4 != 0) {
         func_0x0000f89a();
       }
-      if (*(char *)SAVED_GAM(0x02ed) != '\0') {
+      if (*(char *)PARTY_LOC != '\0') {
         return;
       }
       misc = FUN_0000_0598();
@@ -770,10 +771,10 @@ LAB_0000_0aba:
         local_a = func_0x0000beb0(misc);
       }
     }
-    if ((*(byte *)MODE_OF_TRANSPORTATION & 0xfc) != 0x20) {
-      *(undefined *)SAVED_GAM(0x03af) = 0;
+    if (!IS_SAILING_FRIGATE(*MODE_OF_TRANSPORTATION)) {
+      *SAILING_DIRECTION = NOT_SAILING;
     }
-    if (*(char *)SAVED_GAM(0x02ed) == '\0') {
+    if (*PARTY_LOC == OUTSIDE) {
       if (local_a != 0) {
         func_0x0000cdac(2,uVar8);
         ground_tile_id_p = (byte *)func_0x0000c232(*(undefined *)PARTY_Y,*(undefined *)PARTY_X);
@@ -789,7 +790,7 @@ LAB_0000_0aba:
           func_0x0000f98a();
         }
         else if ((((*PARTY_X == SEXTANT_OJ) && (*PARTY_Y == SEXTANT_OL)) &&
-                 (*PARTY_Z == SURFACE)) && (*SAVED_GAM(0x02ed) == OUTSIDE)) {
+                 (*PARTY_Z == SURFACE)) && (*PARTY_LOC == OUTSIDE)) {
           // Between the Guardians
           func_0x00009680(MEM(0x2b6b));
           if (*ORDAINED_SHRINE_QUESTS == 0) {
@@ -1675,14 +1676,13 @@ void troll_demand(void) {
 
 void check_for_trolls(void) {
   int iVar1;
-  uint uVar2;
+  uint dex_thresh;
   char *pc_status_p;
   undefined2 unaff_DS;
   byte *pc_dex_p;
   int pc_name_p;
   
-  iVar1 = RANDOM(7, false);
-  if (iVar1 != 0 || *MODE_OF_TRANSPORTATION != ON_FOOT) return;
+  if (RANDOM(7, false) != 0 || *MODE_OF_TRANSPORTATION != ON_FOOT) return;
 
   func_0x0000d740();
   func_0x00009680(MEM(0x6b64));
@@ -1697,12 +1697,13 @@ void check_for_trolls(void) {
       func_0x00009680(MEM(0x6b8c));
       iVar1 = 3;
       do {
+        // Print dots slowly, one at a time
         func_0x0000b916(5);
         func_0x000094ea(0x2e);
       } while (--iVar1 != 0);
       func_0x00009680(MEM(0x6b9c));
-      uVar2 = RANDOM(30, true);
-      if (*pc_dex_p < uVar2) {
+      dex_thresh = RANDOM(30, true);
+      if (*pc_dex_p < dex_thresh) {
         troll_demand();
         return;
       }
