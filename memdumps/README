@@ -1,0 +1,9 @@
+Created using debugger-enabled DosBox build by entering a game mode and then
+doing
+
+    memdump 0:0 20000
+
+in the debugger controls.
+
+The MEMDUMP.TXT files that result were converted to binary using the
+dump2bin.py script.
