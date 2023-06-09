@@ -2040,8 +2040,11 @@ uint FUN_0000_3a52(byte param_1)
 }
 
 
-
-int FUN_0000_3ab2(int param_1,int param_2)
+// Was: FUN_0000_3ab2()
+// Returns a random number between param_2 and param_1.
+// Note that param_2 must always be < param_1 or you could
+// get a division-by-zero error.
+int RANDOM(int param_1,int param_2)
 
 {
   uint uVar1;
@@ -2651,7 +2654,7 @@ void FUN_0000_44c8(void)
   pcVar3 = (char *)0x55b3;
   do {
     if ((uVar2 < *(byte *)0x585b) && (*pcVar3 != 'D')) {
-      uVar1 = FUN_0000_3ab2(8,1,uVar2);
+      uVar1 = RANDOM(8,1,uVar2);
       FUN_0000_4472(uVar1);
     }
     pcVar3 = pcVar3 + 0x20;
@@ -2856,12 +2859,12 @@ void FUN_0000_4982(void)
   int iVar1;
   int iVar2;
 
-  iVar1 = FUN_0000_3ab2(0x3f,0);
+  iVar1 = RANDOM(0x3f,0);
   if (iVar1 == 0) {
     do {
-      iVar1 = FUN_0000_3ab2(4,0);
+      iVar1 = RANDOM(4,0);
       if (iVar1 != 0) break;
-      iVar2 = FUN_0000_3ab2(0xff,0);
+      iVar2 = RANDOM(0xff,0);
     } while (iVar2 < 0xc0);
     FUN_0000_48b6(iVar1);
   }
@@ -2895,11 +2898,11 @@ void FUN_0000_49f0(int param_1)
 
   FUN_0000_3c5c(500,3000,0x28);
   if (*(byte *)0x5893 < 0x80) {
-    iVar3 = FUN_0000_3ab2(7,0);
+    iVar3 = RANDOM(7,0);
     uVar1 = (uint)*(byte *)(iVar3 + 0x559e);
   }
   else {
-    uVar1 = FUN_0000_3ab2(1,0);
+    uVar1 = RANDOM(1,0);
   }
   if (uVar1 == 0) {
     FUN_0000_3270(0x5581);
@@ -2941,28 +2944,28 @@ void FUN_0000_4a92(void)
     iVar2 = 8;
     do {
       switchD_0000:e499::caseD_11(2,iVar2 + 4,0xb7,iVar2,8);
-      uVar1 = FUN_0000_3ab2(0x96,0x13);
+      uVar1 = RANDOM(0x96,0x13);
       FUN_0000_3d02(uVar1);
       iVar2 = iVar2 + 3;
     } while (iVar2 < 0xb4);
     iVar2 = 8;
     do {
       FUN_0000_24ee(iVar2 + 4,0xb7,iVar2,8,0,1);
-      uVar1 = FUN_0000_3ab2(0x96,0x13);
+      uVar1 = RANDOM(0x96,0x13);
       FUN_0000_3d02(uVar1);
       iVar2 = iVar2 + 3;
     } while (iVar2 < 0xb4);
     iVar2 = 0xb3;
     do {
       FUN_0000_8c20(2,iVar2 + 4,0xb7,iVar2,8);
-      uVar1 = FUN_0000_3ab2(0x96,0x13);
+      uVar1 = RANDOM(0x96,0x13);
       FUN_0000_3d02(uVar1);
       iVar2 = iVar2 + -3;
     } while (7 < iVar2);
     iVar2 = 0xb3;
     do {
       FUN_0000_24ee(iVar2 + 4,0xb7,iVar2,8,0,1);
-      uVar1 = FUN_0000_3ab2(0x96,0x13);
+      uVar1 = RANDOM(0x96,0x13);
       FUN_0000_3d02(uVar1);
       iVar2 = iVar2 + -3;
     } while (7 < iVar2);
@@ -4348,7 +4351,7 @@ uint FUN_0000_4b98(uint param_1,int param_2,uint param_3)
         in(in_DX);
         uVar11 = (uint)*(byte *)(param_3 * 8 + -0x45e9);
         uVar5 = *(int *)(uVar11 + 0x15cc);
-        if (((uVar11 == 0x1a) || (iVar12 = FUN_0000_3ab2(0xff,0), iVar12 < 0x80)) &&
+        if (((uVar11 == 0x1a) || (iVar12 = RANDOM(0xff,0), iVar12 < 0x80)) &&
            (((*(uint *)(uVar11 * 2 + 0x153c) & 0x8000) == 0 ||
             ((*(char *)0x587a != 'N' && (*(char *)0x587a != '\x1c')))))) {
           FUN_0000_5dce(0x96,5,400,0x2ee);
@@ -4794,7 +4797,7 @@ void FUN_0000_5494(int param_1,int param_2,int param_3,int param_4,
 void FUN_0000_54ce(int param_1)
 
 {
-  FUN_0000_3ab2(param_1,0);
+  RANDOM(param_1,0);
   return;
 }
 
@@ -4924,7 +4927,7 @@ void FUN_0000_5a2c(void)
     puStack_c = (int *)0x55ba;
     do {
       if ((*pcVar2 != 'D') && (*pcVar3 == ',')) {
-        iVar1 = FUN_0000_3ab2(7,0);
+        iVar1 = RANDOM(7,0);
         if (iVar1 == 7) {
           FUN_0000_5934(*puStack_c,1,iStack_a);
           *(int *)((int)FUN_0000_a9f4 + 6) = 1;
@@ -5709,7 +5712,7 @@ void FUN_0000_699c(int param_1)
         do {
           if (*(byte *)(iStack_6 + 0x58c8) < 0x80) {
             do {
-              uVar5 = FUN_0000_3ab2(8,1);
+              uVar5 = RANDOM(8,1);
               if (*(byte *)0x5893 == uVar5) {
                 uVar5 = 0;
               }
@@ -5820,7 +5823,7 @@ int FUN_0000_6bc0(void)
     uVar1 = 0;
   }
   else {
-    uVar1 = FUN_0000_3ab2(3,0);
+    uVar1 = RANDOM(3,0);
   }
   return uVar1;
 }
@@ -6897,7 +6900,7 @@ void FUN_0000_85e2(uint param_1,uint param_2)
   if ((param_2 & 4) != 0) {
     piVar5 = aiStack_28;
     do {
-      iVar4 = FUN_0000_3ab2(0xf,0);
+      iVar4 = RANDOM(0xf,0);
       uStack_6 = *piVar5;
       *piVar5 = aiStack_28[iVar4];
       aiStack_28[iVar4] = uStack_6;
@@ -6913,9 +6916,9 @@ void FUN_0000_85e2(uint param_1,uint param_2)
     uStack_6 = 1;
   }
   if (((uStack_6 != 8) && (uStack_6 != 0x10)) && (uStack_6 != 1)) {
-    uStack_6 = FUN_0000_3ab2(uStack_6,1);
+    uStack_6 = RANDOM(uStack_6,1);
     if (*(char *)((int)FUN_0000_5956 + 3) != '\0') {
-      uStack_6 = FUN_0000_3ab2(uStack_6,1);
+      uStack_6 = RANDOM(uStack_6,1);
     }
     FUN_0000_7330();
     if (0x19 < (int)uStack_6) {
@@ -7529,7 +7532,10 @@ void FUN_0000_8f46(void)
 }
 
 
-
+// I think this gets called when you go over a waterfall.
+// The code that checks for that tile calls thunk_FUN_0000_8fec();
+// and that calls FUN_0000_8fec()
+// and that calls this
 void thunk_FUN_0000_8f97(void)
 
 {
@@ -8192,7 +8198,7 @@ void FUN_0000_a650(void)
   int unaff_DS;
 
   if (*(char *)0x5895 != '\0') {
-    iVar1 = FUN_0000_3ab2(0xff,0);
+    iVar1 = RANDOM(0xff,0);
     if (iVar1 == 0x69) {
       FUN_0000_3270(0x2b1d);
       FUN_0000_4a92();
@@ -8881,7 +8887,7 @@ int FUN_0000_a9f4(int param_1)
   byte *pbVar3;
   int unaff_DS;
 
-  uVar1 = FUN_0000_3ab2(0xff,0);
+  uVar1 = RANDOM(0xff,0);
   iVar2 = 0;
   for (; *(byte *)(iVar2 + param_1) <= uVar1; uVar1 = uVar1 - *pbVar3) {
     pbVar3 = (byte *)(iVar2 + param_1);
@@ -8900,13 +8906,13 @@ int FUN_0000_aa3e(int param_1)
 
   if ((((param_1 < 4) || ((0x5f < param_1 && (param_1 < 0x70)))) ||
       ((0xd3 < param_1 && (param_1 < 0xd8)))) || ((0xe3 < param_1 && (param_1 < 0xe8)))) {
-    iVar1 = FUN_0000_3ab2(0x40,0);
+    iVar1 = RANDOM(0x40,0);
     if (iVar1 < 0x10) {
       if (0x7f < *(byte *)0x5895) {
         iVar1 = FUN_0000_a9f4(0x2bf6);
         return *(int *)(iVar1 + 0x2bda);
       }
-      if ((param_1 == 1) && (iVar1 = FUN_0000_3ab2(7,0), iVar1 == 7)) {
+      if ((param_1 == 1) && (iVar1 = RANDOM(7,0), iVar1 == 7)) {
         return 0xec;
       }
       iVar1 = FUN_0000_a9f4(0x2bf0);
@@ -8914,7 +8920,7 @@ int FUN_0000_aa3e(int param_1)
     }
   }
   else if (param_1 == 7) {
-    iVar1 = FUN_0000_3ab2(3,0);
+    iVar1 = RANDOM(3,0);
     if (iVar1 == 0) {
       return 0xe0;
     }
@@ -8948,9 +8954,9 @@ void FUN_0000_ab3e(void)
 
   do {
     do {
-      cVar1 = FUN_0000_3ab2(0x1f,0);
+      cVar1 = RANDOM(0x1f,0);
       *(uint *)0x5876 = (uint)(byte)(cVar1 + *(char *)0x589b);
-      cVar1 = FUN_0000_3ab2(0x1f,0);
+      cVar1 = RANDOM(0x1f,0);
       *(uint *)0x5878 = (uint)(byte)(cVar1 + *(char *)0x589c);
       uVar2 = *(int *)0x5876 - (uint)*(byte *)0x5896;
       uVar3 = (int)uVar2 >> 0xf;
@@ -9032,7 +9038,7 @@ void FUN_0000_ac8e(void)
   char cStack_4;
 
   if ((*(byte *)0x587c & 0xf8) == 0x20) {
-    uVar3 = FUN_0000_3ab2(0x1e,1);
+    uVar3 = RANDOM(0x1e,1);
     if (uVar3 < *(byte *)0x5c5f) {
       cStack_4 = (char)uVar3;
       pcVar1 = (char *)0x5c5f;
@@ -9060,7 +9066,7 @@ void FUN_0000_ac8e(void)
         if (cVar2 == '\0') {
           pcVar1 = (char *)0x57b0;
           *pcVar1 = *pcVar1 + -1;
-          cVar2 = FUN_0000_3ab2(1,0);
+          cVar2 = RANDOM(1,0);
           cVar2 = cVar2 + '\x14';
         }
         else {
@@ -9089,14 +9095,14 @@ void FUN_0000_ad58(int param_1,int param_2,int param_3)
   if (param_2 == 0) {
     cVar1 = *(char *)(param_3 * 8 + 0x5c5b);
     if ((cVar1 == ',') || (cVar1 == '.')) {
-      bVar2 = FUN_0000_3ab2(3,0);
+      bVar2 = RANDOM(3,0);
       *(char *)(param_3 * 8 + 0x5c5b) = (bVar2 & 2) + 0x2d;
     }
   }
   if (param_1 == 0) {
     cVar1 = *(char *)(param_3 * 8 + 0x5c5b);
     if ((cVar1 == '-') || (cVar1 == '/')) {
-      bVar2 = FUN_0000_3ab2(3,0);
+      bVar2 = RANDOM(3,0);
       *(char *)(param_3 * 8 + 0x5c5b) = (bVar2 & 2) + 0x2c;
     }
   }
@@ -9182,7 +9188,7 @@ LAB_0000_af8c:
   }
   else {
     if ((bVar1 == 0x88) || (bVar1 == 0xdc)) {
-      if ((iStack_6 < 4) && ((iStack_8 < 4 && (iVar4 = FUN_0000_3ab2(7,0), iVar4 == 0)))) {
+      if ((iStack_6 < 4) && ((iStack_8 < 4 && (iVar4 = RANDOM(7,0), iVar4 == 0)))) {
         FUN_0000_7330();
         FUN_0000_5dce(100,5,300,0x514);
                     // WARNING: Subroutine does not return
@@ -9390,7 +9396,7 @@ LAB_0000_b2a2:
     piStack_4 = (int *)(uint)*(byte *)(((uVar18 & 0xff) << (bVar16 & 0x1f)) + 0x13bf);
     piStack_6 = piStack_8;
     if (piStack_4 != (int *)0x0) {
-      iVar17 = FUN_0000_3ab2();
+      iVar17 = RANDOM();
       piStack_6 = (int *)((int)piStack_6 - iVar17);
     }
     return piStack_6;
@@ -10304,10 +10310,10 @@ LAB_0000_b2a2:
         }
         piVar15 = (int *)(uint)*(byte *)((int)piVar22 + 0x412b);
       } while ((param_5 < piVar15) ||
-              (piVar15 = (int *)FUN_0000_3ab2(),
+              (piVar15 = (int *)RANDOM(),
               piVar15 < (int *)(uint)*(byte *)((int)piVar22 + 0x412b)));
       if (*(char *)((int)piVar22 + 0x4133) != '\x01') {
-        FUN_0000_3ab2();
+        RANDOM();
       }
     } while( true );
   case 4:
@@ -11978,7 +11984,7 @@ void FUN_0000_b2ec(int param_1)
   uVar2 = (uint)*(byte *)(param_1 * 8 + 0x5c5d);
   iVar6 = 0;
   while( true ) {
-    iVar3 = FUN_0000_3ab2(3,0);
+    iVar3 = RANDOM(3,0);
     if (iVar3 == 0) {
       iVar6 = FUN_0000_b072(uVar2 - 1,uVar1,param_1);
       if (iVar6 == 0) {
@@ -12073,7 +12079,7 @@ void FUN_0000_b3c4(int param_1,int param_2)
   else {
     iStack_6 = -1;
   }
-  iVar4 = FUN_0000_3ab2(1,0);
+  iVar4 = RANDOM(1,0);
   if (iVar4 == 1) {
     if (iStack_4 != 0) {
       iVar4 = FUN_0000_b072(uVar3,uVar2 + iStack_4,param_2);
@@ -12130,7 +12136,7 @@ void FUN_0000_b57c(int param_1)
     if (*pbVar1 == 0) {
       return;
     }
-    iVar5 = FUN_0000_3ab2(1,0);
+    iVar5 = RANDOM(1,0);
     if (iVar5 == 0) {
       FUN_0000_b2ec(param_1);
       return;
@@ -12196,7 +12202,7 @@ LAB_0000_b664:
       *pbVar1 = *pbVar1 ^ 1;
       if (*pbVar1 != 0) goto LAB_0000_b664;
     }
-    iVar3 = FUN_0000_3ab2(0x1e,1);
+    iVar3 = RANDOM(0x1e,1);
     iVar4 = FUN_0000_a97c();
     if (iVar3 < iVar4) {
       FUN_0000_abb4();
@@ -12288,7 +12294,7 @@ void FUN_0000_b7d8(void)
   int iStack_c;
   uint uStack_4;
 
-  iVar1 = FUN_0000_3ab2(7,0);
+  iVar1 = RANDOM(7,0);
   if ((iVar1 == 0) && (*(char *)0x587c == '\x1c')) {
     FUN_0000_7330();
     FUN_0000_3270(0x6b64);
@@ -12309,7 +12315,7 @@ void FUN_0000_b7d8(void)
             iVar1 = iVar1 + -1;
           } while (iVar1 != 0);
           FUN_0000_3270(0x6b9c);
-          uVar2 = FUN_0000_3ab2(0x1e,1);
+          uVar2 = RANDOM(0x1e,1);
           if (*pbStack_e < uVar2) {
             FUN_0000_b72e();
             return;
@@ -12434,9 +12440,9 @@ void FUN_0000_db92(int param_1,int param_2)
   int unaff_DS;
   int uVar5;
 
-  iVar3 = FUN_0000_3ab2(7,0);
+  iVar3 = RANDOM(7,0);
   if (iVar3 == 0) {
-    iVar3 = FUN_0000_3ab2(3,0);
+    iVar3 = RANDOM(3,0);
     if (iVar3 == 0) {
       FUN_0000_3270(0x863a);
       uVar2 = 0xf;
@@ -12447,7 +12453,7 @@ void FUN_0000_db92(int param_1,int param_2)
     }
     *(int *)(param_2 * 8 + 0x5c5b) = uVar2;
     *(int *)(param_2 * 8 + 0x5c5a) = uVar2;
-    uVar2 = FUN_0000_3ab2(3,1);
+    uVar2 = RANDOM(3,1);
     *(int *)(param_2 * 8 + 0x5c5f) = uVar2;
     pbVar1 = (byte *)0x24e6;
     *pbVar1 = *pbVar1 | 2;
@@ -12455,7 +12461,7 @@ void FUN_0000_db92(int param_1,int param_2)
   }
   else {
     FUN_0000_5494(param_2,0,0,0,0,0,0);
-    iVar3 = FUN_0000_3ab2(0x1f,0);
+    iVar3 = RANDOM(0x1f,0);
     if (iVar3 == 0x13) {
       FUN_0000_3270(0x8606);
       FUN_0000_3c5c(500,3000,0x28);
@@ -12464,8 +12470,8 @@ void FUN_0000_db92(int param_1,int param_2)
     }
     else {
       uVar5 = 0;
-      uVar4 = FUN_0000_3ab2(3,0);
-      iVar3 = FUN_0000_3ab2(uVar4,uVar5);
+      uVar4 = RANDOM(3,0);
+      iVar3 = RANDOM(uVar4,uVar5);
       if (iVar3 == 0) {
         uVar4 = 0x8610;
       }
@@ -12506,7 +12512,7 @@ void FUN_0000_dc8a(int param_1,int param_2)
   else {
     uVar3 = ((bVar1 & 0x7f) - (uint)*(byte *)(param_1 * 0x20 + 0x55b6)) + 0x1e;
   }
-  iVar4 = FUN_0000_3ab2(0x1e,1);
+  iVar4 = RANDOM(0x1e,1);
   bVar2 = (int)(uVar3 >> 1) <= iVar4;
   if (((bVar2) && ((bVar1 & 0x80) == 0)) || ((!bVar2 && ((bVar1 & 0x80) != 0)))) {
     uVar5 = 0x864a;
@@ -12597,7 +12603,7 @@ int FUN_0000_ddfa(uint param_1,uint param_2)
   }
   *(char *)(iVar5 + 0x5858) = cVar2;
   uVar3 = (uint)*(byte *)(iVar5 + 0x3e6e);
-  iVar5 = FUN_0000_3ab2(0xf,2);
+  iVar5 = RANDOM(0xf,2);
   pcVar1 = (char *)(uVar3 + 0x5850);
   *pcVar1 = *pcVar1 + (char)iVar5;
   if (99 < *(byte *)(uVar3 + 0x5850)) {
@@ -12727,7 +12733,7 @@ void FUN_0000_dfe6(void)
         }
         else if (bVar4 != 0x30) {
           if (bVar4 == 0x40) {
-            iVar6 = FUN_0000_3ab2(0x1e,1);
+            iVar6 = RANDOM(0x1e,1);
             if ((int)uVar9 < iVar6) {
               if (bVar3 == 0x40) {
                 uVar7 = 0x8732;
@@ -12736,7 +12742,7 @@ void FUN_0000_dfe6(void)
               uVar10 = (uint)*(byte *)0x5895;
             }
             else {
-              uVar10 = FUN_0000_3ab2(8,1);
+              uVar10 = RANDOM(8,1);
             }
             if ((int)uVar10 < 4) {
               uVar7 = 0x873c;
@@ -12764,7 +12770,7 @@ void FUN_0000_dfe6(void)
             if (bVar3 != 0x62) {
               return;
             }
-            iVar6 = FUN_0000_3ab2(0x1e,1);
+            iVar6 = RANDOM(0x1e,1);
             if ((int)uVar9 < iVar6) {
               FUN_0000_3270(0x87aa);
               pbVar1 = (byte *)((int)FUN_0000_5956 + 4 +
@@ -12881,7 +12887,7 @@ void FUN_0000_e54a(int param_1)
     }
     else {
       bVar4 = *(byte *)(iVar5 * 0x20 + 0x55b5);
-      uVar7 = FUN_0000_3ab2(0x1e,1);
+      uVar7 = RANDOM(0x1e,1);
       if ((((bVar3 & 0x7f) - (uint)bVar4) + 0x1e >> 1 & 0xff) < uVar7) {
         FUN_0000_3270(0x8a64);
         pbVar1 = (byte *)(param_1 * 8 + 0x5c5f);
@@ -12936,7 +12942,7 @@ LAB_0000_e665:
   }
   else if ((bVar2 & 0xf0) == 0x40) {
     if (*(char *)0x57ac != '\0') {
-      iVar4 = FUN_0000_3ab2(0x1e,1);
+      iVar4 = RANDOM(0x1e,1);
       if ((int)((uVar7 * 2 - (uint)bVar3) + 0x1e >> 1) < iVar4) {
         FUN_0000_3270(0x8a9c);
         *(char *)((int)FUN_0000_5956 + 4 +
@@ -12976,7 +12982,7 @@ void FUN_0000_e928(int *param_1,int param_2,int param_3,int param_4,int param_5
     if (param_7 != 2) goto LAB_0000_e969;
     param_2 = param_2 * 3;
   }
-  param_6 = FUN_0000_3ab2(param_2,1);
+  param_6 = RANDOM(param_2,1);
 LAB_0000_e969:
   iVar2 = FUN_0000_d9a0();
   if (iVar2 != 0) {
@@ -13015,13 +13021,13 @@ void FUN_0000_e9e0(int param_1,int param_2,int param_3,int param_4,
   iVar2 = 8;
   while (iVar3 = iVar2, iVar2 = iVar3 + -1, -1 < iVar2) {
     if (*(byte *)(iVar3 + 0x412b) <= param_5) {
-      uVar1 = FUN_0000_3ab2(0x1e,1);
+      uVar1 = RANDOM(0x1e,1);
       if (*(byte *)(iVar3 + 0x412b) <= uVar1) {
         if (*(char *)(iVar3 + 0x4133) == '\x01') {
           uVar4 = 1;
         }
         else {
-          uVar4 = FUN_0000_3ab2(*(int *)(iVar3 + 0x4133),1);
+          uVar4 = RANDOM(*(int *)(iVar3 + 0x4133),1);
         }
         FUN_0000_e928(param_1,param_5,param_2,param_3,param_4,uVar4,*(int *)(iVar3 + 0x4123));
       }
@@ -13044,10 +13050,10 @@ void FUN_0000_ea58(int param_1,int param_2,int param_3,int param_4,
 
   iStack_4 = (int)param_5 / 2;
   while (iVar1 = iStack_4 + -1, -1 < iStack_4) {
-    iVar2 = FUN_0000_3ab2(0x2f,0);
+    iVar2 = RANDOM(0x2f,0);
     iStack_4 = iVar1;
     if (*(byte *)(iVar2 + 0x416c) <= param_5) {
-      uVar3 = FUN_0000_3ab2(0x1e,1);
+      uVar3 = RANDOM(0x1e,1);
       if (*(byte *)(iVar2 + 0x416c) <= uVar3) {
         FUN_0000_e928(param_1,param_5,param_2,param_3,param_4,iVar2,*(int *)(iVar2 + 0x413c));
       }
@@ -13582,7 +13588,7 @@ code_r0x00007513:
                   if ((char)uStack_10 != '\0') {
                     ppppppuVar46 = (uint ******)0x0;
                     pppppppuStack_a = (uint *******)0x843d;
-                    pppppppuStack_a = (uint *******)FUN_0000_3ab2();
+                    pppppppuStack_a = (uint *******)RANDOM();
                     if (pppppppuStack_a == (uint *******)0xb) {
                       FUN_0000_3270();
                       ppppppuVar46 = (uint ******)&DAT_0000_04b0;
@@ -13664,7 +13670,7 @@ code_r0x00007513:
             case 0xfe46:
               if ((int *)((int)puVar17 + bVar42 + 0x400) != (int *)0x0) {
                 pppppppuStack_a = (uint *******)0xfe58;
-                iVar18 = FUN_0000_3ab2();
+                iVar18 = RANDOM();
                 if (iVar18 < 0x20) {
                     // WARNING: Subroutine does not return
                   thunk_FUN_0000_8fec();
@@ -15834,21 +15840,21 @@ LAB_0000_f247:
           return puVar17;
         }
         pppppppuStack_a = (uint *******)0xf1df;
-        puVar17 = (uint *)FUN_0000_3ab2();
+        puVar17 = (uint *)RANDOM();
         pbVar36 = (byte *)((int)puVar21 + 0x41bd);
         puVar21 = unaff_SI;
       } while (puVar17 < (uint *)(uint)*pbVar36);
       if (unaff_SI == (uint *)0x5) {
         pppppppuStack_a = (uint *******)0xf1f8;
-        FUN_0000_3ab2();
+        RANDOM();
       }
       else if (unaff_SI == (uint *)0x6) {
         pppppppuStack_a = (uint *******)0xf211;
-        FUN_0000_3ab2();
+        RANDOM();
       }
       else {
         pppppppuStack_a = (uint *******)0xf23a;
-        FUN_0000_3ab2();
+        RANDOM();
       }
     } while( true );
   }
@@ -15959,14 +15965,14 @@ void FUN_0000_f13e(void)
       FUN_0000_3270(0x8dbc);
       iVar5 = 0;
       do {
-        uVar4 = FUN_0000_3ab2((uint)*(byte *)0x5895 * 4 + 4,1);
+        uVar4 = RANDOM((uint)*(byte *)0x5895 * 4 + 4,1);
         if (*(byte *)(iVar5 + 0x41bc) <= uVar4) {
           if (iVar5 == 5) {
-            uVar3 = FUN_0000_3ab2(7,0);
+            uVar3 = RANDOM(7,0);
             uVar6 = 3;
           }
           else if (iVar5 == 6) {
-            uVar3 = FUN_0000_3ab2(7,0);
+            uVar3 = RANDOM(7,0);
             uVar6 = 4;
           }
           else {
@@ -15976,7 +15982,7 @@ void FUN_0000_f13e(void)
             else {
               uVar4 = (uint)*(byte *)(iVar5 + 0x41c4);
             }
-            uVar3 = FUN_0000_3ab2(uVar4,1);
+            uVar3 = RANDOM(uVar4,1);
             uVar6 = *(int *)(iVar5 + 0x41cc);
           }
           FUN_0000_edf8(0x20,uVar3,uVar6);
@@ -16972,7 +16978,7 @@ void FUN_0000_56ba(void)
         iVar8 = iVar8 + 1;
       } while (iVar8 < 5);
       do {
-        cVar3 = FUN_0000_3ab2(3,1);
+        cVar3 = RANDOM(3,1);
         pcVar1 = (char *)0x5c5f;
         *pcVar1 = *pcVar1 + cVar3;
         if (99 < *(byte *)0x5c5f) {
@@ -17328,7 +17334,7 @@ void FUN_0000_a5d6(void)
     pbVar3 = (byte *)0x55b5;
     pcVar2 = (char *)0x55b3;
     do {
-      uVar1 = FUN_0000_3ab2(0x1e,1);
+      uVar1 = RANDOM(0x1e,1);
       if ((*pbVar3 <= uVar1) && (*pcVar2 != 'D')) {
         *pcVar2 = 'P';
         FUN_0000_3c5c(0xdac,0x32,1);
@@ -17692,7 +17698,7 @@ void FUN_0000_c2e2(void)
         return;
       }
     } while (((*unaff_SI == 'D') || (*unaff_SI == 'P')) ||
-            (uVar2 = FUN_0000_3ab2(0x1e,1), uVar2 <= *unaff_DI));
+            (uVar2 = RANDOM(0x1e,1), uVar2 <= *unaff_DI));
     *unaff_SI = 'P';
   } while( true );
 }
@@ -17818,7 +17824,7 @@ void FUN_0000_c350(void)
         FUN_0000_3270(0x77a4);
         FUN_0000_345e(0x20,1,*(int *)(unaff_BP + -0xc));
         FUN_0000_3270(0x77b8);
-        iVar6 = FUN_0000_3ab2(3,1);
+        iVar6 = RANDOM(3,1);
         if (iVar6 == 1) {
           FUN_0000_3270(0x77c0);
           iVar6 = *(int *)(unaff_BP + -6) * 0x20 + 0x55b4;
@@ -17943,7 +17949,7 @@ void FUN_0000_c900(int param_1,int param_2,int param_3,int param_4,int param_5)
   int iVar5;
   int unaff_DS;
 
-  uVar4 = FUN_0000_3ab2(0xff,0);
+  uVar4 = RANDOM(0xff,0);
   if ((uVar4 & 8) != 0) {
     uVar4 = FUN_0000_54ce(0x40);
     *(int *)0x5876 = *(int *)(param_5 + 2);
@@ -18094,7 +18100,7 @@ LAB_0000_cd86:
             if (local_14 < 1) {
               if (*piVar13 != 1) {
                 iVar14 = *(int *)(local_4 * 2 + 0x65c2);
-                if ((iVar14 < 200) && ((iVar14 == 0 || (iVar14 = FUN_0000_3ab2(2,0), iVar14 == 1))))
+                if ((iVar14 < 200) && ((iVar14 == 0 || (iVar14 = RANDOM(2,0), iVar14 == 1))))
                 {
                   if (*(int *)(local_4 * 2 + 0x655e) == -1) {
                     local_14 = local_14 + 1;
