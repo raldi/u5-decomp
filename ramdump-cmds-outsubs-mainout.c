@@ -385,6 +385,7 @@ void __cdecl16near FUN_0000_1c50(void)
 }
 
 
+// *** ultima.exe starts
 
 void FUN_0000_1d14(undefined2 param_1,undefined2 param_2)
 
@@ -18920,6 +18921,7 @@ void __cdecl16near FUN_0000_90d4(void)
   return;
 }
 
+// *** ultima.exe ends
 
 
 int FUN_0000_9436(void)
@@ -25430,6 +25432,7 @@ void __cdecl16near FUN_0000_9bda(void)
 }
 
 
+// *** mainout.ovl starts
 
 void __cdecl16near FUN_0000_9c6a(void)
 
@@ -34996,6 +34999,8 @@ void __cdecl16near FUN_0000_b7d8(void)
   return;
 }
 
+// ** mainout.ovl ends
+
 
 
 void __cdecl16near FUN_0000_b93a(void)
@@ -35170,6 +35175,7 @@ bool FUN_0000_bcb0(uint param_1)
 }
 
 
+// *** outsubs.ovl starts
 
 bool FUN_0000_bcfa(int param_1)
 
@@ -50598,7 +50604,9 @@ LAB_0000_de43:
   } while( true );
 }
 
+// *** outsubs.ovl ends
 
+// *** cmds.ovl starts
 
 void __cdecl16near FUN_0000_def2(void)
 
@@ -52146,4 +52154,4 @@ void __cdecl16near FUN_0000_f5c0(void)
   return;
 }
 
-
+// *** cmds.ovl ends

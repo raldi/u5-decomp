@@ -1917,6 +1917,7 @@ void __cdecl16near FUN_0000_1c50(void)
 }
 
 
+// *** ultima.exe starts
 
 void FUN_0000_1d14(undefined2 param_1,undefined2 param_2)
 
@@ -19379,6 +19380,8 @@ void __cdecl16near FUN_0000_90d4(void)
   return;
 }
 
+// *** ultima.exe ends
+
 
 
 void __cdecl16far thunk_FUN_0000_8fec(void)
@@ -28004,6 +28007,7 @@ int __cdecl16near FUN_0000_d9a0(void)
 }
 
 
+// *** sjog.ovl starts
 
 void FUN_0000_d9ca(undefined2 param_1,undefined2 param_2,int param_3)
 
@@ -42140,7 +42144,9 @@ LAB_0000_fbcd:
   goto LAB_0000_fbcd;
 }
 
+// *** sjog.ovl ends
 
+// *** comsubs.ovl starts
 
 undefined2 FUN_0000_fc00(int param_1,undefined2 param_2_00,undefined2 param_2)
 
@@ -43111,4 +43117,4 @@ undefined2 FUN_1000_0ede(int param_1,int param_2,int param_3,int param_4,int par
   return 1;
 }
 
-
+// *** comsubs.ovl ends
