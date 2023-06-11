@@ -910,12 +910,12 @@ void FUN_0000_104c(uint param_1)
 
 {
   int iVar1;
-  uint uVar2;
+  uint party_location;
   undefined2 unaff_DS;
   
-  uVar2 = (uint)*(byte *)SAVED_GAM(0x02ed);
+  party_location = *SAVED_GAM(0x02ed);
   if (param_1 <= *(byte *)(uVar2 + MEM(0x2dcf))) {
-    iVar1 = *(byte *)(uVar2 + MEM(0x2dc7)) + param_1;
+    iVar1 = *(byte *)(party_location + MEM(0x2dc7)) + param_1;
     func_0x00009a52(0x18,0x27,*(undefined *)(iVar1 + MEM(0x2e03)),*(undefined *)(iVar1 + MEM(0x2df7)),0);
     func_0x000099c4(0);
     func_0x00009ace(1);
@@ -1168,7 +1168,7 @@ undefined2 FUN_0000_150a(int param_1,uint param_2,uint param_3)
   char cVar2;
   uint uVar3;
   int iVar4;
-  byte *pbVar5;
+  byte *dungeon_tile_p;
   undefined2 unaff_DS;
   byte local_6;
   int local_4;
@@ -1186,18 +1186,18 @@ undefined2 FUN_0000_150a(int param_1,uint param_2,uint param_3)
        ((local_6 & 0xf0) == 0xc0)) {
       cVar2 = FUN_0000_145c(param_1,uVar3 & 7,*(byte *)((uVar3 & 7) + param_1 * 5 + MEM(0x2e8b)) + 0xe,
                             0x5f);
-      pbVar5 = (byte *)((uint)*(byte *)PARTY_Z * 0x40 + (param_2 & 7) * 8 + (param_3 & 7) + SAVED_GAM(0x03b4));
-      pbVar1 = pbVar5;
-      *pbVar1 = *pbVar1 & 0xf8;
-      pbVar1 = pbVar5;
-      *pbVar1 = *pbVar1 + cVar2;
+      dungeon_tile_p = (byte *)((uint)*(byte *)PARTY_Z * 0x40 + (param_2 & 7) * 8 + (param_3 & 7) + SAVED_GAM(0x03b4));
+      pbVar1 = dungeon_tile_p;
+      *pbVar1 &= 0xf8;  // Clear trap bits
+      *pbVar1 += cVar2; // Set them to... something
     }
     if (param_1 == 1) {
       if (((local_6 & 0xf0) == 0xb0) && ((uVar3 & 0xf) != 0)) {
-        FUN_0000_104c(uVar3 & 0xf); // Wall with writing
+        FUN_0000_104c(uVar3 & 0xf); // Draw writing on wall?
       } else if ((*(char *)MEM(0x6604) == '\x03') && // Dungeon type is dungeon, not cave or mine
               (((local_6 & 0xf0) == 0xc0 && // Tile is a skeleton wall
               (iVar4 = RANDOM(64, false), iVar4 < 4)))) {
+        // Indecipherable, but I suspect it makes their eyes blink red.
         func_0x000088a0(*(int *)MEM(0x13ae) + 8);
         func_0x00008acc(0x5d,0x57,0x5c);
         func_0x00008acc(0x5d,0x58,0x5b);

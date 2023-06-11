@@ -1,5 +1,9 @@
 #define HARPSICHORD 141
 
+#define NPC_TYPE SAVED_GAM(0x0ff8)
+
+#define DRUNKENNESS SAVED_GAM(0x03b1)
+
 /*
 Unable to decompile 'FUN_0000_0000'
 Cause: Offset must be between 0x0 and 0x10ffef, got 0xffffffff instead!
@@ -530,38 +534,38 @@ LAB_0000_0776:
 }
 
 
-
-void FUN_0000_085e(int param_1)
+// Updates one NPC to reflect your new wanted status
+void FUN_0000_085e(int npc_slot)
 
 {
   undefined2 *puVar1;
   int *piVar2;
   int iVar3;
-  int iVar4;
   undefined2 *puVar5;
   int *piVar6;
   undefined2 unaff_DS;
   byte local_4;
   
-  if (*(byte *)(param_1 + SAVED_GAM(0x0ff8)) < 0x2f) {
-    local_4 = 6;
+  if (*(byte *)(npc_slot + SAVED_GAM(0x0ff8)) < 0x2f) {
+    local_4 = 6; // If they're an inanimate object they attack you?
   }
   else {
-    local_4 = 7;
+    local_4 = 7; // And if they're alive, they chase you aggressively? Even non-guards?
   }
-  puVar5 = (undefined2 *)(param_1 * 0x10 + SAVED_GAM(0x07c4));
+
+  // Clear their calendar; this is their life now
+  puVar5 = (undefined2 *)(npc_slot * 0x10 + SAVED_GAM(0x07c4));
   for (iVar3 = 2; iVar3 != 0; iVar3 = iVar3 + -1) {
     puVar1 = puVar5;
     puVar5 = puVar5 + 1;
     *puVar1 = 0;
   }
-  iVar3 = (uint)local_4 * MEM(0x0100) + (uint)local_4;
-  piVar6 = (int *)(param_1 * 0x10 + SAVED_GAM(0x07b8));
-  for (iVar4 = 1; iVar4 != 0; iVar4 = iVar4 + -1) {
-    piVar2 = piVar6;
-    piVar6 = piVar6 + 1;
-    *piVar2 = iVar3;
-  }
+
+  // Change their behavior somehow
+  iVar3 = local_4 * (MEM(0x0100) + 1);
+  piVar6 = npc_slot * 0x10 + SAVED_GAM(0x07b8));
+  piVar2 = piVar6++;
+  *piVar2 = iVar3;
   *(char *)piVar6 = (char)iVar3;
   return;
 }
@@ -601,32 +605,30 @@ void FUN_0000_08d4(int param_1)
 
 
 
-void __cdecl16near FUN_0000_0958(void)
-
-{
-  char cVar1;
+void become_wanted(void) {
+  char npc_type;
   int iVar2;
-  int iVar3;
+  int npc_slot;
   undefined2 unaff_DS;
-  int *local_8;
+  int *npc_state_p;
   
-  iVar3 = 0;
-  local_8 = (int *)SAVED_GAM(0x09b8);
+  npc_slot = 0;
+  npc_state_p = (int *)SAVED_GAM(0x09b8);
   do {
-    if (*local_8 != 0) {
-      cVar1 = *(char *)(iVar3 + SAVED_GAM(0x0ff8));
-      if (((cVar1 == -4) || (cVar1 == -0x28)) || (cVar1 == 'p')) {
+    if (*npc_state_p != 0) {
+      npc_type = NPC_TYPE[npc_slot];
+      if (npc_type == SHADOWLORD || npc_type == DAEMON || npc_type == GUARD) {
         FUN_0000_085e(iVar3);
-      }
-      else {
+      } else {
         iVar2 = RANDOM(255, false);
         if (iVar2 < 0x80) {
+          // There's a 50/50 chance this is called
           FUN_0000_08d4(iVar3);
         }
       }
     }
-    local_8 = local_8 + 8;
-    iVar3 = iVar3 + 1;
+    npc_state_p += 8;
+    npc_slot++;
   } while (iVar3 < 0x20);
   return;
 }
@@ -705,7 +707,7 @@ undefined2 __cdecl16near FUN_0000_09e6(void)
   if (iVar9 < 0x80) {
     func_0x0000bd66(5,SAVED_GAM(0x02e2));
 LAB_0000_0b05:
-    FUN_0000_0958();
+    become_wanted();
   }
   else if ((local_12 & 0xfc) == 0xd8) goto LAB_0000_0b05;
   pbVar4 = (byte *)func_0x0000c232(iVar6,iVar5);
@@ -881,7 +883,6 @@ void __cdecl16near FUN_0000_0c78(void)
 uint FUN_0000_0dc4(int param_1)
 
 {
-  char *pcVar1;
   uint uVar2;
   int iVar3;
   undefined2 unaff_DS;
@@ -896,16 +897,15 @@ uint FUN_0000_0dc4(int param_1)
     func_0x0000ca5a();
   }
   uVar2 = func_0x0000a49c();
-  if (*(char *)SAVED_GAM(0x03b1) != '\0') {
-    uVar2 = 0;
-    iVar3 = RANDOM(1); // They seem to have forgotten to pass the second parameter.
-    if (iVar3 != 0) {
-      FUN_0000_0958();
-      pcVar1 = (char *)SAVED_GAM(0x03b1);
-      *pcVar1 = *pcVar1 + -1;
-      func_0x00009680(MEM(0x273c));
+  if (*DRUNKENNESS != 0) {
+    uVar2 = 0; // Half the time you don't move? In actuality, half the time you move where you asked
+    iVar3 = RANDOM(1,0);
+    if (iVar3 != 0) { // And half the time you move randomly?
+      become_wanted();
+      (*DRUNKENNESS)--;
+      func_0x00009680(MEM(0x273c)); // Print "Hic!"
       iVar3 = RANDOM(3, false);
-      uVar2 = (uint)*(byte *)(iVar3 + MEM(0x2742));
+      uVar2 = (uint)*(byte *)(iVar3 + MEM(0x2742)); // Move in random direction
     }
   }
   return uVar2;
@@ -1183,7 +1183,7 @@ void FUN_0000_11f0(int param_1)
       puVar3 = puVar3 + 8;
       iVar2 = iVar2 + -1;
     } while (iVar2 != 0);
-    *(undefined *)SAVED_GAM(0x03b1) = 0;
+    *(undefined *)DRUNKENNESS = 0;
     *(undefined *)SAVED_GAM(0x02fe) = 1;
     func_0x0000f8a6();
     func_0x0000f8d6(*(undefined *)SAVED_GAM(0x02d9));
@@ -1248,7 +1248,7 @@ undefined2 __cdecl16near FUN_0000_12ae(void)
     } while (cVar1 != 'Y');
     if (cVar1 != 'Y') {
       func_0x00009680(MEM(0x285e));
-      FUN_0000_0958();
+      become_wanted();
       return 1;
     }
     func_0x00009680(MEM(0x281b));
