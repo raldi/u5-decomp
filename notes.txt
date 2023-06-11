@@ -13,3 +13,89 @@ and note that this is the start of the sprite flags table.
 
 If you see one in the 0x3xxx or 0x4xxx range, add 0x10 and look it up
 in DATA.OVL. So if you see 0x3f5c, look up 3f6c.
+
+# OVL file details
+
+DosBox with debugger enabled logs all file access. This can be used to
+figure out how OVL files are used in game. When an OVL file is first
+loaded, you know it's relevant for the action that was just done in
+game. If another OVL file is loaded by a second action and then you
+repeat the first action and the first OVL file is loaded again, you
+can assume the first file was swapped out to make room for the second.
+
+Dependency tree, parallel OVLs are assumed to be mutually exclusive.
+
+ULTIMA.EXE has the base stuff, is always loaded. DATA.OVL is loaded at
+the very start, but doesn't have code. All OVL code is presumed to be
+stuff that can be swapped out of memory.
+
+## Game modes
+
+  town      overland     combat       dungeon
+TOWN.OVL  MAINOUT.OVL  COMBAT.OVL   DUNGEON.OVL
+NPC.OVL   OUTSUBS.OVL  COMSUBS.OVL  DNGLOOK.OVL
+
+Combat mode wants to keep SJOG.OVL loaded at all times.
+
+## Command ovls
+
+CAST2.OVL  CMDS.OVL  LOOKOBJ.OVL  SJOG.OVL  TALK.OVL  ZSTATS.OVL
+CAST.OVL
+
+CAST2.OVL can show up without CAST.OVL, usually both are loaded when
+CAST.OVL is used.
+
+OVL file details
+
+    BLCKTHRN.OVL  torture room scene?
+    CAST.OVL      magic
+    CAST2.OVL     magic, mixing spells, also saving the game?
+    CMDS.OVL      out-of-combat commands like ignite torch, hole up
+    COMBAT.OVL    * combat mode *
+    COMSUBS.OVL   combat mode subroutines
+    DNGLOOK.OVL   dungeon mode subroutines
+    DUNGEON.OVL   * dungeon mode *
+    ENDGAME.OVL   outro?
+    FLAMES.OVL    intro screen graphical effect?
+    FONT.OVL      text display?
+    INTRO.OVL     intro screen animation?
+    LOOKOBJ.OVL   L)ook command results
+    MAINOUT.OVL   * overland mode *
+    NPC.OVL       town NPC routines?
+    OUTSUBS.OVL   overland mode subroutines
+    SHOPPES.OVL   shopping in town?
+    SHOPPES2.OVL  shopping
+    SHOPPES3.OVL  shopping
+    SJOG.OVL      commands that work in combat, search, open, push
+    TALK.OVL      NPC conversation
+    TOWN.OVL      * town mode *
+    ZSTATS.OVL    Character stats and inventory view
+
+    DATA.OVL      game data, no code
+
+OVLs loaded by command keys:
+
+    a: (switch to combat mode if there's an enemy)
+    b: CMDS.OVL
+    c: CAST.OVL CAST2.OVL
+    e: -
+    f: CMDS.OVL
+    g: SJOG.OVL
+    h: CMDS.OVL
+    i: CMDS.OVL
+    j: SJOG.OVL
+    k: CMDS.OVL
+    l: LOOKOBJ.OVL
+    m: CMDS.OVL CAST2.OVL
+    n: CMDS.OVL
+    o: SJOG.OVL
+    p: CMDS.OVL
+    q: CAST2.OVL (huh? savegame function is in magic module?)
+    r: ZSTATS.OVL
+    s: SJOG.OVL
+    t: TALK.OVL (only in town)
+    u: CAST.OVL ZSTATS.OVL
+    v: LOOKOBJ.OVL
+    x: ? (didn't have a boat in test save)
+    y: CMDS.OVL
+    z: ZSTATS.OVL
