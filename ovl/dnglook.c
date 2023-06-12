@@ -5,7 +5,7 @@ typedef unsigned int    undefined2;
 
 
 
-void FUN_124c_0284(int param_1,int param_2)
+void dnglook_124c_0284(int param_1,int param_2)
 
 {
   int iVar1;
@@ -30,7 +30,7 @@ void FUN_124c_0284(int param_1,int param_2)
 
 
 
-undefined2 FUN_124c_0340(int param_1,int param_2)
+undefined2 dnglook_124c_0340(int param_1,int param_2)
 
 {
   byte bVar1;
@@ -70,7 +70,7 @@ undefined2 FUN_124c_0340(int param_1,int param_2)
 
 
 
-void __cdecl16near FUN_124c_06a8(void)
+void __cdecl16near dnglook_124c_06a8(void)
 
 {
   undefined *puVar1;
@@ -130,7 +130,7 @@ void __cdecl16near FUN_124c_06a8(void)
         (**(code **)(local_16 * 2 + -0x5600))();
         return;
       }
-      iVar4 = FUN_124c_0340(uVar2,uVar3);
+      iVar4 = dnglook_124c_0340(uVar2,uVar3);
       if (iVar4 != 0) {
         *local_4 = uVar3;
         local_4 = local_4 + 1;
@@ -154,7 +154,7 @@ void __cdecl16near FUN_124c_06a8(void)
 
 
 
-void FUN_124c_0844(int param_1)
+void dnglook_124c_0844(int param_1)
 
 {
   byte *pbVar1;
@@ -189,7 +189,7 @@ void FUN_124c_0844(int param_1)
 
 
 
-bool FUN_124c_08d4(int param_1)
+bool dnglook_124c_08d4(int param_1)
 
 {
   uint uVar1;
@@ -212,7 +212,7 @@ bool FUN_124c_08d4(int param_1)
 
 
 
-void __cdecl16near FUN_124c_093a(void)
+void __cdecl16near dnglook_124c_093a(void)
 
 {
   byte *pbVar1;
@@ -227,7 +227,7 @@ void __cdecl16near FUN_124c_093a(void)
   do {
     bVar2 = *pbVar4;
     if ((bVar2 & 0xf0) == 0xf0) {
-      iVar3 = FUN_124c_08d4(bVar2 & 0xf);
+      iVar3 = dnglook_124c_08d4(bVar2 & 0xf);
       if (iVar3 != 0) {
         pbVar1 = pbVar4;
         *pbVar1 = *pbVar1 & 0xaf;
@@ -241,7 +241,7 @@ void __cdecl16near FUN_124c_093a(void)
 
 
 
-void FUN_124c_097e(int param_1,char param_2)
+void dnglook_124c_097e(int param_1,char param_2)
 
 {
   undefined uVar1;
@@ -293,7 +293,7 @@ void FUN_124c_097e(int param_1,char param_2)
 
 
 
-void FUN_124c_0a48(int param_1)
+void dnglook_124c_0a48(int param_1)
 
 {
   int iVar1;
@@ -336,7 +336,7 @@ void FUN_124c_0a48(int param_1)
 
 
 
-void FUN_124c_0aee(int param_1)
+void dnglook_124c_0aee(int param_1)
 
 {
   int iVar1;
@@ -384,7 +384,7 @@ LAB_1000_2fe5:
 
 
 
-void FUN_124c_0b9e(int param_1)
+void dnglook_124c_0b9e(int param_1)
 
 {
   byte bVar1;
@@ -409,22 +409,22 @@ void FUN_124c_0b9e(int param_1)
   bVar1 = *(byte *)((uint)*(byte *)0x5895 * 0x40 + (local_6 & 7) * 8 + (local_4 & 7) + 0x595a) &
           0xf0;
   if (bVar1 < 0xa0) {
-    FUN_124c_0aee(param_1);
+    dnglook_124c_0aee(param_1);
   }
   if (((bVar1 == 0xb0) || (bVar1 == 0xc0)) || (bVar1 == 0xd0)) {
-    FUN_124c_097e(param_1,*(byte *)((uint)*(byte *)0x5896 +
+    dnglook_124c_097e(param_1,*(byte *)((uint)*(byte *)0x5896 +
                                     (*(uint *)0x5895 & 0xff) * 0x40 + (uint)*(byte *)0x5897 * 8 +
                                    0x595a) & 0xf0);
   }
   else {
-    FUN_124c_0a48(param_1);
+    dnglook_124c_0a48(param_1);
   }
   return;
 }
 
 
 
-void __cdecl16near FUN_124c_0c6c(void)
+void __cdecl16near dnglook_124c_0c6c(void)
 
 {
   byte bVar1;
@@ -483,7 +483,7 @@ void __cdecl16near FUN_124c_0c6c(void)
   }
   iVar6 = 0;
   do {
-    FUN_124c_0b9e(iVar6);
+    dnglook_124c_0b9e(iVar6);
     iVar6 = iVar6 + 1;
   } while (iVar6 < 4);
   return;
@@ -491,7 +491,7 @@ void __cdecl16near FUN_124c_0c6c(void)
 
 
 
-void __cdecl16near FUN_124c_0d3e(void)
+void __cdecl16near dnglook_124c_0d3e(void)
 
 {
   char cVar1;
@@ -527,7 +527,7 @@ void __cdecl16near FUN_124c_0d3e(void)
   if ((*(byte *)0x58a1 & 4) != 0) {
     *(undefined *)0xadb9 = 0xb3;
   }
-  FUN_124c_0c6c();
+  dnglook_124c_0c6c();
   iVar6 = 0;
   do {
     *(undefined *)(iVar6 + -0x51d9) = 0xff;
@@ -661,7 +661,7 @@ LAB_124c_0ea5:
 
 
 
-void FUN_124c_109e(int param_1)
+void dnglook_124c_109e(int param_1)
 
 {
   int iVar1;
@@ -700,7 +700,7 @@ void FUN_124c_109e(int param_1)
 
 
 
-void FUN_124c_117e(int param_1,int param_2)
+void dnglook_124c_117e(int param_1,int param_2)
 
 {
   undefined uVar1;

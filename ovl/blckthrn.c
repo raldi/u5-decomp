@@ -4,7 +4,7 @@ typedef unsigned int    undefined2;
 
 
 
-void FUN_124c_0000(int param_1)
+void blackthrn_124c_0000(int param_1)
 
 {
   if (0 < param_1) {
@@ -19,7 +19,7 @@ void FUN_124c_0000(int param_1)
 
 
 
-undefined2 FUN_124c_002e(uint param_1)
+undefined2 blackthrn_124c_002e(uint param_1)
 
 {
   int *piVar1;
@@ -70,7 +70,7 @@ undefined2 FUN_124c_002e(uint param_1)
 // WARNING: Removing unreachable block (ram,0x00012667)
 // WARNING: Removing unreachable block (ram,0x000126db)
 
-void FUN_124c_00be(byte *param_1)
+void blackthrn_124c_00be(byte *param_1)
 
 {
   char *pcVar1;
@@ -103,7 +103,7 @@ void FUN_124c_00be(byte *param_1)
         return;
       }
     }
-    iVar6 = FUN_124c_002e(uVar7);
+    iVar6 = blackthrn_124c_002e(uVar7);
     uVar3 = *(undefined2 *)0x5876;
     uVar4 = *(undefined2 *)0x5878;
     do {
@@ -113,7 +113,7 @@ void FUN_124c_00be(byte *param_1)
       local_16 = (char)uVar4;
       pcVar1 = (char *)(iVar6 * 8 + 0x5c5d);
       *pcVar1 = *pcVar1 + local_16;
-      FUN_124c_0000(1);
+      blackthrn_124c_0000(1);
       local_6 = local_6 + -1;
     } while (local_6 != 0);
   } while( true );
@@ -121,7 +121,7 @@ void FUN_124c_00be(byte *param_1)
 
 
 
-void FUN_124c_0278(int param_1,int param_2)
+void blackthrn_124c_0278(int param_1,int param_2)
 
 {
   undefined2 uVar1;
@@ -154,7 +154,7 @@ void FUN_124c_0278(int param_1,int param_2)
 
 
 
-int FUN_124c_02ea(int param_1)
+int blackthrn_124c_02ea(int param_1)
 
 {
   int iVar1;
@@ -200,7 +200,7 @@ int FUN_124c_02ea(int param_1)
 
 
 
-void FUN_124c_03ae(int param_1)
+void blackthrn_124c_03ae(int param_1)
 
 {
   char *pcVar1;
@@ -308,21 +308,21 @@ void FUN_124c_03ae(int param_1)
 
 
 
-void __cdecl16near FUN_124c_0510(void)
+void __cdecl16near blackthrn_124c_0510(void)
 
 {
   func_0x0001a89c();
-  FUN_124c_00be();
+  blackthrn_124c_00be();
   return;
 }
 
 
 
-void __cdecl16near FUN_124c_051c(void)
+void __cdecl16near blackthrn_124c_051c(void)
 
 {
   func_0x00019a80(0xb447);
-  FUN_124c_00be(0x36da);
+  blackthrn_124c_00be(0x36da);
   func_0x00019a80(0xb47d);
   func_0x00019a80(0x55c8);
   func_0x00019a80(0x6fac);
@@ -333,7 +333,7 @@ void __cdecl16near FUN_124c_051c(void)
 
 
 
-void FUN_124c_054a(int param_1,int param_2)
+void blackthrn_124c_054a(int param_1,int param_2)
 
 {
   bool bVar1;
@@ -346,20 +346,20 @@ void FUN_124c_054a(int param_1,int param_2)
   func_0x00019a80(0x6fb8);
   iVar4 = 0;
   do {
-    FUN_124c_0278(param_2,iVar4);
-    iVar2 = FUN_124c_02ea(param_2);
+    blackthrn_124c_0278(param_2,iVar4);
+    iVar2 = blackthrn_124c_02ea(param_2);
     if (iVar2 != 0) {
       *(undefined *)(param_2 + 0x58d8) = 0xff;
       func_0x0001c166(5,0x5888);
       if (1 < param_1) {
-        FUN_124c_03ae(0);
+        blackthrn_124c_03ae(0);
         goto LAB_124c_0595;
       }
       uVar3 = 0xb4ba;
 LAB_124c_0591:
       func_0x00019a80(uVar3);
 LAB_124c_0595:
-      FUN_124c_0510();
+      blackthrn_124c_0510();
       return;
     }
     if (param_1 < 2) {
@@ -379,12 +379,12 @@ LAB_124c_0595:
         *(undefined *)0xae39 = 0xe8;
       }
       else if (iVar4 == 3) {
-        FUN_124c_03ae(1);
+        blackthrn_124c_03ae(1);
       }
     }
     else {
       bVar1 = true;
-      FUN_124c_051c();
+      blackthrn_124c_051c();
     }
     iVar4 = iVar4 + 1;
     if (3 < iVar4) {
@@ -395,7 +395,7 @@ LAB_124c_0595:
 
 
 
-void __cdecl16near FUN_124c_060e(void)
+void __cdecl16near blackthrn_124c_060e(void)
 
 {
   undefined2 *puVar1;
@@ -511,10 +511,10 @@ void __cdecl16near FUN_124c_060e(void)
   func_0x00019a80(0x7024);
   func_0x0001bd16(0x32);
   func_0x00019a80(0x704c);
-  FUN_124c_0000(8);
+  blackthrn_124c_0000(8);
   func_0x0001bca4(6,0,0,10,4,0x70,0x70);
   func_0x0001bca4(7,0,0,10,6,0x70,0x70);
-  FUN_124c_00be(0x3702);
+  blackthrn_124c_00be(0x3702);
   func_0x0001a3c2(5,100,13000,1,0xaf0);
   func_0x0001bca4(8,0,0,5,5,0x16,0x16);
   func_0x00019298(5,5,0x178);
@@ -535,12 +535,12 @@ LAB_1000_2d74:
     goto LAB_1000_2d74;
   }
   func_0x00019a80(0x70ce);
-  FUN_124c_00be(0x370e);
+  blackthrn_124c_00be(0x370e);
   func_0x00019a80(0xb54a);
   func_0x0001a89c();
-  FUN_124c_054a(local_a,iVar10);
+  blackthrn_124c_054a(local_a,iVar10);
   if (*(char *)0x5c9a != '\0') {
-    FUN_124c_00be(0x3716);
+    blackthrn_124c_00be(0x3716);
   }
 LAB_124c_08e7:
   *(undefined *)0x5895 = 0xff;
@@ -555,7 +555,7 @@ LAB_124c_08e7:
 
 
 
-void __cdecl16near FUN_124c_0910(void)
+void __cdecl16near blackthrn_124c_0910(void)
 
 {
   byte bVar1;

@@ -5,7 +5,7 @@ typedef unsigned int    undefined2;
 
 
 
-void __cdecl16near FUN_141b_0552(void)
+void __cdecl16near cmds_141b_0552(void)
 
 {
   char *pcVar1;
@@ -110,7 +110,7 @@ void __cdecl16near FUN_141b_0552(void)
 
 
 
-undefined2 __cdecl16near FUN_141b_06ee(void)
+undefined2 __cdecl16near cmds_141b_06ee(void)
 
 {
   undefined2 uVar1;
@@ -128,7 +128,7 @@ undefined2 __cdecl16near FUN_141b_06ee(void)
 
 
 
-undefined2 __cdecl16near FUN_141b_070c(void)
+undefined2 __cdecl16near cmds_141b_070c(void)
 
 {
   byte bVar1;
@@ -150,14 +150,14 @@ undefined2 __cdecl16near FUN_141b_070c(void)
 
 
 
-undefined2 __cdecl16near FUN_141b_073e(void)
+undefined2 __cdecl16near cmds_141b_073e(void)
 
 {
   int iVar1;
   
-  iVar1 = FUN_141b_0788(5,4);
-  if ((((iVar1 != 1) && (iVar1 = FUN_141b_0788(5,6), iVar1 != 1)) &&
-      (iVar1 = FUN_141b_0788(6,5), iVar1 != 1)) && (iVar1 = FUN_141b_0788(4,5), iVar1 != 1)) {
+  iVar1 = cmds_141b_0788(5,4);
+  if ((((iVar1 != 1) && (iVar1 = cmds_141b_0788(5,6), iVar1 != 1)) &&
+      (iVar1 = cmds_141b_0788(6,5), iVar1 != 1)) && (iVar1 = cmds_141b_0788(4,5), iVar1 != 1)) {
     return 0;
   }
   return 1;
@@ -165,7 +165,7 @@ undefined2 __cdecl16near FUN_141b_073e(void)
 
 
 
-undefined2 FUN_141b_0788(int param_1,int param_2)
+undefined2 cmds_141b_0788(int param_1,int param_2)
 
 {
   char cVar1;
@@ -192,7 +192,7 @@ undefined2 FUN_141b_0788(int param_1,int param_2)
 
 
 
-undefined2 __cdecl16near FUN_141b_07f6(void)
+undefined2 __cdecl16near cmds_141b_07f6(void)
 
 {
   char *pcVar1;
@@ -214,7 +214,7 @@ undefined2 __cdecl16near FUN_141b_07f6(void)
         uVar6 = 0x425e;
         goto LAB_141b_080d;
       }
-      iVar7 = FUN_141b_06ee();
+      iVar7 = cmds_141b_06ee();
       if (iVar7 == 0) {
         return 1;
       }
@@ -224,7 +224,7 @@ LAB_141b_0875:
       *(byte *)0x587c = bVar5;
     }
     else if (bVar5 == 0x1b) {
-      iVar7 = FUN_141b_06ee();
+      iVar7 = cmds_141b_06ee();
       if (iVar7 == 0) {
         return 1;
       }
@@ -233,7 +233,7 @@ LAB_141b_0875:
     }
     else {
       if ((bVar5 & 0xfc) == 0x28) {
-        iVar7 = FUN_141b_06ee();
+        iVar7 = cmds_141b_06ee();
         if (iVar7 == 0) {
           return 1;
         }
@@ -244,7 +244,7 @@ LAB_141b_0875:
         func_0x00019a80(0x42bf);
         return 0;
       }
-      iVar7 = FUN_141b_070c();
+      iVar7 = cmds_141b_070c();
       if (iVar7 == 0) {
         return 1;
       }
@@ -283,7 +283,7 @@ LAB_141b_080d:
 
 
 
-void __cdecl16near FUN_141b_0962(void)
+void __cdecl16near cmds_141b_0962(void)
 
 {
   byte *pbVar1;
@@ -356,7 +356,7 @@ void __cdecl16near FUN_141b_0962(void)
 
 
 
-void __cdecl16near FUN_141b_0aea(void)
+void __cdecl16near cmds_141b_0aea(void)
 
 {
   byte *pbVar1;
@@ -389,7 +389,7 @@ LAB_141b_0b01:
     return;
   }
   if (*(char *)0x5893 == '\0') {
-    FUN_141b_0962();
+    cmds_141b_0962();
     return;
   }
   func_0x0001bbfc(*(undefined *)0x5951,*(undefined *)0x5950,*(undefined *)0x594f);
@@ -508,7 +508,7 @@ LAB_141b_0bee:
 
 
 
-void __cdecl16near FUN_141b_0ddc(void)
+void __cdecl16near cmds_141b_0ddc(void)
 
 {
   undefined2 *puVar1;
@@ -587,7 +587,7 @@ void __cdecl16near FUN_141b_0ddc(void)
 
 
 
-void __cdecl16near FUN_141b_0eb4(void)
+void __cdecl16near cmds_141b_0eb4(void)
 
 {
   char *pcVar1;
@@ -621,13 +621,13 @@ LAB_141b_0ff4:
   }
   else {
     if (bVar3 == 0x14) {
-      iVar6 = FUN_141b_073e();
+      iVar6 = cmds_141b_073e();
       if ((iVar6 != 0) || (iVar6 = func_0x0001ae7c(bVar2,0x1c), iVar6 != 0)) {
         func_0x00019a80(0x437d);
         local_4 = '\x1b';
         goto LAB_141b_0f43;
       }
-      iVar6 = FUN_141b_073e();
+      iVar6 = cmds_141b_073e();
       if (iVar6 == 0) {
         uVar4 = 0x4386;
       }
@@ -642,7 +642,7 @@ LAB_141b_0ff4:
       if (bVar3 != 0x20) {
         if (bVar3 == 0x24) {
           func_0x00019a80(0x43d2);
-          iVar6 = FUN_141b_073e();
+          iVar6 = cmds_141b_073e();
           if (iVar6 == 0) {
             if (*(char *)0x5c61 != '\0') {
               local_4 = *(char *)0x587c;
@@ -667,7 +667,7 @@ LAB_141b_0ff4:
           local_a = *(char *)0x5c61;
         }
         else if (bVar3 == 0x28) {
-          iVar6 = FUN_141b_073e();
+          iVar6 = cmds_141b_073e();
           if (iVar6 == 0) {
             uVar4 = 0x43ac;
           }
@@ -693,7 +693,7 @@ LAB_141b_0ecc:
 
 
 
-undefined2 FUN_141b_1030(undefined2 param_1)
+undefined2 cmds_141b_1030(undefined2 param_1)
 
 {
   char cVar1;
@@ -784,7 +784,7 @@ undefined2 FUN_141b_1030(undefined2 param_1)
 
 
 
-void FUN_141b_1202(uint param_1,uint param_2,int param_3)
+void cmds_141b_1202(uint param_1,uint param_2,int param_3)
 
 {
   byte *pbVar1;
@@ -828,7 +828,7 @@ void FUN_141b_1202(uint param_1,uint param_2,int param_3)
 
 
 
-void FUN_141b_12c8(undefined2 param_1)
+void cmds_141b_12c8(undefined2 param_1)
 
 {
   byte *pbVar1;
@@ -877,7 +877,7 @@ LAB_141b_1315:
         }
       }
       if (local_c == '\x1a') {
-        FUN_141b_1202(iVar6 + (uint)*(byte *)0x5897,local_6 + (uint)*(byte *)0x5896,iVar5);
+        cmds_141b_1202(iVar6 + (uint)*(byte *)0x5897,local_6 + (uint)*(byte *)0x5896,iVar5);
         return;
       }
       if ((local_6 + (uint)*(byte *)0x5896 == (uint)*(byte *)(iVar5 + 0x1eaa)) &&
@@ -905,7 +905,7 @@ LAB_141b_1315:
 
 
 
-undefined2 __cdecl16near FUN_141b_1418(void)
+undefined2 __cdecl16near cmds_141b_1418(void)
 
 {
   char *pcVar1;
@@ -936,14 +936,14 @@ undefined2 __cdecl16near FUN_141b_1418(void)
       func_0x000198ea(10);
       if ((*(char *)0x5893 == '\0') || (0x20 < *(byte *)0x5893)) {
         if (*(char *)0x5893 == '\0') {
-          FUN_141b_12c8(local_22);
+          cmds_141b_12c8(local_22);
         }
         else {
           func_0x00019a80(0x453a);
         }
       }
       else {
-        local_24 = FUN_141b_1030(local_22);
+        local_24 = cmds_141b_1030(local_22);
       }
     }
   }
@@ -952,7 +952,7 @@ undefined2 __cdecl16near FUN_141b_1418(void)
 
 
 
-undefined2 FUN_141b_14ba(byte param_1)
+undefined2 cmds_141b_14ba(byte param_1)
 
 {
   if (param_1 < 0xa7) {
@@ -983,7 +983,7 @@ undefined2 FUN_141b_14ba(byte param_1)
 
 
 
-uint FUN_141b_1504(int param_1,uint param_2,int param_3,int param_4)
+uint cmds_141b_1504(int param_1,uint param_2,int param_3,int param_4)
 
 {
   if ((param_4 == 1) && (param_3 == 0)) {
@@ -1003,7 +1003,7 @@ uint FUN_141b_1504(int param_1,uint param_2,int param_3,int param_4)
 
 
 
-void FUN_141b_1548(undefined2 param_1,undefined2 param_2,undefined2 param_3,undefined2 param_4,
+void cmds_141b_1548(undefined2 param_1,undefined2 param_2,undefined2 param_3,undefined2 param_4,
                   undefined2 param_5,undefined2 param_6,undefined param_7,byte param_8)
 
 {
@@ -1019,7 +1019,7 @@ void FUN_141b_1548(undefined2 param_1,undefined2 param_2,undefined2 param_3,unde
   *puVar3 = param_7;
   param_8 = param_8 & 0xfc;
   if ((param_8 == 0x90) || (param_8 == 0xb4)) {
-    uVar1 = FUN_141b_1504(0,param_8,param_1,param_2);
+    uVar1 = cmds_141b_1504(0,param_8,param_1,param_2);
     puVar3 = (undefined *)func_0x0001c632(param_3,param_4);
     *puVar3 = uVar1;
   }
@@ -1028,7 +1028,7 @@ void FUN_141b_1548(undefined2 param_1,undefined2 param_2,undefined2 param_3,unde
 
 
 
-void FUN_141b_15b0(undefined2 param_1,undefined2 param_2,undefined2 param_3,undefined2 param_4,
+void cmds_141b_15b0(undefined2 param_1,undefined2 param_2,undefined2 param_3,undefined2 param_4,
                   undefined2 param_5,undefined2 param_6,byte param_7,undefined param_8)
 
 {
@@ -1044,7 +1044,7 @@ void FUN_141b_15b0(undefined2 param_1,undefined2 param_2,undefined2 param_3,unde
   *puVar3 = param_8;
   param_7 = param_7 & 0xfc;
   if ((param_7 == 0x90) || (param_7 == 0xb4)) {
-    uVar1 = FUN_141b_1504(1,param_7,param_1,param_2);
+    uVar1 = cmds_141b_1504(1,param_7,param_1,param_2);
     puVar3 = (undefined *)func_0x0001c632(param_5,param_6);
     *puVar3 = uVar1;
   }
@@ -1053,7 +1053,7 @@ void FUN_141b_15b0(undefined2 param_1,undefined2 param_2,undefined2 param_3,unde
 
 
 
-void __cdecl16near FUN_141b_161a(void)
+void __cdecl16near cmds_141b_161a(void)
 
 {
   char *pcVar1;
@@ -1099,7 +1099,7 @@ void __cdecl16near FUN_141b_161a(void)
   pbVar10 = (byte *)func_0x0001c632(iVar8,iVar15);
   bVar3 = *pbVar10;
   iVar9 = func_0x0001b8be(*(undefined *)0x5895,iVar8,iVar15);
-  if ((iVar9 == 0) && (iVar9 = FUN_141b_14ba(bVar3), iVar9 != 0)) {
+  if ((iVar9 == 0) && (iVar9 = cmds_141b_14ba(bVar3), iVar9 != 0)) {
     if ((bVar3 & 0xfc) == 0xb4) {
       cVar6 = 'E';
     }
@@ -1114,14 +1114,14 @@ void __cdecl16near FUN_141b_161a(void)
     cVar5 = *pcVar13;
     iVar14 = func_0x0001b8be(*(undefined *)0x5895,iVar12,iVar9);
     if ((iVar14 == 0) && (cVar4 == cVar6)) {
-      FUN_141b_1548(iVar2,iVar7,iVar12,iVar9,iVar8,iVar15,cVar4,bVar3);
+      cmds_141b_1548(iVar2,iVar7,iVar12,iVar9,iVar8,iVar15,cVar4,bVar3);
     }
     else {
       if (cVar5 != cVar6) {
         uVar11 = 0x4567;
         goto LAB_141b_16d3;
       }
-      FUN_141b_15b0(iVar2,iVar7,iVar8,iVar15,*(undefined *)0x5897,*(undefined *)0x5896,bVar3,cVar5);
+      cmds_141b_15b0(iVar2,iVar7,iVar8,iVar15,*(undefined *)0x5897,*(undefined *)0x5896,bVar3,cVar5);
     }
     local_12 = (char)iVar7;
     pcVar1 = (char *)0x5896;
@@ -1157,7 +1157,7 @@ LAB_141b_16d3:
 
 
 
-int __cdecl16near FUN_141b_17ec(void)
+int __cdecl16near cmds_141b_17ec(void)
 
 {
   bool bVar1;
@@ -1223,7 +1223,7 @@ LAB_141b_184d:
 
 
 
-uint __cdecl16near FUN_141b_18be(void)
+uint __cdecl16near cmds_141b_18be(void)
 
 {
   uint uVar1;
@@ -1335,7 +1335,7 @@ LAB_141b_19c5:
 
 
 
-uint FUN_141b_1a70(uint param_1)
+uint cmds_141b_1a70(uint param_1)
 
 {
   bool bVar1;
@@ -1369,7 +1369,7 @@ uint FUN_141b_1a70(uint param_1)
 
 
 
-void __cdecl16near FUN_141b_1ad8(void)
+void __cdecl16near cmds_141b_1ad8(void)
 
 {
   char *pcVar1;
@@ -1406,8 +1406,8 @@ void __cdecl16near FUN_141b_1ad8(void)
     func_0x000198ea(0x2c);
     func_0x000198ea(0x19);
     func_0x00019a80(0x8fc6);
-    uVar3 = FUN_141b_18be();
-    if (((int)uVar3 < 0) || (iVar4 = FUN_141b_1a70(uVar3), iVar4 < 1)) goto LAB_141b_1c11;
+    uVar3 = cmds_141b_18be();
+    if (((int)uVar3 < 0) || (iVar4 = cmds_141b_1a70(uVar3), iVar4 < 1)) goto LAB_141b_1c11;
     if (uVar3 != 0) {
       func_0x00019a80(0x8ff0);
       if (*(byte *)0x5893 < 0x21) {
@@ -1453,7 +1453,7 @@ LAB_141b_1c11:
 
 
 
-void __cdecl16near FUN_141b_1c20(void)
+void __cdecl16near cmds_141b_1c20(void)
 
 {
   undefined2 uVar1;

@@ -5,7 +5,7 @@ typedef unsigned int    undefined2;
 
 
 
-void FUN_1641_0000(int param_1,undefined2 param_2)
+void font_1641_0000(int param_1,undefined2 param_2)
 
 {
   int *piVar1;
@@ -124,7 +124,7 @@ LAB_1000_6500:
 
 
 
-void FUN_1641_02a2(int param_1,int param_2)
+void font_1641_02a2(int param_1,int param_2)
 
 {
   byte bVar1;
@@ -149,7 +149,7 @@ void FUN_1641_02a2(int param_1,int param_2)
 
 
 
-undefined2 FUN_1641_02fc(int param_1)
+undefined2 font_1641_02fc(int param_1)
 
 {
   char *pcVar1;
@@ -180,7 +180,7 @@ undefined2 FUN_1641_02fc(int param_1)
       do {
         if (*pcVar4 != -2) {
           iVar5 = iVar3;
-          FUN_1641_02a2(iVar3,local_6);
+          font_1641_02a2(iVar3,local_6);
         }
         pcVar4 = pcVar4 + 0x20;
         iVar3 = iVar3 + 1;
@@ -229,7 +229,7 @@ LAB_1641_0406:
 
 
 
-void FUN_1641_0418(int param_1)
+void font_1641_0418(int param_1)
 
 {
   undefined uVar1;
@@ -266,7 +266,7 @@ void FUN_1641_0418(int param_1)
 
 
 
-void __cdecl16near FUN_1641_04a4(void)
+void __cdecl16near font_1641_04a4(void)
 
 {
   int iVar1;
@@ -284,11 +284,11 @@ void __cdecl16near FUN_1641_04a4(void)
   func_0x00018d40(0x7f,199,0x7f,0x78);
   if ((*(char *)0x5893 != 'B') &&
      (func_0x0001a79e(0x2c0,2000,0xb21e,0xa044), *(char *)0x5893 == '@')) {
-    FUN_1641_0e52();
+    font_1641_0e52();
     do {
       iVar1 = func_0x00019224(*(undefined2 *)0x25f0);
     } while (iVar1 == 0);
-    FUN_1641_0e7b();
+    font_1641_0e7b();
   }
   *(undefined *)0x5893 = 0x42;
   local_e = 0x200;
@@ -312,7 +312,7 @@ void __cdecl16near FUN_1641_04a4(void)
 
 
 
-void __cdecl16near FUN_1641_0998(void)
+void __cdecl16near font_1641_0998(void)
 
 {
   int iVar1;
@@ -329,7 +329,7 @@ void __cdecl16near FUN_1641_0998(void)
 
 
 
-void FUN_1641_09c8(undefined2 param_1,undefined2 param_2)
+void font_1641_09c8(undefined2 param_1,undefined2 param_2)
 
 {
   char *pcVar1;
@@ -349,8 +349,8 @@ void FUN_1641_09c8(undefined2 param_1,undefined2 param_2)
   func_0x00018f7c(0,0,200,1,param_1);
   *(undefined2 *)0x5156 = 0;
   *(undefined2 *)0x5158 = 0x98;
-  local_6 = FUN_1641_0998();
-  iVar3 = FUN_1641_0998();
+  local_6 = font_1641_0998();
+  iVar3 = font_1641_0998();
   if (iVar3 < local_6) {
     local_c = 'B';
     local_10 = local_6;
@@ -366,7 +366,7 @@ void FUN_1641_09c8(undefined2 param_1,undefined2 param_2)
   func_0x00018f7c(0,*(undefined *)(local_10 + 0x5204),*(byte *)(local_10 + 0x51fc) + 0xb8,
                   local_10 + 2,param_1);
   func_0x0001a79e(*(undefined2 *)(iVar3 * 2 + local_6 * 0x10 + 0x517c),2000,0xb21e,0xa052);
-  FUN_1641_0000(0xb21e,param_2);
+  font_1641_0000(0xb21e,param_2);
   func_0x0001919e(0,1);
   do {
     uVar4 = func_0x00019f8e();
@@ -390,7 +390,7 @@ void FUN_1641_09c8(undefined2 param_1,undefined2 param_2)
 
 
 
-void __cdecl16near FUN_1641_0b0a(void)
+void __cdecl16near font_1641_0b0a(void)
 
 {
   undefined uVar1;
@@ -456,7 +456,7 @@ void __cdecl16near FUN_1641_0b0a(void)
     *(undefined *)0xa9be = 2;
     func_0x000198ea(0xff);
     func_0x00018f7c(0,0x60,0,0,iVar6);
-    FUN_1641_0000(0xb21e,iVar5);
+    font_1641_0000(0xb21e,iVar5);
     func_0x0001919e(0,1);
     *(undefined2 *)0x5150 = 200;
     do {
@@ -473,7 +473,7 @@ void __cdecl16near FUN_1641_0b0a(void)
     } while (bVar9 < 8);
     iVar8 = 4;
     do {
-      FUN_1641_09c8(iVar6,iVar5);
+      font_1641_09c8(iVar6,iVar5);
       iVar8 = iVar8 + -1;
     } while (iVar8 != 0);
     puVar10 = (undefined2 *)0xbd2a;
@@ -484,7 +484,7 @@ void __cdecl16near FUN_1641_0b0a(void)
     }
     iVar8 = 2;
     do {
-      FUN_1641_09c8(iVar6,iVar5);
+      font_1641_09c8(iVar6,iVar5);
       iVar8 = iVar8 + -1;
     } while (iVar8 != 0);
     puVar10 = (undefined2 *)0xbd2a;
@@ -493,7 +493,7 @@ void __cdecl16near FUN_1641_0b0a(void)
       puVar10 = puVar10 + 1;
       *puVar3 = 0;
     }
-    FUN_1641_09c8(iVar6,iVar5);
+    font_1641_09c8(iVar6,iVar5);
     *(undefined2 *)0x5158 = 0;
     *(undefined2 *)0x5156 = 0;
     *(undefined2 *)0x5150 = 0x5a;
@@ -504,7 +504,7 @@ void __cdecl16near FUN_1641_0b0a(void)
     func_0x00018e52(1);
     func_0x000198ea(0xff);
     func_0x00018f7c(0,100,0xa8,10,iVar6);
-    FUN_1641_0000(0xb21e,iVar5);
+    font_1641_0000(0xb21e,iVar5);
     *(undefined2 *)0x5154 = 5;
     func_0x0001919e(0,1);
     do {
@@ -542,7 +542,7 @@ void __cdecl16near FUN_1641_0b0a(void)
 
 
 
-void __cdecl16near FUN_1641_0e52(void)
+void __cdecl16near font_1641_0e52(void)
 
 {
   undefined2 *puVar1;
@@ -573,7 +573,7 @@ void __cdecl16near FUN_1641_0e52(void)
 
 
 
-void __cdecl16near FUN_1641_0e7b(void)
+void __cdecl16near font_1641_0e7b(void)
 
 {
   undefined2 *puVar1;

@@ -5,7 +5,7 @@ typedef unsigned int    undefined2;
 
 
 
-void FUN_1040_0000(byte param_1)
+void dungeon_1040_0000(byte param_1)
 
 {
   byte *pbVar1;
@@ -89,7 +89,7 @@ void FUN_1040_0000(byte param_1)
 
 
 
-void FUN_1040_0134(int param_1)
+void dungeon_1040_0134(int param_1)
 
 {
   char cVar1;
@@ -111,7 +111,7 @@ void FUN_1040_0134(int param_1)
       func_0x00018e14(*(undefined2 *)0xa9c6);
     }
     *(undefined2 *)0xa9c6 = 0;
-    iVar2 = FUN_1040_0252();
+    iVar2 = dungeon_1040_0252();
     if (iVar2 == 0) {
       *(undefined *)0x5c63 = 0;
       *(undefined *)0x5c62 = 0;
@@ -129,7 +129,7 @@ void FUN_1040_0134(int param_1)
 
 
 
-void __cdecl16near FUN_1040_01d2(void)
+void __cdecl16near dungeon_1040_01d2(void)
 
 {
   char cVar1;
@@ -168,7 +168,7 @@ void __cdecl16near FUN_1040_01d2(void)
 
 
 
-uint __cdecl16near FUN_1040_0252(void)
+uint __cdecl16near dungeon_1040_0252(void)
 
 {
   byte bVar1;
@@ -220,7 +220,7 @@ LAB_1040_02fb:
 
 
 
-void __cdecl16near FUN_1040_0332(void)
+void __cdecl16near dungeon_1040_0332(void)
 
 {
   undefined2 unaff_DS;
@@ -248,7 +248,7 @@ void __cdecl16near FUN_1040_0332(void)
 
 
 
-int __cdecl16near FUN_1040_03d6(void)
+int __cdecl16near dungeon_1040_03d6(void)
 
 {
   undefined2 uVar1;
@@ -271,7 +271,7 @@ int __cdecl16near FUN_1040_03d6(void)
       iVar2 = iVar2 + 0xfa;
     }
     if (iVar2 == 0) {
-      FUN_1040_1a90(iVar3);
+      dungeon_1040_1a90(iVar3);
       if (iVar3 == 0) {
         uVar4 = 0x28;
         uVar1 = 0x96;
@@ -284,7 +284,7 @@ int __cdecl16near FUN_1040_03d6(void)
       if (*(char *)0x6604 != '\x01') {
         iVar3 = 0;
       }
-      FUN_1040_1020();
+      dungeon_1040_1020();
     }
   } while (iVar2 == 0);
   return iVar2;
@@ -292,14 +292,14 @@ int __cdecl16near FUN_1040_03d6(void)
 
 
 
-void FUN_1040_0470(int param_1)
+void dungeon_1040_0470(int param_1)
 
 {
   char *pcVar1;
   int iVar2;
   undefined2 unaff_DS;
   
-  FUN_1040_1be0();
+  dungeon_1040_1be0();
   func_0x00019a80(0x2ca8);
   func_0x00019a80(0x2caf);
   func_0x00018ca0(*(undefined2 *)0x13b0);
@@ -322,13 +322,13 @@ void FUN_1040_0470(int param_1)
     *pcVar1 = *pcVar1 - *(char *)(iVar2 + 0x24de);
   }
   func_0x0001acd8();
-  FUN_1040_1be0();
+  dungeon_1040_1be0();
   return;
 }
 
 
 
-undefined2 FUN_1040_0502(byte param_1,int param_2)
+undefined2 dungeon_1040_0502(byte param_1,int param_2)
 
 {
   byte bVar1;
@@ -400,7 +400,7 @@ LAB_1040_0642:
     if (bVar1 == 0x83) {
       *(undefined *)0x5896 = (byte)local_8;
       *(undefined *)0x5897 = (byte)local_a;
-      FUN_1040_0470(local_6);
+      dungeon_1040_0470(local_6);
       local_8 = (uint)*(byte *)0x5896;
       local_a = (uint)*(byte *)0x5897;
     }
@@ -410,7 +410,7 @@ LAB_1040_0642:
       if ((local_8 != *(byte *)0x5c64) || (local_a != *(byte *)0x5c65)) {
         *(undefined *)0xa9fb = 0xf;
         *(undefined *)0x24e7 = 0;
-        FUN_1040_1020();
+        dungeon_1040_1020();
         *(undefined *)0x24e7 = 0;
         *(byte *)0x5896 = (byte)local_8 & 7;
         *(byte *)0x5897 = (byte)local_a & 7;
@@ -424,13 +424,13 @@ LAB_1040_0642:
     func_0x00019a80(uVar2);
   }
 LAB_1040_06b6:
-  FUN_1040_1be0();
+  dungeon_1040_1be0();
   return local_4;
 }
 
 
 
-undefined2 FUN_1040_06c4(uint param_1)
+undefined2 dungeon_1040_06c4(uint param_1)
 
 {
   int iVar1;
@@ -491,7 +491,7 @@ LAB_1040_07bc:
       if (param_1 != 0x2e) goto LAB_1040_07bc;
     }
 LAB_1040_0744:
-    local_4 = FUN_1040_0502(*(undefined *)
+    local_4 = dungeon_1040_0502(*(undefined *)
                              ((uint)*(byte *)0x5896 +
                               (*(uint *)0x5895 & 0xff) * 0x40 + (uint)*(byte *)0x5897 * 8 + 0x595a),
                             param_1);
@@ -501,7 +501,7 @@ LAB_1040_0744:
 
 
 
-undefined2 __cdecl16near FUN_1040_07e2(void)
+undefined2 __cdecl16near dungeon_1040_07e2(void)
 
 {
   byte bVar1;
@@ -572,7 +572,7 @@ undefined2 __cdecl16near FUN_1040_07e2(void)
 
 
 
-void __cdecl16near FUN_1040_0948(void)
+void __cdecl16near dungeon_1040_0948(void)
 
 {
   byte *pbVar1;
@@ -608,7 +608,7 @@ void __cdecl16near FUN_1040_0948(void)
 
 
 
-void __cdecl16near FUN_1040_09e6(void)
+void __cdecl16near dungeon_1040_09e6(void)
 
 {
   uint uVar1;
@@ -638,7 +638,7 @@ void __cdecl16near FUN_1040_09e6(void)
 
 
 
-void FUN_1040_0a4c(byte param_1)
+void dungeon_1040_0a4c(byte param_1)
 
 {
   byte *pbVar1;
@@ -664,7 +664,7 @@ void FUN_1040_0a4c(byte param_1)
       *(byte *)((uint)*(byte *)0x5895 * 0x40 + (uint)*(byte *)0x5897 * 8 + (uint)*(byte *)0x5896 +
                0x595a) = param_1;
     }
-    FUN_1040_1be0();
+    dungeon_1040_1be0();
     func_0x00019a80(0x2d81);
     func_0x0001acd8();
   }
@@ -676,7 +676,7 @@ void FUN_1040_0a4c(byte param_1)
                       (*(uint *)0x5895 & 0xff) * 0x40 + (uint)*(byte *)0x5897 * 8 + 0x595a) & 0xf0;
     if ((bVar3 == 0xa0) || (bVar3 == 0xf0)) {
       func_0x0001fe32();
-      FUN_1040_0000(*(undefined *)
+      dungeon_1040_0000(*(undefined *)
                      ((uint)*(byte *)0x5896 +
                       (*(uint *)0x5895 & 0xff) * 0x40 + (uint)*(byte *)0x5897 * 8 + 0x595a));
       if (*(char *)0x5893 == '\0') {
@@ -684,14 +684,14 @@ void FUN_1040_0a4c(byte param_1)
       }
       func_0x0001fe3e(1);
     }
-    FUN_1040_0134(1);
+    dungeon_1040_0134(1);
   }
   return;
 }
 
 
 
-void __cdecl16near FUN_1040_0b7e(void)
+void __cdecl16near dungeon_1040_0b7e(void)
 
 {
   char cVar1;
@@ -736,7 +736,7 @@ LAB_1040_0c03:
   *(undefined *)0x6603 = *(undefined *)0x6602;
 LAB_1040_0c22:
   func_0x00019a80(0x2dbc);
-  FUN_1040_1be0();
+  dungeon_1040_1be0();
   func_0x00019d46();
   func_0x0001a32a(2);
   func_0x0001fe32();
@@ -746,16 +746,16 @@ LAB_1040_0c22:
   func_0x0001e1b6(0,*(undefined *)0x5c67);
   func_0x0001fe9e();
   func_0x0001fe3e(1);
-  FUN_1040_0134(1);
+  dungeon_1040_0134(1);
   if (*(char *)0x5893 != '\0') {
-    FUN_1040_1be0();
+    dungeon_1040_1be0();
   }
   return;
 }
 
 
 
-void FUN_1040_0c76(int param_1,byte param_2)
+void dungeon_1040_0c76(int param_1,byte param_2)
 
 {
   byte *pbVar1;
@@ -786,10 +786,10 @@ void FUN_1040_0c76(int param_1,byte param_2)
     func_0x0001ab30();
   }
   if (param_1 != 0) {
-    local_a = FUN_1040_07e2();
+    local_a = dungeon_1040_07e2();
   }
   if (local_a != 0) {
-    FUN_1040_0b7e();
+    dungeon_1040_0b7e();
     param_2 = *(byte *)((uint)*(byte *)0x5896 +
                         (*(uint *)0x5895 & 0xff) * 0x40 + (uint)*(byte *)0x5897 * 8 + 0x595a);
     local_4 = param_2 & 0xf0;
@@ -797,25 +797,25 @@ void FUN_1040_0c76(int param_1,byte param_2)
   if ((local_4 == 0xf0) || (local_4 == 0xa0)) {
     func_0x0001fe32();
     while ((((local_4 == 0xf0 || (local_4 == 0xa0)) && (iVar2 = func_0x0001bc2c(), -1 < iVar2)) &&
-           (FUN_1040_0000(param_2), *(char *)0x5893 != '\0'))) {
+           (dungeon_1040_0000(param_2), *(char *)0x5893 != '\0'))) {
       param_2 = *(byte *)((uint)*(byte *)0x5896 +
                           (*(uint *)0x5895 & 0xff) * 0x40 + (uint)*(byte *)0x5897 * 8 + 0x595a);
       local_4 = param_2 & 0xf0;
     }
     func_0x0001fe3e(1);
     if (0x20 < *(byte *)0x5893) {
-      FUN_1040_1be0();
+      dungeon_1040_1be0();
     }
     goto LAB_1040_0e22;
   }
   if (param_2 == 0x80) {
 LAB_1040_0db0:
-    FUN_1040_0948();
+    dungeon_1040_0948();
   }
   else if (param_2 < 0x81) {
     if (param_2 == 0x61) {
 LAB_1040_0dfa:
-      FUN_1040_0a4c(param_2);
+      dungeon_1040_0a4c(param_2);
     }
     else {
       if (param_2 != 0x62) {
@@ -842,7 +842,7 @@ LAB_1040_0dc3:
       goto LAB_1040_0dc3;
     }
 LAB_1040_0db6:
-    FUN_1040_09e6();
+    dungeon_1040_09e6();
   }
 LAB_1000_121f:
   func_0x0001ab30();
@@ -853,7 +853,7 @@ LAB_1040_0e22:
 
 
 
-void FUN_1040_0e2e(undefined2 param_1)
+void dungeon_1040_0e2e(undefined2 param_1)
 
 {
   byte *pbVar1;
@@ -873,8 +873,8 @@ void FUN_1040_0e2e(undefined2 param_1)
   func_0x0001fe4a();
   bVar3 = *(byte *)((uint)*(byte *)0x5896 +
                     (*(uint *)0x5895 & 0xff) * 0x40 + (uint)*(byte *)0x5897 * 8 + 0x595a) & 0xf0;
-  FUN_1040_0332();
-  FUN_1040_01d2();
+  dungeon_1040_0332();
+  dungeon_1040_01d2();
   iVar4 = *(byte *)0x5893 - 0x20;
   if (((iVar4 == 1) || (iVar4 == 4)) || (iVar4 == 5)) {
     *(undefined *)0xbb14 = 0x4f;
@@ -893,14 +893,14 @@ void FUN_1040_0e2e(undefined2 param_1)
   }
   if ((bVar3 == 0xa0) || (bVar3 == 0xf0)) {
     func_0x0001fe32();
-    FUN_1040_0000(*(undefined *)
+    dungeon_1040_0000(*(undefined *)
                    ((uint)*(byte *)0x5896 +
                     (*(uint *)0x5895 & 0xff) * 0x40 + (uint)*(byte *)0x5897 * 8 + 0x595a));
   }
   if (0x20 < *(byte *)0x5893) {
     func_0x0001fe3e(param_1);
-    FUN_1040_0134(param_1);
-    FUN_1040_1be0();
+    dungeon_1040_0134(param_1);
+    dungeon_1040_1be0();
   }
   do {
     do {
@@ -945,9 +945,9 @@ void FUN_1040_0e2e(undefined2 param_1)
 LAB_1040_0f2e:
       func_0x0001d1ac(1);
     }
-    iVar4 = FUN_1040_03d6();
+    iVar4 = dungeon_1040_03d6();
     if (-1 < iVar4) {
-      in_stack_0000fff4 = FUN_1040_06c4(iVar4);
+      in_stack_0000fff4 = dungeon_1040_06c4(iVar4);
     }
     if (*(byte *)0x5893 < 0x21) {
       in_stack_0000fff4 = 0;
@@ -957,7 +957,7 @@ LAB_1040_0f2e:
                       (uint)*(byte *)0x5896 + 0x595a);
     bVar3 = bVar2 & 0xf0;
     if (in_stack_0000fff4 != 0) {
-      FUN_1040_0c76(uVar7,bVar2);
+      dungeon_1040_0c76(uVar7,bVar2);
     }
     if (*(byte *)0x5893 < 0x21) {
       in_stack_0000fff4 = 0;
@@ -968,7 +968,7 @@ LAB_1040_0f2e:
 
 
 
-void __cdecl16near FUN_1040_1020(void)
+void __cdecl16near dungeon_1040_1020(void)
 
 {
   byte *pbVar1;
@@ -985,7 +985,7 @@ void __cdecl16near FUN_1040_1020(void)
 
 
 
-void FUN_1040_104c(uint param_1)
+void dungeon_1040_104c(uint param_1)
 
 {
   int iVar1;
@@ -1011,7 +1011,7 @@ void FUN_1040_104c(uint param_1)
 
 
 
-byte FUN_1040_10dc(uint param_1,uint param_2)
+byte dungeon_1040_10dc(uint param_1,uint param_2)
 
 {
   byte bVar1;
@@ -1026,7 +1026,7 @@ byte FUN_1040_10dc(uint param_1,uint param_2)
 
 
 
-void FUN_1040_111e(int param_1)
+void dungeon_1040_111e(int param_1)
 
 {
   byte bVar1;
@@ -1095,7 +1095,7 @@ void FUN_1040_111e(int param_1)
 
 
 
-void FUN_1040_127e(int param_1,int param_2)
+void dungeon_1040_127e(int param_1,int param_2)
 
 {
   undefined2 uVar1;
@@ -1143,7 +1143,7 @@ LAB_1040_12be:
 
 
 
-void FUN_1040_134a(int param_1,int param_2,uint param_3)
+void dungeon_1040_134a(int param_1,int param_2,uint param_3)
 
 {
   uint uVar1;
@@ -1202,7 +1202,7 @@ LAB_1040_1452:
 
 
 
-int FUN_1040_145c(int param_1,int param_2,int param_3,int param_4)
+int dungeon_1040_145c(int param_1,int param_2,int param_3,int param_4)
 
 {
   undefined2 uVar1;
@@ -1241,7 +1241,7 @@ int FUN_1040_145c(int param_1,int param_2,int param_3,int param_4)
 
 
 
-undefined2 FUN_1040_150a(int param_1,uint param_2,uint param_3)
+undefined2 dungeon_1040_150a(int param_1,uint param_2,uint param_3)
 
 {
   byte *pbVar1;
@@ -1253,18 +1253,18 @@ undefined2 FUN_1040_150a(int param_1,uint param_2,uint param_3)
   byte local_6;
   int local_4;
   
-  uVar3 = FUN_1040_10dc(param_2,param_3);
+  uVar3 = dungeon_1040_10dc(param_2,param_3);
   if (0x9f < (int)uVar3) {
     local_4 = (uint)*(byte *)(((int)uVar3 >> 4) + 0x2e80) + param_1;
     if (param_1 == 0) {
       local_4 = 0xc;
     }
-    FUN_1040_134a(0,0,local_4);
-    FUN_1040_134a(1,0,local_4);
+    dungeon_1040_134a(0,0,local_4);
+    dungeon_1040_134a(1,0,local_4);
     local_6 = (byte)uVar3;
     if ((((param_1 == 1) || (param_1 == 2)) && (*(char *)0x6604 == '\x01')) &&
        ((local_6 & 0xf0) == 0xc0)) {
-      cVar2 = FUN_1040_145c(param_1,uVar3 & 7,*(byte *)((uVar3 & 7) + param_1 * 5 + 0x2e8b) + 0xe,
+      cVar2 = dungeon_1040_145c(param_1,uVar3 & 7,*(byte *)((uVar3 & 7) + param_1 * 5 + 0x2e8b) + 0xe,
                             0x5f);
       pbVar5 = (byte *)((uint)*(byte *)0x5895 * 0x40 + (param_2 & 7) * 8 + (param_3 & 7) + 0x595a);
       pbVar1 = pbVar5;
@@ -1274,7 +1274,7 @@ undefined2 FUN_1040_150a(int param_1,uint param_2,uint param_3)
     }
     if (param_1 == 1) {
       if (((local_6 & 0xf0) == 0xb0) && ((uVar3 & 0xf) != 0)) {
-        FUN_1040_104c(uVar3 & 0xf);
+        dungeon_1040_104c(uVar3 & 0xf);
       }
       else if ((*(char *)0x6604 == '\x03') &&
               (((local_6 & 0xf0) == 0xc0 && (iVar4 = func_0x0001a2c2(0x40,0), iVar4 < 4)))) {
@@ -1295,7 +1295,7 @@ undefined2 FUN_1040_150a(int param_1,uint param_2,uint param_3)
 
 
 
-void FUN_1040_1682(int param_1,int param_2,uint param_3,uint param_4)
+void dungeon_1040_1682(int param_1,int param_2,uint param_3,uint param_4)
 
 {
   byte *pbVar1;
@@ -1306,7 +1306,7 @@ void FUN_1040_1682(int param_1,int param_2,uint param_3,uint param_4)
   undefined2 unaff_DS;
   int local_6;
   
-  uVar3 = FUN_1040_10dc(param_3,param_4);
+  uVar3 = dungeon_1040_10dc(param_3,param_4);
   if ((int)uVar3 < 0xa0) {
     param_1 = param_1 + 0x10;
   }
@@ -1314,7 +1314,7 @@ void FUN_1040_1682(int param_1,int param_2,uint param_3,uint param_4)
     uVar4 = uVar3 & 0xf0;
     if (uVar4 != 0xa0) {
       if (uVar4 == 0xc0) {
-        FUN_1040_134a(param_2,0,param_1 + 0x14);
+        dungeon_1040_134a(param_2,0,param_1 + 0x14);
         if (1 < param_1) {
           return;
         }
@@ -1330,7 +1330,7 @@ void FUN_1040_1682(int param_1,int param_2,uint param_3,uint param_4)
         if (param_2 != 0) {
           local_6 = 0xbe - local_6;
         }
-        cVar2 = FUN_1040_145c(param_1,uVar3 & 7,*(byte *)((uVar3 & 7) + param_1 * 5 + 0x2e9a) + 0xe,
+        cVar2 = dungeon_1040_145c(param_1,uVar3 & 7,*(byte *)((uVar3 & 7) + param_1 * 5 + 0x2e9a) + 0xe,
                               local_6);
         pbVar5 = (byte *)((uint)*(byte *)0x5895 * 0x40 + (param_3 & 7) * 8 + (param_4 & 7) + 0x595a)
         ;
@@ -1345,13 +1345,13 @@ void FUN_1040_1682(int param_1,int param_2,uint param_3,uint param_4)
     param_1 = param_1 + 4;
   }
 LAB_1040_1775:
-  FUN_1040_134a(param_2,0,param_1);
+  dungeon_1040_134a(param_2,0,param_1);
   return;
 }
 
 
 
-void FUN_1040_1786(int param_1,int param_2)
+void dungeon_1040_1786(int param_1,int param_2)
 
 {
   undefined uVar1;
@@ -1436,7 +1436,7 @@ void FUN_1040_1786(int param_1,int param_2)
 
 
 
-void FUN_1040_1952(int param_1,uint param_2,uint param_3)
+void dungeon_1040_1952(int param_1,uint param_2,uint param_3)
 
 {
   char *pcVar1;
@@ -1445,38 +1445,38 @@ void FUN_1040_1952(int param_1,uint param_2,uint param_3)
   int iVar4;
   undefined2 unaff_DS;
   
-  uVar2 = FUN_1040_10dc(param_2,param_3);
+  uVar2 = dungeon_1040_10dc(param_2,param_3);
   iVar3 = (int)uVar2 >> 4;
   if (((iVar3 < 1) || (7 < iVar3)) || ((iVar3 == 6 && ((uVar2 & 7) != 0)))) {
     if (iVar3 == 8) {
-      FUN_1040_127e(uVar2 & 7,param_1);
+      dungeon_1040_127e(uVar2 & 7,param_1);
     }
   }
   else {
     if (*(char *)(iVar3 + 0x2f16) != '\0') {
       iVar4 = (uint)*(byte *)(iVar3 + 0x2f16) + param_1 * 2;
-      FUN_1040_134a(0,1,iVar4);
-      FUN_1040_134a(1,1,iVar4);
+      dungeon_1040_134a(0,1,iVar4);
+      dungeon_1040_134a(1,1,iVar4);
     }
     if (*(char *)(iVar3 + 0x2f1e) != '\0') {
       iVar4 = (uint)*(byte *)(iVar3 + 0x2f1e) + param_1 * 2;
-      FUN_1040_134a(0,0,iVar4);
-      FUN_1040_134a(1,0,iVar4);
+      dungeon_1040_134a(0,0,iVar4);
+      dungeon_1040_134a(1,0,iVar4);
     }
     if (iVar3 == 5) {
-      FUN_1040_1786(*(undefined *)0x2f26,param_1);
+      dungeon_1040_1786(*(undefined *)0x2f26,param_1);
     }
   }
   if ((iVar3 < 9) &&
      ((*(byte *)((uint)*(byte *)0x5895 * 0x40 + (param_2 & 7) * 8 + (param_3 & 7) + 0x595a) & 8) !=
       0)) {
     iVar3 = param_1 * 2 + (uint)*(byte *)0x2f24;
-    FUN_1040_134a(0,1,iVar3);
-    FUN_1040_134a(1,1,iVar3);
+    dungeon_1040_134a(0,1,iVar3);
+    dungeon_1040_134a(1,1,iVar3);
   }
   if (((param_1 != 0) && (((byte)param_3 & 7) == *(byte *)0x5c64)) &&
      (((byte)param_2 & 7) == *(byte *)0x5c65)) {
-    FUN_1040_111e(param_1);
+    dungeon_1040_111e(param_1);
   }
   if ((param_1 == 0) && (pcVar1 = (char *)0x2f26, *pcVar1 = *pcVar1 + '\x01', 2 < *(byte *)0x2f26))
   {
@@ -1487,7 +1487,7 @@ void FUN_1040_1952(int param_1,uint param_2,uint param_3)
 
 
 
-void FUN_1040_1a90(int param_1)
+void dungeon_1040_1a90(int param_1)
 
 {
   int iVar1;
@@ -1516,16 +1516,16 @@ void FUN_1040_1a90(int param_1)
     iVar2 = *(int *)(iVar2 + 0x24de);
     iVar5 = 0;
     do {
-      iVar3 = FUN_1040_150a(iVar5,local_8,uVar6);
+      iVar3 = dungeon_1040_150a(iVar5,local_8,uVar6);
       if (iVar3 == 0) break;
       if ((iVar5 != 0) ||
-         ((iVar3 = FUN_1040_10dc(*(undefined *)0x5897,*(undefined *)0x5896), iVar3 != 0xe0 &&
+         ((iVar3 = dungeon_1040_10dc(*(undefined *)0x5897,*(undefined *)0x5896), iVar3 != 0xe0 &&
           (param_1 != 0)))) {
         uVar4 = (uint)*(byte *)0x6603;
-        FUN_1040_1682(iVar5,0,*(byte *)(uVar4 + 0x2f2c) + local_8,*(byte *)(uVar4 + 0x2f28) + uVar6)
+        dungeon_1040_1682(iVar5,0,*(byte *)(uVar4 + 0x2f2c) + local_8,*(byte *)(uVar4 + 0x2f28) + uVar6)
         ;
         uVar4 = (uint)*(byte *)0x6603;
-        FUN_1040_1682(iVar5,1,local_8 - *(byte *)(uVar4 + 0x2f2c),uVar6 - *(byte *)(uVar4 + 0x2f28))
+        dungeon_1040_1682(iVar5,1,local_8 - *(byte *)(uVar4 + 0x2f2c),uVar6 - *(byte *)(uVar4 + 0x2f28))
         ;
       }
       uVar6 = uVar6 + iVar1;
@@ -1535,7 +1535,7 @@ void FUN_1040_1a90(int param_1)
     while (iVar5 = iVar5 + -1, -1 < iVar5) {
       uVar6 = uVar6 - iVar1;
       local_8 = local_8 - iVar2;
-      FUN_1040_1952(iVar5,local_8,uVar6);
+      dungeon_1040_1952(iVar5,local_8,uVar6);
     }
   }
   func_0x00018e52(0);
@@ -1545,20 +1545,20 @@ void FUN_1040_1a90(int param_1)
 
 
 
-void __cdecl16near FUN_1040_1be0(void)
+void __cdecl16near dungeon_1040_1be0(void)
 
 {
   func_0x0001ab30();
-  FUN_1040_1a90();
+  dungeon_1040_1a90();
   func_0x00018cfe(0xb2,0xaf,0xe,0x10,0);
-  FUN_1040_1020();
-  FUN_1040_01d2();
+  dungeon_1040_1020();
+  dungeon_1040_01d2();
   return;
 }
 
 
 
-undefined2 FUN_1040_1c0c(int param_1,int param_2)
+undefined2 dungeon_1040_1c0c(int param_1,int param_2)
 
 {
   byte bVar1;
@@ -1579,7 +1579,7 @@ undefined2 FUN_1040_1c0c(int param_1,int param_2)
 
 
 
-undefined2 FUN_1040_1c6a(undefined2 param_1,int param_2)
+undefined2 dungeon_1040_1c6a(undefined2 param_1,int param_2)
 
 {
   char *pcVar1;
@@ -1598,7 +1598,7 @@ undefined2 FUN_1040_1c6a(undefined2 param_1,int param_2)
   func_0x00019a80(uVar2);
   if (((param_2 < 1) || (*(char *)0x5895 != '\a')) && ((-1 < param_2 || (*(char *)0x5895 != '\0'))))
   {
-    iVar3 = FUN_1040_1c0c(param_1,param_2 + (uint)*(byte *)0x5895);
+    iVar3 = dungeon_1040_1c0c(param_1,param_2 + (uint)*(byte *)0x5895);
     if (iVar3 == 0) {
       func_0x00019a80(0x6c7a);
       func_0x0001c5de(0x32,1,2000,800);
@@ -1612,8 +1612,8 @@ undefined2 FUN_1040_1c6a(undefined2 param_1,int param_2)
       else {
         *(undefined *)0x6602 = 5;
       }
-      FUN_1040_0134(1);
-      FUN_1040_1be0();
+      dungeon_1040_0134(1);
+      dungeon_1040_1be0();
     }
   }
   else {
@@ -1624,7 +1624,7 @@ undefined2 FUN_1040_1c6a(undefined2 param_1,int param_2)
 
 
 
-void __cdecl16near FUN_1040_1d08(void)
+void __cdecl16near dungeon_1040_1d08(void)
 
 {
   uint uVar1;
@@ -1650,7 +1650,7 @@ void __cdecl16near FUN_1040_1d08(void)
 
 
 
-undefined2 __cdecl16near FUN_1040_1d4a(void)
+undefined2 __cdecl16near dungeon_1040_1d4a(void)
 
 {
   char *pcVar1;
@@ -1684,19 +1684,19 @@ undefined2 __cdecl16near FUN_1040_1d4a(void)
       goto LAB_1040_1dd1;
     }
   }
-  FUN_1040_1d08();
+  dungeon_1040_1d08();
 LAB_1040_1dd1:
   func_0x0001fe3e(1);
   if (*(char *)0x5893 != '\0') {
-    FUN_1040_0134(1);
-    FUN_1040_1be0();
+    dungeon_1040_0134(1);
+    dungeon_1040_1be0();
   }
   return 0;
 }
 
 
 
-undefined2 __cdecl16near FUN_1040_1e10(void)
+undefined2 __cdecl16near dungeon_1040_1e10(void)
 
 {
   byte bVar1;
@@ -1709,7 +1709,7 @@ undefined2 __cdecl16near FUN_1040_1e10(void)
   
   bVar2 = false;
   bVar3 = false;
-  uVar4 = FUN_1040_10dc(*(undefined *)0x5897,*(undefined *)0x5896);
+  uVar4 = dungeon_1040_10dc(*(undefined *)0x5897,*(undefined *)0x5896);
   uVar4 = uVar4 & 0xf0;
   bVar1 = *(byte *)((uint)*(byte *)0x5896 +
                     (*(uint *)0x5895 & 0xff) * 0x40 + (uint)*(byte *)0x5897 * 8 + 0x595a);
@@ -1755,9 +1755,9 @@ LAB_1040_1ed4:
     }
     func_0x00019a80(0x6cce);
   }
-  if (((bVar2) && (iVar5 = FUN_1040_1c6a(0,0xffff), iVar5 != 0)) ||
-     ((bVar3 && (iVar5 = FUN_1040_1c6a(0,1), iVar5 != 0)))) {
-    FUN_1040_1d08();
+  if (((bVar2) && (iVar5 = dungeon_1040_1c6a(0,0xffff), iVar5 != 0)) ||
+     ((bVar3 && (iVar5 = dungeon_1040_1c6a(0,1), iVar5 != 0)))) {
+    dungeon_1040_1d08();
   }
   return 1;
 }

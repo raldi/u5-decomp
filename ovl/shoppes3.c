@@ -5,7 +5,7 @@ typedef unsigned int    undefined2;
 
 
 
-int __cdecl16near FUN_1641_0000(void)
+int __cdecl16near shoppes3_1641_0000(void)
 
 {
   int iVar1;
@@ -28,7 +28,7 @@ int __cdecl16near FUN_1641_0000(void)
 
 
 
-undefined2 FUN_1641_002c(int param_1)
+undefined2 shoppes3_1641_002c(int param_1)
 
 {
   uint uVar1;
@@ -36,7 +36,7 @@ undefined2 FUN_1641_002c(int param_1)
   undefined2 unaff_DS;
   
   func_0x00019a80(0x4d84);
-  uVar1 = FUN_1641_0000();
+  uVar1 = shoppes3_1641_0000();
   if (uVar1 < *(byte *)(*(int *)0xb114 + 0x4dc4)) {
     uVar2 = 1;
   }
@@ -57,7 +57,7 @@ undefined2 FUN_1641_002c(int param_1)
 
 
 
-undefined2 FUN_1641_0072(undefined2 param_1,int param_2,int param_3)
+undefined2 shoppes3_1641_0072(undefined2 param_1,int param_2,int param_3)
 
 {
   int *piVar1;
@@ -76,7 +76,7 @@ undefined2 FUN_1641_0072(undefined2 param_1,int param_2,int param_3)
   uint local_a;
   
   func_0x000198ea(0x52);
-  iVar6 = FUN_1641_002c(param_2);
+  iVar6 = shoppes3_1641_002c(param_2);
   if (iVar6 == 0) {
     param_1 = 0xfffe;
   }
@@ -203,7 +203,7 @@ LAB_1000_6646:
 
 
 
-undefined2 FUN_1641_02ae(undefined2 param_1,undefined2 param_2,int param_3)
+undefined2 shoppes3_1641_02ae(undefined2 param_1,undefined2 param_2,int param_3)
 
 {
   int *piVar1;
@@ -227,7 +227,7 @@ undefined2 FUN_1641_02ae(undefined2 param_1,undefined2 param_2,int param_3)
   undefined2 local_22 [16];
   
   func_0x000198ea(0x4c);
-  iVar9 = FUN_1641_002c(param_2);
+  iVar9 = shoppes3_1641_002c(param_2);
   if (iVar9 != 0) {
     if (*(char *)0x585b == '\x01') {
       func_0x000101e6(0x26e8);
@@ -338,7 +338,7 @@ undefined2 FUN_1641_02ae(undefined2 param_1,undefined2 param_2,int param_3)
 
 
 
-int FUN_1641_0494(int param_1)
+int shoppes3_1641_0494(int param_1)
 
 {
   undefined2 unaff_DS;
@@ -354,7 +354,7 @@ int FUN_1641_0494(int param_1)
 
 
 
-int FUN_1641_04b6(int param_1)
+int shoppes3_1641_04b6(int param_1)
 
 {
   undefined2 unaff_DS;
@@ -371,7 +371,7 @@ int FUN_1641_04b6(int param_1)
 
 
 
-undefined2 FUN_1641_04e6(undefined2 param_1,int param_2)
+undefined2 shoppes3_1641_04e6(undefined2 param_1,int param_2)
 
 {
   int *piVar1;
@@ -400,7 +400,7 @@ undefined2 FUN_1641_04e6(undefined2 param_1,int param_2)
   undefined2 local_24 [16];
   int local_4;
   
-  local_4 = FUN_1641_0000();
+  local_4 = shoppes3_1641_0000();
   if (*(char *)0x585b == '\x06') {
     func_0x00019a80(0x4f57);
     return param_1;
@@ -410,7 +410,7 @@ undefined2 FUN_1641_04e6(undefined2 param_1,int param_2)
     return param_1;
   }
   if (local_4 < 2) {
-    local_34 = FUN_1641_04b6(0);
+    local_34 = shoppes3_1641_04b6(0);
   }
   else {
     func_0x00019a80(0x4fa7);
@@ -463,7 +463,7 @@ undefined2 FUN_1641_04e6(undefined2 param_1,int param_2)
     } while (local_3a != 0);
     func_0x00019dc4(2);
     bVar6 = false;
-    local_34 = FUN_1641_04b6(0);
+    local_34 = shoppes3_1641_04b6(0);
     iVar9 = 0x28;
     func_0x00018ca0(*(undefined2 *)0x13b0);
     do {
@@ -472,7 +472,7 @@ undefined2 FUN_1641_04e6(undefined2 param_1,int param_2)
         bVar7 = func_0x0001a89c();
         if (bVar7 == 3) {
 LAB_1641_067c:
-          iVar13 = FUN_1641_0494(local_34);
+          iVar13 = shoppes3_1641_0494(local_34);
           if (iVar13 != 0) {
             func_0x00018db6(iVar9 + 7,0x131,iVar9,0xc6);
             iVar9 = iVar9 + -8;
@@ -487,7 +487,7 @@ LAB_1000_6b00:
         }
         else if (bVar7 == 4) {
 LAB_1641_06a4:
-          iVar13 = FUN_1641_04b6(local_34);
+          iVar13 = shoppes3_1641_04b6(local_34);
           if (iVar13 != 0) {
             func_0x00018db6(iVar9 + 7,0x131,iVar9,0xc6);
             iVar9 = iVar9 + 8;
@@ -611,7 +611,7 @@ LAB_1000_6c9b:
 
 
 
-void FUN_1641_08b4(int param_1)
+void shoppes3_1641_08b4(int param_1)
 
 {
   undefined uVar1;
@@ -661,7 +661,7 @@ LAB_1641_095f:
         local_a = iVar5;
       }
       else if (local_e == 'L') {
-        iVar6 = FUN_1641_02ae(local_a,uVar2,uVar1);
+        iVar6 = shoppes3_1641_02ae(local_a,uVar2,uVar1);
         if (-2 < iVar6) {
           iVar5 = iVar6;
         }
@@ -671,11 +671,11 @@ LAB_1000_6d8f:
       }
       else {
         if (local_e == 'P') {
-          iVar5 = FUN_1641_04e6(local_a,uVar1);
+          iVar5 = shoppes3_1641_04e6(local_a,uVar1);
           goto LAB_1000_6d8f;
         }
         if (local_e == 'R') {
-          iVar5 = FUN_1641_0072(local_a,uVar2,uVar1);
+          iVar5 = shoppes3_1641_0072(local_a,uVar2,uVar1);
           if (-2 < iVar5) goto LAB_1641_095f;
         }
         else {
