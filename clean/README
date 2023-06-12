@@ -1,0 +1,28 @@
+Recreated source code.
+
+Must produce as close to possible the original binary files when compiled
+with Microsoft C Compiler 5.1 for DOS.
+
+Procedure:
+
+Somehow acquire Microsoft C Compiler 5.1 (this exact version) and install it
+under DosBox. Set up the paths in DosBox, if you installed in C:\,
+
+    SET PATH=C:\bin
+    SET LIB=C:\lib
+    SET INCLUDE=C:\include
+
+Write a C file 'scratch.c' with an empty main function and a sketch of the
+function you're reverse-engienering.
+
+Compile your code in DosBox with
+
+    cl -Ox -Fa scratch.c
+
+It will emit scratch.asm and scratch.exe. Eyeball scratch.asm against Ghidra's
+decompile of the OVL or EXE file until you're happy.
+
+Start with Ghidra's suggestion for the C source. It's probably not going to
+produce matching output out of the box, the compiler is very finicky and
+Ghdira's output is so-so. Read the original assembly to figure out exactly
+what was happening in the original code.
