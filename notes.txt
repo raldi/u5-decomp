@@ -10,66 +10,72 @@ https://wiki.ultimacodex.com/wiki/Ultima_V_internal_formats#DATA.OVL
 For instance, if you see -0x45ea, calculate hex(0x5b36-0x45ea) == 0x154c
 and note that this is the start of the sprite flags table.
 
-
 If you see one in the 0x3xxx or 0x4xxx range, add 0x10 and look it up
 in DATA.OVL. So if you see 0x3f5c, look up 3f6c.
 
+# Tool notes
+
+Based on string "MS Run-Time Library - Copyright (c) 1988, Microsoft
+Corp" found in DATA.OVL, the compiler used to originally compile the
+files was probably Microsoft C Compiler 5.1 for DOS. (Not 5.0, that
+doesn't have 1988 in the copyright string.)
+
+The OVL linking scheme probably uses a different linker from than the
+one provided by the Microsoft compiler. Probably a Phoenix Technologies
+overlay linker identified by the string "Copyright (C) 1984, 1985, 1986
+by Phoenix Software Associates Ltd." found in ULTIMA.EXE.
+
 # OVL file details
 
-DosBox with debugger enabled logs all file access. This can be used to
-figure out how OVL files are used in game. When an OVL file is first
-loaded, you know it's relevant for the action that was just done in
-game. If another OVL file is loaded by a second action and then you
-repeat the first action and the first OVL file is loaded again, you
-can assume the first file was swapped out to make room for the second.
+OVLs have modular extra code (except DATA.OVL that's all data).
+ULTIMA.EXE contains the main program code and calls the OVLs.
 
-Dependency tree, parallel OVLs are assumed to be mutually exclusive.
+OVLs have assigned regions, there can be only one OVL loaded in each
+region, and when a function from a different OVL is called, the old OVL
+needs to be swapped out and the new one loaded in its place. You can
+monitor how OVL files are being accessed from file load messages in a
+debugger-enabled DosBox's event window.
 
-ULTIMA.EXE has the base stuff, is always loaded. DATA.OVL is loaded at
-the very start, but doesn't have code. All OVL code is presumed to be
-stuff that can be swapped out of memory.
+The layers and OVLs are as follows:
 
-## Game modes
+(town mainout dungeon intro)
+(flames npc combat blckthrn lookobj dnglook outsubs shoppes endgame)
+(sjog cmds cast talk)
+(cast2 zstats comsubs shoppes2 shoppes3 font)
+(data)
 
-  town      overland     combat       dungeon
-TOWN.OVL  MAINOUT.OVL  COMBAT.OVL   DUNGEON.OVL
-NPC.OVL   OUTSUBS.OVL  COMSUBS.OVL  DNGLOOK.OVL
-
-Combat mode wants to keep SJOG.OVL loaded at all times.
-
-## Command ovls
-
-CAST2.OVL  CMDS.OVL  LOOKOBJ.OVL  SJOG.OVL  TALK.OVL  ZSTATS.OVL
-CAST.OVL
-
-CAST2.OVL can show up without CAST.OVL, usually both are loaded when
-CAST.OVL is used.
+Functions in loaded OVLs are always at same memory addresses, so the
+only question for using them is whether the correct OVL has been loaded
+to memory.
 
 OVL file details
 
-    BLCKTHRN.OVL  torture room scene?
-    CAST.OVL      magic
-    CAST2.OVL     magic, mixing spells, also saving the game?
-    CMDS.OVL      out-of-combat commands like ignite torch, hole up
-    COMBAT.OVL    * combat mode *
-    COMSUBS.OVL   combat mode subroutines
-    DNGLOOK.OVL   dungeon mode subroutines
-    DUNGEON.OVL   * dungeon mode *
-    ENDGAME.OVL   outro?
-    FLAMES.OVL    intro screen graphical effect?
-    FONT.OVL      text display?
-    INTRO.OVL     intro screen animation?
-    LOOKOBJ.OVL   L)ook command results
+    TOWN.OVL      * town mode *
     MAINOUT.OVL   * overland mode *
+    DUNGEON.OVL   * dungeon mode *
+    INTRO.OVL     intro screen animation?
+
+    FLAMES.OVL    loaded during intro screen, extra data?
     NPC.OVL       town NPC routines?
+    COMBAT.OVL    * combat mode *
+    BLCKTHRN.OVL  torture room scene?
+    LOOKOBJ.OVL   L)ook command results
+    DNGLOOK.OVL   dungeon mode subroutines
     OUTSUBS.OVL   overland mode subroutines
     SHOPPES.OVL   shopping in town?
+    ENDGAME.OVL   outro?
+
+    SJOG.OVL      commands that work in combat, search, jimmy, open, get
+    CMDS.OVL      out-of-combat commands like ignite torch, hole up
+    CAST.OVL      magic
+    TALK.OVL      NPC conversation
+
+    CAST2.OVL     magic, mixing spells, also saving the game?
+    ZSTATS.OVL    Character stats and inventory view
+    COMSUBS.OVL   combat mode subroutines
     SHOPPES2.OVL  shopping
     SHOPPES3.OVL  shopping
-    SJOG.OVL      commands that work in combat, search, open, push
-    TALK.OVL      NPC conversation
-    TOWN.OVL      * town mode *
-    ZSTATS.OVL    Character stats and inventory view
+    FONT.OVL      text display?
 
     DATA.OVL      game data, no code
 
