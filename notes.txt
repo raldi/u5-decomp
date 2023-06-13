@@ -25,6 +25,14 @@ one provided by the Microsoft compiler. Probably a Phoenix Technologies
 overlay linker identified by the string "Copyright (C) 1984, 1985, 1986
 by Phoenix Software Associates Ltd." found in ULTIMA.EXE.
 
+# Decompilation notes
+
+OVL files should be all machine code, but Ghidra fails to recognize some
+functions right at the start of the file. You can also try dumping out the
+assembly with
+
+    objdump -D -b binary -m i8086 [file.ovl]
+
 # OVL file details
 
 OVLs have modular extra code (except DATA.OVL that's all data).
