@@ -85,18 +85,26 @@ typedef struct {
 // XXX: How's this different from Creature?
 // Are these used in town instead of combat?
 typedef struct {
-    uint16_t pad00;
+    // 0x0000  0x5f5e
+    uint16_t unknown00;
+    // 0x0002  0x5f60
     uint16_t x;
+    // 0x0004  0x5f62
     uint16_t y;
+    // 0x0006  0x5f64
     uint16_t z;
+    // 0x0008  0x5f66
     uint16_t tile;
-    uint16_t pad01;
+    // 0x000a  0x5f68
+    uint16_t unknown01;
+    // 0x000c  0x5f6a
     uint16_t anim_state;
+    // 0x000e  0x5f6c
     uint16_t is_active;
 } Sprite;
 
 typedef struct {
-    uint16_t pad00;
+    uint16_t unknown00;
     // 0x0002  0x55a8
     Hero pc[16];
     // 0x0202  0x57a8
@@ -116,7 +124,7 @@ typedef struct {
     // 0x020b  0x57b1
     uint8_t skull_keys;
     // 0x020c  0x57b2
-    uint8_t pad01;
+    uint8_t unknown01;
     // 0x020d  0x57b3
     bool amulet;
     // 0x020e  0x57b4
@@ -127,7 +135,7 @@ typedef struct {
     // Falsehood, Hatred, Cowardice
     bool shards[3];
     // 0x0213  0x57b9
-    uint8_t pad02;
+    uint8_t unknown02;
     // 0x0214  0x57ba
     uint8_t spyglasses;
     // 0x0215  0x57bb
@@ -165,7 +173,7 @@ typedef struct {
     // Set bits to 1 when object is taken.
     uint8_t object_taken_flags[15];
 
-    uint8_t pad03[9];
+    uint8_t unknown03[9];
 
     // 0x02ce  0x5874
     uint16_t year;
@@ -188,11 +196,11 @@ typedef struct {
     // 0x02d9  0x587f
     uint8_t hour;
     // 0x02da  0x5880
-    uint8_t pad04;
+    uint8_t unknown04;
     // 0x02db  0x5881
     uint8_t minute;
     // 0x02dc  0x5882
-    uint8_t pad05[3];
+    uint8_t unknown05[3];
     // 0x02df  0x5885
     uint8_t moon_phase[2];
     // 0x02e1  0x5887
@@ -200,17 +208,17 @@ typedef struct {
     // 0x02e2  0x5888
     uint8_t karma;
     // 0x02e3  0x5889
-    uint8_t pad06[2];
+    uint8_t unknown06[2];
     // 0x02e5  0x588b
     uint8_t turns_since_start;
     // 0x02e6  0x588c
     uint8_t hours_until_camping_heals;
     // 0x02e7  0x588d
-    uint8_t pad07;
+    uint8_t unknown07;
     // 0x02e8  0x588e
     uint8_t prot_spell_duration;
     // 0x02e9  0x588f
-    uint8_t pad08[2];
+    uint8_t unknown08[2];
     // 0x02eb  0x5891
     uint8_t animate_tiles_next_frame;
     // 0x02ec  0x5892
@@ -239,7 +247,7 @@ typedef struct {
     // 0x02f7  0x589d
     uint8_t attacker_weapon;
     // 0x02f8  0x589e
-    uint8_t pad09;
+    uint8_t unknown09;
     // 0x02f9  0x589f
     uint8_t focus_rectangle_visible;
     // 0x02fa  0x58a0
@@ -248,7 +256,7 @@ typedef struct {
     // 0x02fb  0x58a1
     uint8_t combat_type_flags;
     // 0x02fc  0x58a2
-    uint8_t pad10;
+    uint8_t unknown10;
     // 0x02fd  0x58a3
     uint8_t all_enemies_cleared;
     // 0x02fe  0x58a4
@@ -266,17 +274,17 @@ typedef struct {
     // Falsehood, Hatred, Cowardice
     uint8_t shadowlord_locations[3];
     // 0x0325  0x58cb
-    uint8_t pad11;
+    uint8_t unknown11;
     // 0x0326  0x58cc
     // bitset
     uint8_t shrine_quest_given;
     // 0x0327  0x58cd
-    uint8_t pad12;
+    uint8_t unknown12;
     // 0x0328  0x58ce
     // bitset
     uint8_t shrine_quest_completed;
     // 0x0329  0x58cf
-    uint8_t pad13;
+    uint8_t unknown13;
     // 0x032a  0x58d0
     uint8_t dungeon_unsealed[8];
     // 0x0332  0x58d8
@@ -313,7 +321,7 @@ typedef struct {
     // 0x03b1  0x5957
     uint8_t drunk_counter;
     // 0x03b2  0x5958
-    uint8_t pad14[2];
+    uint8_t unknown14[2];
     // 0x03b4  0x595a
     uint8_t current_dungeon_map[512];
     // 0x05b4  0x5b5a
@@ -325,7 +333,7 @@ typedef struct {
     // 0x06b4  0x5c5a
     Creature creatures[32];
     // 0x07b4  0x5d5a
-    uint8_t pad15[4];
+    uint8_t unknown15[4];
     // 0x07b8  0x5d5e
     uint8_t npc_schedules[512];
     // 0x09b8  0x5f5e
@@ -337,9 +345,9 @@ typedef struct {
     // 0x0ff8  0x659e
     uint8_t npc_sprites[32];
     // 0x1018  0x65be
-    uint8_t pad16[68];
+    uint8_t unknown16[68];
     // 0x105c  0x6602
-    uint8_t pad17;
+    uint8_t unknown17;
     // 0x105d  0x6603
     // 0=north 1=east 2=south 3=west
     uint8_t dungeon_facing;
@@ -349,7 +357,7 @@ typedef struct {
     // 0x105f  0x6605
     uint8_t ship_state;
     // 0x1060  0x6606
-    uint8_t pad18[2];
+    uint8_t unknown18[2];
     // 0x1062  0x6608
     uint8_t town_map[32][32];
 } Gamestate;
