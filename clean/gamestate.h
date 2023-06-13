@@ -17,39 +17,68 @@ typedef enum {
 } Class;
 
 typedef struct {
+    // 0x0000  0x55a8
     char name[9];
+    // 0x0009  0x55b1
     Gender gender;
+    // 0x000a  0x55b2
     Class class;
     // TODO: These are the 'G', 'P' initials for statuses, what's the whole set?
+    // 0x000b  0x55b3
     char status;
+    // 0x000c  0x55b4
     uint8_t str;
+    // 0x000d  0x55b5
     uint8_t dex;
+    // 0x000e  0x55b6
     uint8_t intl;
+    // 0x000f  0x55b7
     uint8_t mp;
+    // 0x0010  0x55b8
     uint16_t hp;
+    // 0x0012  0x55ba
     uint16_t max_hp;
+    // 0x0014  0x55bc
     uint16_t xp;
+    // 0x0016  0x55be
     uint8_t level;
+    // 0x0017  0x55bf
     uint8_t months_at_inn;
+    // 0x0018  0x55c0
     uint8_t unknown;
+    // 0x0019  0x55c1
     uint8_t helmet;
+    // 0x001a  0x55c2
     uint8_t armor;
+    // 0x001b  0x55c3
     uint8_t left_hand;
+    // 0x001c  0x55c4
     uint8_t right_hand;
+    // 0x001d  0x55c5
     uint8_t ring;
+    // 0x001e  0x55c6
     uint8_t amulet;
+    // 0x001f  0x55c7
     uint8_t is_recruited;
 } Hero;
 
 typedef struct {
+    // 0x0000  0x5c5a
     uint8_t base_tile;
+    // 0x0001  0x5c5b
     uint8_t current_frame_tile;
+    // 0x0002  0x5c5c
     uint8_t x;
+    // 0x0003  0x5c5d
     uint8_t y;
+    // 0x0004  0x5c5e
     uint8_t z;
     // TODO: Figure out what these are
+    // 0x0005  0x5c5f
     uint8_t value_1;
+    // 0x0006  0x5c60
     uint8_t value_2;
+    // 0x0007  0x5c61
     uint8_t value_3;
 } Creature;
 
