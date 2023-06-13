@@ -32,7 +32,7 @@ const char* MS_COPYRIGHT = "MS Run-Time Library - Copyright (c) 1988, Microsoft 
 // way.
 
 // 0x0052  -0x5ae4
-const char* ITEM_NAMES[] = {
+const char* EQUIPMENT_NAMES[] = {
     "Leather Helm",
     "Spiked Helm",
     "Small Shield",
@@ -66,13 +66,13 @@ const char* ITEM_NAMES[] = {
 };
 
 // 0x0052  -0x5ae4
-const char** ARMOUR_NAMES = &ITEM_NAMES[0];
+const char** ARMOUR_NAMES = &EQUIPMENT_NAMES[0];
 
 // 0x00f8  -0x5a3e
-const char** WEAPON_NAMES = &ITEM_NAMES[13];
+const char** WEAPON_NAMES = &EQUIPMENT_NAMES[13];
 
 // 0x0179  -0x59bd
-const char** TRINKET_NAMES = &ITEM_NAMES[23];
+const char** TRINKET_NAMES = &EQUIPMENT_NAMES[23];
 
 // 0x01d3  -0x5963
 const char* MOB_NAMES[] = {
@@ -173,10 +173,28 @@ const char* ENCOUNTER_NAMES[] = {
     "ROTWORMS",
     "SHADOW LORD",
 };
-// 0x0490
-const void* DATA_01[] = {};
+// TODO: Unknown data
+// 0x0490  -0x56a6
+const char* DATA_01[] = {
+    "*VL",
+    "*RH",
+    "*IS",
+    "*IA",
+    "*IQW",
+    "*KXC",
+    "*IMC",
+    "*AT",
+    "!",
+    "!",
+    "!",
+    "!",
+    "!",
+    "!",
+    "!",
+    "!",
+};
 // 0x04c3
-const char* ITEMS[] = {
+const char* ITEM_NAMES[] = {
 };
 // TODO More items?
 
@@ -554,7 +572,7 @@ int main() {
 
     bytes(out, DATA_00);
     string(out, MS_COPYRIGHT);
-    strings(out, ITEM_NAMES);
+    strings(out, EQUIPMENT_NAMES);
     strings(out, MOB_NAMES);
     strings(out, ENCOUNTER_NAMES);
 
