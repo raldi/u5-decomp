@@ -328,4 +328,4 @@ typedef struct {
 // Global gamestate variable.
 // Rewrite references to gamestate addresses to access game.
 
-Gamestate game;
+extern Gamestate game;
