@@ -1,5 +1,6 @@
-#include <string.h>
+#include <stdint.h>
 #include <stdio.h>
+#include <string.h>
 
 // DATA.OVL recreation.
 //
@@ -7,15 +8,31 @@
 // compiler. Linker trickery is needed to make this compile exactly to the
 // original form, so this uses GCC, not the ancient MS compiler.
 
-// 0x0000
+// The secondary hex addresses are the first address minus 0x5b36. These are
+// the values that show up in sources decompiled by Ghidra.
+
+// 0x0000  -0x5b36
 const char DATA_00[] = {
   0xd6, 0x51, 0x68, 0x0f, 0x6a, 0x52, 0x68, 0x0f, 0x56, 0x53, 0x68, 0x0f,
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
-// 0x0018
+// 0x0018  -0x5b1e
 const char* MS_COPYRIGHT = "MS Run-Time Library - Copyright (c) 1988, Microsoft Corp\x11";
+
+// TODO: For lists of the same type but with subsections, put the data in a
+// single buffer and do the subsection parts as pointers to data. Code must
+// work either if it indexes into the start value or into the sub-value, and
+// separate arrays aren't guaranteed to be compiled to be continuous.
+
+// NB. For contiguous lists of the same type with distinct regions, eg. list
+// of all item names that's clearly split to armours, weapons and trinkets, put
+// the entire list in one data entry and do the sub-sections with pointers. We
+// don't know whether the game code indexes the entire set it via the root
+// address or a section sub-address, so make the data defined here work either
+// way.
+
 // 0x0052  -0x5ae4
-const char* ARMORS[] = {
+const char* ITEM_NAMES[] = {
     "Leather Helm",
     "Spiked Helm",
     "Small Shield",
@@ -29,18 +46,132 @@ const char* ARMORS[] = {
     "Chain Mail",
     "Plate Mail",
     "Mystic Armour",
+
+    "Flaming Oil",
+    "Main Gauche",
+    "Throwing Axe",
+    "Short Sword",
+    "Morning Star",
+    "Sword of Chaos",
+    "Silver Sword",
+    "Glass Sword",
+    "Jeweled Sword",
+    "Mystic Sword",
+
+    "Ring of Invisibility",
+    "Ring of Protection",
+    "Ring of Regeneration",
+    "Amulet/Turning",
+    "Spiked Collar",
 };
-// 0x00f8
-const char* WEAPONS[] = {
-};
-// 0x0179
-const char* TRINKETS[] = {
-};
-// 0x01d3
+
+// 0x0052  -0x5ae4
+const char** ARMOUR_NAMES = &ITEM_NAMES[0];
+
+// 0x00f8  -0x5a3e
+const char** WEAPON_NAMES = &ITEM_NAMES[13];
+
+// 0x0179  -0x59bd
+const char** TRINKET_NAMES = &ITEM_NAMES[23];
+
+// 0x01d3  -0x5963
 const char* MOB_NAMES[] = {
+    "Mage",
+    "Bard",
+    "Fighter",
+    "Avatar",
+    "Villager",
+    "Merchant",
+    "Jester",
+    "Bard",
+    "Child",
+    "Beggar",
+    "Guard",
+    "Wanderer",
+    "Blackthorn",
+    "Lord British",
+    "Sea Horse",
+    "Squid",
+    "Sea Serpent",
+    "Shark",
+    "Giant Rat",
+    "Bat",
+    "Giant Spider",
+    "Ghost",
+    "Slime",
+    "Gremlin",
+    "Mimic",
+    "Reaper",
+    "Gazer",
+    "Crawler",
+    "Gargoyle",
+    "Insect Swarm",
+    "Orc",
+    "Skeleton",
+    "Python",
+    "Ettin",
+    "Headless",
+    "Wisp",
+    "Daemon",
+    "Dragon",
+    "Sand Trap",
+    "Troll",
+    "Mongbat",
+    "Corpser",
+    "Rot Worm",
+    "Shadow Lord",
 };
-// ?
+
+// 0x032b  -0x580b
 const char* ENCOUNTER_NAMES[] = {
+    "WIZARDS",
+    "BARD",
+    "FIGHTER",
+    "x",
+    "VILLAGER",
+    "MERCHANT",
+    "JESTER",
+    "BARD",
+    "PIRATES",
+    "x",
+    "CHILD",
+    "BEGGAR",
+    "GUARDS",
+    "x",
+    "BLACKTHORN",
+    "LORD BRITISH",
+    "SEA HORSES",
+    "SQUIDS",
+    "SEA SERPENTS",
+    "SHARKS",
+    "GIANT RATS",
+    "BATS",
+    "SPIDERS",
+    "GHOSTS",
+    "SLIME",
+    "GREMLINS",
+    "MIMICS",
+    "REAPERS",
+    "GAZERS",
+    "x",
+    "GARGOYLE",
+    "INSECTS",
+    "ORCS",
+    "SKELETONS",
+    "SNAKES",
+    "ETTINS",
+    "HEADLESSES",
+    "WISPS",
+    "DAEMONS",
+    "DRAGONS",
+    "SAND TRAPS",
+    "TROLLS",
+    "x",
+    "x",
+    "MONGBATS",
+    "CORPSERS",
+    "ROTWORMS",
+    "SHADOW LORD",
 };
 // 0x0490
 const void* DATA_01[] = {};
@@ -400,7 +531,7 @@ const char* DAT_FILES[] = {
     "DWELLING.DAT",
     "CASTLE.DAT",
     "KEEP.DAT",
-}
+};
 
 // 0x266a
 // TODO: Misc strings that have newlines and spaces at end
@@ -423,7 +554,9 @@ int main() {
 
     bytes(out, DATA_00);
     string(out, MS_COPYRIGHT);
-    strings(out, ARMORS);
+    strings(out, ITEM_NAMES);
+    strings(out, MOB_NAMES);
+    strings(out, ENCOUNTER_NAMES);
 
     fclose(out);
     printf("newdata.ovl written\n");
