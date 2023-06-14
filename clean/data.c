@@ -7,12 +7,12 @@
 // compiler. Linker trickery is needed to make this compile exactly to the
 // original form, so this uses GCC, not the ancient MS compiler.
 
-// The secondary hex addresses are the first address minus 0x5b36. These are
-// the values that show up in sources decompiled by Ghidra.
+// The secondary hex addresses are the guess for where the data shows up in
+// Ghidra's decompiled C code.
 
 // Reference: https://wiki.ultimacodex.com/wiki/Ultima_V_internal_formats
 
-// 0x154c  -0x45ea
+// 0x154c  0x153c
 const uint16_t MON_FLAG[] = {
 Mage,                                                   // Mage
 Unk2,                                                   // Bard
@@ -64,7 +64,7 @@ Unk1|Poison,                                            // Rot Worm
 NoDrop|Undead|Poss|Unk1|Poison|Invis|Vanish|Tele|Mage,  // Shadow Lord
 };
 
-// 0x160c  -0x452a
+// 0x160c  0x15fc
 const uint8_t ITEM_ATTACK[] = {
     0x00,  // Leather helm
     0x00,  // Chain coif
@@ -124,7 +124,7 @@ const uint8_t ITEM_ATTACK[] = {
     0x00,
 };
 
-// 0x1644  -0x44f2
+// 0x1644  0x1634
 const uint8_t ITEM_DEFENSE[] = {
     0x01,  // Leather helm
     0x02,  // Chain coif
@@ -176,7 +176,7 @@ const uint8_t ITEM_DEFENSE[] = {
     0x00,  // Ankh
 };
 
-// 0x1674  -0x44c2
+// 0x1674  0x1664
 const uint8_t ITEM_RANGE[] = {
     0x00,  // Leather helm
     0x00,  // Chain coif

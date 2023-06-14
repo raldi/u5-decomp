@@ -20,11 +20,11 @@ enum MONSTER_FLAG_BIT {
     Mage =     0x8000, // In An or Crown disables projectiles
 };
 
-// 0x154c  -0x45ea
+// 0x154c  0x153c
 extern const uint16_t MON_FLAG[];
-// 0x160c  -0x452a
+// 0x160c  0x15fc
 extern const uint8_t ITEM_ATTACK[];
-// 0x1644  -0x44f2
+// 0x1644  0x1634
 extern const uint8_t ITEM_DEFENSE[];
-// 0x1674  -0x44c2
+// 0x1674  0x1664
 extern const uint8_t ITEM_RANGE[];
