@@ -114,14 +114,14 @@ const uint8_t ITEM_ATTACK[] = {
     0x00,  // Amulet of Turning
     0x00,  // Spiked collar
     0x00,  // Ankh
-    0x10,  // Flam Por
-    0x1e,  // Vas Flam
-    0x63,  // In Corp
-    0x12,  // Uus Nox
-    0x00,  // Uus Zu
-    0x15,  // Uus Flam
-    0x00,  // Uus Sanct
-    0x00,
+    0x10,  // Vas Lor
+    0x1e,  // Rel Hur
+    0x63,  // In Sanct
+    0x12,  // In An
+    0x00,  // In Quas Wis
+    0x15,  // Kal Xen Corp
+    0x00,  // In Mani Corp
+    0x00,  // An Tym
 };
 
 // 0x1644  0x1634
@@ -226,12 +226,12 @@ const uint8_t ITEM_RANGE[] = {
     0x00,  // Amulet of Turning
     0x00,  // Spiked collar
     0x00,  // Ankh
-    0x0f,  // Flam Por
-    0x0f,  // Vas Flam
-    0x0f,  // In Corp
-    0x0f,  // Uus Nox
-    0x0f,  // Uus Zu
-    0x0f,  // Uus Flam
-    0x0f,  // Uus Sanct
-    0x00,
+    0x0f,  // Vas Lor
+    0x0f,  // Rel Hur
+    0x0f,  // In Sanct
+    0x0f,  // In An
+    0x0f,  // In Quas Wis
+    0x0f,  // Kal Xen Corp
+    0x0f,  // In Mani Corp
+    0x00,  // An Tym
 };

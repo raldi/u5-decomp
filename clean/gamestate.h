@@ -184,10 +184,10 @@ typedef struct {
     uint16_t year;
     // 0x02d0  0x5876
     // Active monsters and charmed PCs
-    uint16_t num_enemies;
+    int16_t num_enemies;
     // 0x02d2  0x5878
     // Active PCs and charmed monsters
-    uint16_t num_allies;
+    int16_t num_allies;
     // 0x02d4  0x587a
     uint8_t ui_icon;
     // 0x02d5  0x587b
