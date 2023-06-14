@@ -16,6 +16,7 @@ typedef enum {
     Mage = 'M',
 } Class;
 
+// game.pc
 typedef struct {
     // 0x0000  0x55a8
     char name[9];
@@ -62,6 +63,7 @@ typedef struct {
     uint8_t is_recruited;
 } Hero;
 
+// game.creatures
 typedef struct {
     // 0x0000  0x5c5a
     uint8_t base_tile;
@@ -84,6 +86,8 @@ typedef struct {
 
 // XXX: How's this different from Creature?
 // Are these used in town instead of combat?
+
+// game.sprites
 typedef struct {
     // 0x0000  0x5f5e
     uint16_t unknown00;
@@ -103,6 +107,7 @@ typedef struct {
     uint16_t is_active;
 } Sprite;
 
+// game
 typedef struct {
     uint16_t unknown00;
     // 0x0002  0x55a8
@@ -218,7 +223,8 @@ typedef struct {
     // 0x02e8  0x588e
     uint8_t prot_spell_duration;
     // 0x02e9  0x588f
-    uint8_t unknown08[2];
+    uint8_t unknown08;
+    uint8_t unknown082;
     // 0x02eb  0x5891
     uint8_t animate_tiles_next_frame;
     // 0x02ec  0x5892
