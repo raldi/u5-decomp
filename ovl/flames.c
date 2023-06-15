@@ -1,4 +1,0 @@
-typedef unsigned char   undefined;
-
-
-
