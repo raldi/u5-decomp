@@ -17,7 +17,7 @@ undefined2 comsubs_1641_0000(int param_1,undefined2 param_2,undefined2 param_3)
   if (((param_1 != 0x30) && (param_1 != 0x31)) && (param_1 < 0x33)) {
     iVar1 = func_0x000100f6(0xffff,param_3);
     iVar2 = func_0x000100f6(0xffff,param_2);
-    iVar3 = func_0x0001bcee();
+    iVar3 = ultima_1000_3abe();
     if (iVar3 < ((iVar2 - iVar1) + 0x1e) / 2) {
       return 1;
     }
@@ -34,7 +34,7 @@ void comsubs_1641_0056(void)
 
     for (i = 0; i < NUM_MONSTERS; i++) {
         if ((game.monsters[i].base_tile & ANIM_BASE_MASK) == TileField) {
-            x = func_0x0001a2c2(0xff,0);
+            x = ultima_1000_2092(0xff, 0);
             if (x < 0x10) {
                 func_0x0001ffb2(i + 1);
             }
@@ -55,7 +55,7 @@ void comsubs_1641_0094(int param_1)
   else {
     iVar1 = (uint)*(byte *)(param_1 * 8 + -0x45e9) * 0x20 + 0x55a8;
   }
-  func_0x00019a80(iVar1);
+  ultima_1000_1850(iVar1);
   return;
 }
 
@@ -71,7 +71,7 @@ void comsubs_1641_00d2(undefined2 param_1)
   } else {
     uVar1 = 0x99a0;
   }
-  func_0x00019a80(uVar1);
+  ultima_1000_1850(uVar1);
 }
 
 
@@ -100,59 +100,59 @@ LAB_1000_6537:
     if (MON_FLAG[monster_type] & Poss == 0) {
 LAB_1641_01ca:
       if ((MON_FLAG[monster_type] & Invis == 0) ||
-         (iVar7 = func_0x0001a2c2(0xff,0), 0x1f < iVar7)) {
+         (iVar7 = ultima_1000_2092(0xff,0), 0x1f < iVar7)) {
         if (((((MON_FLAG[monster_type] & Summ) == 0) ||
-             (iVar7 = func_0x0001a2c2(0xff,0), 0x1f < iVar7)) ||
+             (iVar7 = ultima_1000_2092(0xff,0), 0x1f < iVar7)) ||
             (iVar7 = func_0x000100c6(), iVar7 == 0)) ||
            ((iVar7 = func_0x0001ffa6(game.num_allies, game.num_enemies, 0xd8), iVar7 == 0
-            || (iVar7 = func_0x0001e736(game.party_z, game.num_allies,
+            || (iVar7 = ultima_1000_6506(game.party_z, game.num_allies,
                                         game.num_enemies,0,0x26), iVar7 == -1))))
         goto LAB_1000_6537;
-        func_0x000198ea(10);
+        ultima_1000_16ba(10);
         comsubs_1641_0094(param_1);
-        func_0x00019a80(0x99dc);
-        func_0x0001a3c2(0xf,1000,5000,1,0xac8);
+        ultima_1000_1850(0x99dc);
+        ultima_1000_2192(0xf,1000,5000,1,0xac8);
         iVar7 = (uint)*(byte *)(iVar7 * 8 + -0x45e8);
         game.creatures[iVar7].current_frame_tile = 0x16;
         game.creatures[iVar7].base_tile = 0x16;
-        func_0x00019298(game.num_allies, game.num_enemies, 0x1d8);
+        ultima_1000_1068(game.num_allies, game.num_enemies, 0x1d8);
         game.creatures[iVar7].current_frame_tile = 0xd8;
         game.creatures[iVar7].base_tile = 0xd8;
       }
       else {
-        func_0x000198ea(10);
+        ultima_1000_16ba(10);
         comsubs_1641_0094(param_1);
         if (game.creatures[monster_id].current_frame_tile == 0) {
-          func_0x00019a80(0x99c2);
+          ultima_1000_1850(0x99c2);
           pbVar1 = (byte *)(param_1 * 8 + -0x45ea);
           *pbVar1 = *pbVar1 & 0xef;
           game.creatures[monster_id].current_frame_tile =
               game.creatures[monster_id].base_tile;
         }
         else {
-          func_0x00019a80(0x99ce);
+          ultima_1000_1850(0x99ce);
           pbVar1 = (byte *)(param_1 * 8 + -0x45ea);
           *pbVar1 = *pbVar1 | 0x10;
           game.creatures[monster_id].current_frame_tile = 0;
         }
       }
     } else {
-      iVar7 = func_0x0001a2c2(0x1f,0);
+      iVar7 = ultima_1000_2092(0x1f,0);
       iVar8 = iVar7 * 8;
       bVar2 = *(byte *)(iVar8 + -0x45ea);
       if (((bVar2 & 0x80) == 0) || ((bVar2 & 0x3d) != 0)) goto LAB_1641_01ca;
       iVar6 = comsubs_1641_0000(0,iVar7,param_1);
       if (iVar6 == 0) {
-        func_0x000198ea(10);
+        ultima_1000_16ba(10);
         pbVar1 = (byte *)(iVar8 + -0x45ea);
         *pbVar1 = *pbVar1 | 1;
         if (*(char *)(iVar8 + -0x45e9) == game.active_pc) {
           game.active_pc = 0xff;
         }
-        func_0x0001ab30();
+        ultima_1000_2900();
         comsubs_1641_0094(iVar7);
-        func_0x00019a80(0x99b4);
-        func_0x0001a3c2(2,1000,30000,1,0xc1c);
+        ultima_1000_1850(0x99b4);
+        ultima_1000_2192(2,1000,30000,1,0xc1c);
         if (monster_type == 0x26) {
           func_0x0001ffb2(-1 - param_1);
         }
@@ -180,8 +180,8 @@ void comsubs_1641_0312(int param_1,int param_2)
   *pbVar1 = *pbVar1 & 0xfe;
   if ((*(byte *)0x58a2 & 0x20) != 0) {
     comsubs_1641_0094(param_2);
-    func_0x00019a80(0x99f2);
-    func_0x0001c5de(0x28,1,2000,0x4b0);
+    ultima_1000_1850(0x99f2);
+    ultima_1000_43ae(0x28,1,2000,0x4b0);
   }
   if ((*(byte *)0x58a2 & 0x22) != 0) {
     pbVar1 = (byte *)0x58a2;
@@ -190,7 +190,7 @@ void comsubs_1641_0312(int param_1,int param_2)
   }
   if ((bVar2 == 0) || ((bVar2 & 0x20) != 0)) {
     comsubs_1641_0094(param_2);
-    func_0x00019a80(0x99fc);
+    ultima_1000_1850(0x99fc);
     pbVar1 = (byte *)0x58a2;
     *pbVar1 = *pbVar1 | 1;
   }
@@ -216,12 +216,12 @@ void comsubs_1641_0312(int param_1,int param_2)
       }
       else {
         if ((param_1 != 0xff) && (*(char *)(param_1 * 8 + -0x45e9) == '-')) {
-          func_0x00019a80(0x9a10);
-          func_0x0001c5de(0x28,1,2000,0x4b0);
+          ultima_1000_1850(0x9a10);
+          ultima_1000_43ae(0x28,1,2000,0x4b0);
           pbVar1 = (byte *)(param_2 * 8 + -0x45ea);
           *pbVar1 = *pbVar1 | 4;
           *(undefined *)((uint)*(byte *)(param_2 * 8 + -0x45e8) * 8 + 0x5c5b) = 0;
-          func_0x0001bd16(4);
+          ultima_1000_3ae6(4);
           goto LAB_1641_0426;
         }
         uVar3 = 0x9a22;
@@ -231,12 +231,12 @@ void comsubs_1641_0312(int param_1,int param_2)
       comsubs_1641_0094(param_2);
       uVar3 = 0x9a06;
     }
-    func_0x00019a80(uVar3);
+    ultima_1000_1850(uVar3);
   }
 LAB_1641_0426:
   if ((bVar2 & 0x80) != 0) {
-    func_0x0001ab30();
-    func_0x0001db40();
+    ultima_1000_2900();
+    ultima_1000_5910();
   }
   pbVar1 = (byte *)0x58a2;
   *pbVar1 = *pbVar1 & 0xf3;
@@ -323,16 +323,16 @@ int comsubs_1641_0504(int param_1,uint param_2)
     if ((bVar1) || (bVar2)) {
       game.crosshair_visible = 0;
       if (bVar2) {
-        func_0x000198ea(10);
+        ultima_1000_16ba(10);
         local_14 = 0;
       }
       return local_14;
     }
     iVar7 = 0;
     iVar6 = 0;
-    func_0x0001db40();
+    ultima_1000_5910();
     uVar8 = 0x6a50;
-    iVar5 = func_0x0001a89c();
+    iVar5 = ultima_1000_266c();
     if (iVar5 == 0x1b) {
       bVar2 = true;
       iVar6 = iVar7;
@@ -386,9 +386,9 @@ LAB_1641_05c5:
       }
 LAB_1641_06a3:
       if ((*pcVar4 != game.crosshair_x || (*pcVar3 != game.crosshair_y)) {
-        func_0x000198ea(10,uVar8);
+        ultima_1000_16ba(10,uVar8);
         if (*(char *)0x588f != '\0') {
-          func_0x0001a46c(700,(uint)*(byte *)0x588f * 0x640 + 8000,800);
+          ultima_1000_223c(700,(uint)*(byte *)0x588f * 0x640 + 8000,800);
         }
         bVar1 = true;
       }
@@ -448,9 +448,9 @@ void comsubs_1641_07d4(int param_1,int param_2)
 
   do {
     do {
-      iVar1 = func_0x0001a2c2(3,1);
+      iVar1 = ultima_1000_2092(3,1);
       game.num_enemies = iVar1 + param_2 + -2;
-      iVar1 = func_0x0001a2c2(3,1);
+      iVar1 = ultima_1000_2092(3,1);
       iVar1 = iVar1 + param_1 + -2;
       game.num_allies = iVar1;
     } while (game.num_enemies < 0);
@@ -508,7 +508,7 @@ uint comsubs_1641_0822(undefined2 param_1,int param_2,undefined2 param_3,undefin
 LAB_1641_090c:
     uVar4 = 0xea;
 LAB_1000_6d1f:
-    func_0x0001e736(game.party_z,local_c,local_6,2,uVar4);
+    ultima_1000_6506(game.party_z,local_c,local_6,2,uVar4);
   }
   else {
     if (cVar1 == '3') {
@@ -560,7 +560,7 @@ void comsubs_1641_097c(int param_1,int param_2)
       game.equipment[param_1] -= 1;
       return;
     }
-    func_0x0001f090(param_2,*(undefined *)((uint)*(byte *)0x589e * 8 + -0x45e9));
+    ultima_1000_6e60(param_2,*(undefined *)((uint)*(byte *)0x589e * 8 + -0x45e9));
     return;
   }
   if (param_2 != 0x1a) {
@@ -595,12 +595,12 @@ undefined2 comsubs_1641_09fc(int param_1)
 
   uVar1 = game.monster_interferes[param_1];
   if ((((uVar1 != 0xff) && (pbVar3 = (byte *)(uVar1 * 8 + -0x45ea), *pbVar3 != 0)) &&
-      (iVar2 = func_0x0001d876(uVar1), iVar2 != 0)) &&
+      (iVar2 = ultima_1000_5646(uVar1), iVar2 != 0)) &&
      ((((*pbVar3 & 0xc) == 0 && (game.ui_icon != 'T')) &&
       (iVar2 = comsubs_1641_04d4(uVar1,param_1), iVar2 == 1)))) {
-    func_0x000198ea(10);
+    ultima_1000_16ba(10);
     comsubs_1641_0094(uVar1);
-    func_0x00019a80(0x9a70);
+    ultima_1000_1850(0x9a70);
     return 1;
   }
   return 0;
@@ -625,13 +625,13 @@ void comsubs_1641_0a68(undefined2 param_1,int param_2,int param_3)
 
   if (((((param_2 != 0x1a) && (param_2 != 0x1c)) && (param_2 != 0x24)) &&
       ((param_2 != 0x13 && (param_2 != 0x11)))) || (iVar5 = comsubs_1641_09fc(param_3), iVar5 == 0)) {
-    func_0x00019a80(0x9a7e);
+    ultima_1000_1850(0x9a7e);
     iVar5 = comsubs_1641_0504(ITEM_RANGE[param_2], param_3);
     if (iVar5 != 0) {
-      func_0x0001c5de(100,5,300,0x514);
+      ultima_1000_43ae(100,5,300,0x514);
       if (param_2 == 0x13) {
         if (game.equipment[FlamingOil] == 0) {
-          func_0x0001f090(0x13,*(undefined *)((uint)*(byte *)0x589e * 8 + -0x45e9));
+          ultima_1000_6e60(0x13,*(undefined *)((uint)*(byte *)0x589e * 8 + -0x45e9));
         }
         else {
           game.equipment[FlamingOil] -= 1;
@@ -657,13 +657,13 @@ void comsubs_1641_0a68(undefined2 param_1,int param_2,int param_3)
       uVar8 = game.num_enemies;
       uVar4 = game.num_allies;
       if (uVar9 < 0x8000) {
-        func_0x0001b794(uVar9);
-        func_0x000198ea(10);
+        ultima_1000_3564(uVar9);
+        ultima_1000_16ba(10);
         func_0x0001ff82(param_3,uVar9);
         comsubs_1641_0312(param_3,uVar9);
       }
       else if (uVar7 < 0x8000) {
-        func_0x000198ea(10);
+        ultima_1000_16ba(10);
         comsubs_1641_00d2(uVar7);
       }
       if (param_2 == 0x26) {
@@ -683,14 +683,14 @@ void comsubs_1641_0bf8(undefined2 param_1,undefined2 param_2,undefined2 param_3)
   int iVar1;
   undefined2 unaff_DS;
 
-  func_0x0001c5de(0x96,5,0x2ee,400);
-  func_0x000198ea(10);
+  ultima_1000_43ae(0x96,5,0x2ee,400);
+  ultima_1000_16ba(10);
   iVar1 = func_0x0001ff52(param_1,-(uint)*(byte *)0x588f,param_3,param_2);
   if (iVar1 == 0) {
     comsubs_1641_00d2(param_2);
   }
   else {
-    func_0x0001b794(param_2);
+    ultima_1000_3564(param_2);
     func_0x0001ff82(param_3,param_2);
     comsubs_1641_0312(param_3,param_2);
   }
@@ -729,11 +729,11 @@ void comsubs_1641_0c52(int param_1,int param_2)
     uVar2 = *(undefined *)(param_1 + 0x169c);
   }
   if (cVar1 == '\0') {
-    func_0x00019a80(0x9a84);
+    ultima_1000_1850(0x9a84);
     iVar3 = comsubs_1641_0504(1,param_2);
     iVar4 = comsubs_1641_0748(game.crosshair_y, game.crosshair_x);
     if ((iVar3 == 0) || (iVar4 == -1)) {
-      func_0x00019a80(0x9a8a);
+      ultima_1000_1850(0x9a8a);
     }
     else {
       local_8 = (undefined)iVar4;
@@ -758,12 +758,12 @@ void comsubs_1641_0d3c(int param_1,int param_2)
     if (1 < param_1) {
       *(undefined *)0x588f = 0;
       *(undefined *)0x5890 = 0;
-      func_0x000198ea(10);
-      func_0x00019a80(*(undefined2 *)(param_2 * 2 + 0x17f6));
-      func_0x00019a80(0x9a94);
+      ultima_1000_16ba(10);
+      ultima_1000_1850(*(undefined2 *)(param_2 * 2 + 0x17f6));
+      ultima_1000_1850(0x9a94);
     }
     game.attacker_weapon = param_2;
-    func_0x00019a80(0x9a98);
+    ultima_1000_1850(0x9a98);
     comsubs_1641_0c52(param_2,*(undefined *)0x589e);
   }
   return;
@@ -780,15 +780,15 @@ void comsubs_1641_0d96(int param_1,int param_2)
 
   if (((*(byte *)(param_2 * 8 + -0x45ea) & 0x80) == 0) || (param_1 == 0)) {
     game.attacker_weapon = 0xff;
-    func_0x00019a80(0x9aa0);
+    ultima_1000_1850(0x9aa0);
     comsubs_1641_0c52(0xff,param_2);
   }
   else {
     bVar1 = *(byte *)(param_2 * 8 + -0x45e9);
     if (1 < param_1) {
-      uVar2 = func_0x00019f1e(0);
-      func_0x00019e22(uVar2);
-      func_0x000198ea(0x20);
+      uVar2 = ultima_1000_1cee(0);
+      ultima_1000_1bf2(uVar2);
+      ultima_1000_16ba(0x20);
     }
     comsubs_1641_0d3c(param_1, game.pc[bVar1].helmet);
     comsubs_1641_0d3c(param_1, game.pc[bVar1].left_hand);
@@ -886,7 +886,7 @@ void comsubs_1641_0f4a(undefined2 param_1_00,undefined2 param_2,uint param_1)
 {
   undefined2 unaff_DS;
 
-  func_0x00018ca0(*(undefined2 *)0x13b0);
+  ultima_1000_0a70(*(undefined2 *)0x13b0);
   if (param_1 < 8) {
                     // WARNING: Could not emulate address calculation at 0x000173c0
                     // WARNING: Treating indirect jump as call
@@ -914,7 +914,7 @@ undefined2 comsubs_1641_12de(int param_1,int param_2,int param_3,int param_4,int
 
   local_c = 0xd;
   local_a = 0;
-  func_0x0001919e(1,0);
+  ultima_1000_0f6e(1,0);
   puVar5 = (undefined *)0xa728;
   for (iVar4 = 0x100; iVar4 != 0; iVar4 = iVar4 + -1) {
     puVar1 = puVar5;
@@ -948,22 +948,22 @@ undefined2 comsubs_1641_12de(int param_1,int param_2,int param_3,int param_4,int
       return 1;
     }
     local_a = (local_a & 3) + 1;
-    func_0x0001c1e4(*local_12,*local_e);
+    ultima_1000_3fb4(*local_12,*local_e);
     if (game.num_enemies == -1) {
       return 1;
     }
     comsubs_1641_0f4a(local_12,local_e,param_1,local_a,*local_12,*local_e);
-    func_0x0001a2f8(0x28,1);
+    ultima_1000_20c8(0x28,1);
     uVar2 = (uint)*local_12;
     uVar3 = *local_e & 0xf8;
-    func_0x00018cfe(uVar2 + 0xf,uVar3 + 0xf,uVar2 - 8,uVar3 - 8,0,1);
+    ultima_1000_0ace(uVar2 + 0xf,uVar3 + 0xf,uVar2 - 8,uVar3 - 8,0,1);
     local_e = local_e + local_c;
     local_12 = local_12 + local_c;
     if ((byte *)0xa872 < local_e) {
       return 1;
     }
     if (*local_e == 0xff) break;
-    iVar4 = func_0x0001c19e(game.num_allies, game.num_enemies);
+    iVar4 = ultima_1000_3f6e(game.num_allies, game.num_enemies);
     if ((iVar4 == 0) && ((param_5 != game.num_enemies || (param_4 != game.num_allies)))) {
       return 0;
     }
