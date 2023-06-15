@@ -1,25 +1,25 @@
 #pragma once
 
 enum MONSTER_FLAG_BIT {
-    NoDrop =   0x0001, // Leaves no guts or items
-    Thief =    0x0002, // Steals food
-    Poisonga = 0x0004, // Attacks always poison
-    Immune =   0x0008, // Immune to glass sword
+    NO_DROP =  0x0001, // Leaves no guts or items
+    THIEF =    0x0002, // Steals food
+    POISONGA = 0x0004, // Attacks always poison
+    IMMUNE =   0x0008, // Immune to glass sword
 
-    Divides =  0x0010, // Can divide
-    Undead =   0x0020, // Responds to Repel Undead
-    Poss =     0x0040, // Can possess
-    Brute =    0x0080, // Melee attacks use strength stat
+    DIVIDES =  0x0010, // Can divide
+    UNDEAD =   0x0020, // Responds to Repel Undead
+    POSS =     0x0040, // Can possess
+    BRUTE =    0x0080, // Melee attacks use strength stat
 
-    Unk1 =     0x0100, // Unused?
-    Poison =   0x0200, // Attacks sometimes poison
-    Summ =     0x0400, // Can gate daemons
-    Invis =    0x0800, // Can become invisible
+    UNK1 =     0x0100, // Unused?
+    POISON =   0x0200, // Attacks sometimes poison
+    SUMM =     0x0400, // Can gate daemons
+    INVIS =    0x0800, // Can become invisible
 
-    Vanish =   0x1000, // Vanishes instead of dying
-    Tele =     0x2000, // Can teleport
-    Unk2 =     0x4000, // Unused?
-    Mage =     0x8000, // In An or Crown disables projectiles
+    VANISH =   0x1000, // Vanishes instead of dying
+    TELE =     0x2000, // Can teleport
+    UNK2 =     0x4000, // Unused?
+    MAGE =     0x8000, // In An or Crown disables projectiles
 };
 
 // 0x154c  0x153c

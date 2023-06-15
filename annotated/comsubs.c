@@ -33,7 +33,7 @@ void comsubs_1641_0056(void)
     int i;
 
     for (i = 0; i < NUM_MONSTERS; i++) {
-        if ((game.monsters[i].base_tile & ANIM_BASE_MASK) == TileField) {
+        if ((game.monsters[i].base_tile & ANIM_BASE_MASK) == TILE_FIELD) {
             x = ultima_1000_2092(0xff, 0);
             if (x < 0x10) {
                 func_0x0001ffb2(i + 1);
@@ -97,11 +97,11 @@ LAB_1000_6537:
     uVar5 = 0;
   }
   else {
-    if (MON_FLAG[monster_type] & Poss == 0) {
+    if (MON_FLAG[monster_type] & POSS == 0) {
 LAB_1641_01ca:
-      if ((MON_FLAG[monster_type] & Invis == 0) ||
+      if ((MON_FLAG[monster_type] & INVIS == 0) ||
          (iVar7 = ultima_1000_2092(0xff,0), 0x1f < iVar7)) {
-        if (((((MON_FLAG[monster_type] & Summ) == 0) ||
+        if (((((MON_FLAG[monster_type] & SUMM) == 0) ||
              (iVar7 = ultima_1000_2092(0xff,0), 0x1f < iVar7)) ||
             (iVar7 = func_0x000100c6(), iVar7 == 0)) ||
            ((iVar7 = func_0x0001ffa6(game.num_allies, game.num_enemies, 0xd8), iVar7 == 0
@@ -565,16 +565,16 @@ void comsubs_1641_097c(int param_1,int param_2)
   }
   if (param_2 != 0x1a) {
     if (param_2 == 0x1c) {
-        game.equipment[Quarrels] -= 1;
-        cVar2 = game.equipment[Quarrels];
+        game.equipment[QUARRELS] -= 1;
+        cVar2 = game.equipment[QUARRELS];
       goto LAB_1000_6db0;
     }
     if (param_2 != 0x24) {
       return;
     }
   }
-  game.equipment[Arrows] -= 1;
-  cVar2 = game.equipment[Arrows];
+  game.equipment[ARROWS] -= 1;
+  cVar2 = game.equipment[ARROWS];
 LAB_1000_6db0:
   if (cVar2 == '\0') {
     cVar2 = func_0x0001023a(param_2);
@@ -630,11 +630,11 @@ void comsubs_1641_0a68(undefined2 param_1,int param_2,int param_3)
     if (iVar5 != 0) {
       ultima_1000_43ae(100,5,300,0x514);
       if (param_2 == 0x13) {
-        if (game.equipment[FlamingOil] == 0) {
+        if (game.equipment[FLAMING_OIL] == 0) {
           ultima_1000_6e60(0x13,*(undefined *)((uint)*(byte *)0x589e * 8 + -0x45e9));
         }
         else {
-          game.equipment[FlamingOil] -= 1;
+          game.equipment[FLAMING_OIL] -= 1;
         }
       }
       iVar6 = (uint)*(byte *)(param_3 * 8 + -0x45e8) * 8;

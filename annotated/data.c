@@ -14,8 +14,8 @@
 
 // 0x154c  0x153c
 const uint16_t MON_FLAG[] = {
-Mage,                                                   // Mage
-Unk2,                                                   // Bard
+MAGE,                                                   // Mage
+UNK2,                                                   // Bard
 0,                                                      // Fighter
 0,                                                      // ?
 0,                                                      // Villager
@@ -27,41 +27,41 @@ Unk2,                                                   // Bard
 0,                                                      // Child
 0,                                                      // Beggar
 0,                                                      // Guards
-Immune|Vanish|Tele|Mage,                                // ?
-Immune|Poss|Summ|Invis|Vanish|Tele|Mage,                // Blackthorn
-Immune|Vanish|Tele,                                     // Lord British
-NoDrop|Unk2|Mage,                                       // Sea Horse
-NoDrop|Poisonga|Unk2,                                   // Squid
-NoDrop|Unk2,                                            // Sea Serpent
-NoDrop,                                                 // Shark
-Unk1|Poison,                                            // Giant Rat
-NoDrop,                                                 // Bat
-Poisonga|Poison,                                        // Giant Spider
-NoDrop|Undead|Invis,                                    // Ghost
-NoDrop|Divides,                                         // Slime
-Thief,                                                  // Gremlin
-Brute|Poison,                                           // Mimic
-Brute|Mage,                                             // Reaper
-Poss|Mage,                                              // Gazer
+IMMUNE|VANISH|TELE|MAGE,                                // ?
+IMMUNE|POSS|SUMM|INVIS|VANISH|TELE|MAGE,                // Blackthorn
+IMMUNE|VANISH|TELE,                                     // Lord British
+NO_DROP|UNK2|MAGE,                                       // Sea Horse
+NO_DROP|POISONGA|UNK2,                                   // Squid
+NO_DROP|UNK2,                                            // Sea Serpent
+NO_DROP,                                                 // Shark
+UNK1|POISON,                                            // Giant Rat
+NO_DROP,                                                 // Bat
+POISONGA|POISON,                                        // Giant Spider
+NO_DROP|UNDEAD|INVIS,                                    // Ghost
+NO_DROP|DIVIDES,                                         // Slime
+THIEF,                                                  // Gremlin
+BRUTE|POISON,                                           // Mimic
+BRUTE|MAGE,                                             // Reaper
+POSS|MAGE,                                              // Gazer
 0,                                                      // Crawler
-Divides|Brute,                                          // Gargoyle
-NoDrop,                                                 // Insect Swarm
-Brute,                                                  // Orc
-Undead,                                                 // Skeleton
-Poisonga,                                               // Python
-Brute|Unk2,                                             // Ettin
-Brute,                                                  // Headless
-NoDrop|Poss|Tele,                                       // Wisp
-NoDrop|Undead|Poss|Summ|Mage,                           // Daemon
-Summ,                                                   // Dragon
+DIVIDES|BRUTE,                                          // Gargoyle
+NO_DROP,                                                 // Insect Swarm
+BRUTE,                                                  // Orc
+UNDEAD,                                                 // Skeleton
+POISONGA,                                               // Python
+BRUTE|UNK2,                                             // Ettin
+BRUTE,                                                  // Headless
+NO_DROP|POSS|TELE,                                       // Wisp
+NO_DROP|UNDEAD|POSS|SUMM|MAGE,                           // Daemon
+SUMM,                                                   // Dragon
 0,                                                      // Sand Trap
-Unk2,                                                   // Troll
+UNK2,                                                   // Troll
 0,                                                      // ?
 0,                                                      // ?
 0,                                                      // Mongbat
 0,                                                      // Corpser
-Unk1|Poison,                                            // Rot Worm
-NoDrop|Undead|Poss|Unk1|Poison|Invis|Vanish|Tele|Mage,  // Shadow Lord
+UNK1|POISON,                                            // Rot Worm
+NO_DROP|UNDEAD|POSS|UNK1|POISON|INVIS|VANISH|TELE|MAGE,  // Shadow Lord
 };
 
 // 0x160c  0x15fc

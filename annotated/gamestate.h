@@ -7,15 +7,15 @@ typedef uint8_t bool;
 // Gamestate/savefile struct.
 
 typedef enum {
-    Male = 0xb,   // '♂'
-    Female = 0xc, // '♀'
+    MALE = 0xb,   // '♂'
+    FEMALE = 0xc, // '♀'
 } Gender;
 
 typedef enum {
-    Avatar = 'A',
-    Bard = 'B',
-    Fighter = 'F',
-    Mage = 'M',
+    AVATAR = 'A',
+    BARD = 'B',
+    FIGHTER = 'F',
+    MAGE = 'M',
 } Class;
 
 // game.pc
