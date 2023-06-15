@@ -1,0 +1,8 @@
+Initial source code mostly as it was output from Ghidra's C code
+decompilation.
+
+Try to keep the files in this directory mostly intact. Changes that rely on
+mechanical search & replace like reassigning function names is okay, but don't
+touch the raw memory address stuff. Mistakes are bound to happen when
+rewriting the annotated codes, so these files can serve as a backup where the
+original machine-generated logic can be re-checked.

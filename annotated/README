@@ -1,9 +1,14 @@
-Recreated source code.
+Recreated and annotated source code.
 
-Must produce as close to possible the original binary files when compiled
-with Microsoft C Compiler 5.1 for DOS.
+Change raw memory address accesses to use the annotated structs and arrays,
+replace magic numbers with symbolic constants, try to figure out meanings of
+functions and rename them accordingly.
 
-Procedure:
+Was originally trying to get this into shape where it would be as close as
+possible to the original binary fiels when compiled with Microsoft C Compiler
+5.1 for DOS, but this turned out to be too much work.
+
+Procedure for the recreation anyway:
 
 Somehow acquire Microsoft C Compiler 5.1 (this exact version) and install it
 under DosBox. Set up the paths in DosBox, if you installed in C:\,
