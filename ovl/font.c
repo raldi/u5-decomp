@@ -20,7 +20,7 @@ void font_1641_0000(int param_1,undefined2 param_2)
   int local_8;
   int local_4;
   
-  func_0x00018e52(1);
+  ultima_1000_0c22(1);
   iVar3 = *(int *)0x5150;
   piVar1 = (int *)0x5158;
   if ((*piVar1 == iVar3 || *piVar1 < iVar3) || (*(int *)0x5152 <= *(int *)0x5158)) {
@@ -35,7 +35,7 @@ void font_1641_0000(int param_1,undefined2 param_2)
   local_4 = *(int *)0x5156 - *(int *)(iVar3 + 0x5146);
   do {
     if (*(char *)(local_e + param_1) == '\0') {
-      func_0x00018e52(0);
+      ultima_1000_0c22(0);
       return;
     }
     local_a = 0;
@@ -90,7 +90,7 @@ LAB_1000_6500:
         }
         else if (*(char *)(local_e + param_1) != '_') {
           if (*(int *)0x5158 < 0xc0) {
-            func_0x00019274(*(undefined2 *)0x5158,*(undefined2 *)0x5156,
+            ultima_1000_1044(*(undefined2 *)0x5158,*(undefined2 *)0x5156,
                             *(byte *)(local_e + param_1) - 0x20,param_2);
           }
           piVar1 = (int *)0x5156;
@@ -102,7 +102,7 @@ LAB_1000_6500:
     local_e = iVar3;
     if (*(char *)(iVar3 + param_1) != '\0') {
       if ((*(char *)(iVar3 + param_1) == '_') && (*(int *)0x5158 < 0xc0)) {
-        func_0x00019274(*(undefined2 *)0x5158,*(undefined2 *)0x5156,0xd,param_2);
+        ultima_1000_1044(*(undefined2 *)0x5158,*(undefined2 *)0x5156,0xd,param_2);
       }
       local_4 = 0;
       piVar1 = (int *)0x5158;
@@ -143,7 +143,7 @@ void font_1641_02a2(int param_1,int param_2)
   else {
     uVar3 = (uint)*(byte *)(bVar1 + 0xb11e);
   }
-  func_0x00019310(param_1 + 7,param_2,uVar3);
+  ultima_1000_10e0(param_1 + 7,param_2,uVar3);
   return;
 }
 
@@ -162,7 +162,7 @@ undefined2 font_1641_02fc(int param_1)
   uint local_6;
   
   do {
-    func_0x0001c782();
+    ultima_1000_4552();
     iVar5 = 0x671a;
     func_0x0001ff22();
     pcVar4 = (char *)0x5c5a;
@@ -194,15 +194,15 @@ undefined2 font_1641_02fc(int param_1)
     }
     *(bool *)0xbd28 = *(char *)0xbd28 == '\0';
     uVar6 = 0x67b1;
-    iVar3 = func_0x00019f8e();
+    iVar3 = ultima_1000_1d5e();
     if (iVar3 != 0) {
       return 1;
     }
     if (param_1 != 0) {
-      func_0x0001a32a(1,iVar5,uVar6);
+      ultima_1000_20fa(1,iVar5,uVar6);
     }
     if (*(char *)0xbd29 == '\x02') {
-      func_0x0001a46c(10000,0x3c,0x14);
+      ultima_1000_223c(10000,0x3c,0x14);
     }
     else if (*(char *)0xbd29 == '\x03') {
       piVar2 = (int *)0x515a;
@@ -217,7 +217,7 @@ undefined2 font_1641_02fc(int param_1)
         if (*(int *)0x515a != 4) goto LAB_1641_0406;
         uVar6 = 2000;
       }
-      func_0x0001a4f0(3,uVar6);
+      ultima_1000_22c0(3,uVar6);
     }
 LAB_1641_0406:
     param_1 = param_1 + -1;
@@ -278,15 +278,15 @@ void __cdecl16near font_1641_04a4(void)
   *(undefined *)0xbd27 = 9;
   *(undefined *)0xbd26 = 9;
   *(undefined *)0xbd28 = 0;
-  func_0x00018ca0(*(undefined2 *)0x13b2);
-  func_0x00018cd6(0x7e,199,0x78,0x78);
-  func_0x00018ca0(*(undefined2 *)0x13b0);
-  func_0x00018d40(0x7f,199,0x7f,0x78);
+  ultima_1000_0a70(*(undefined2 *)0x13b2);
+  ultima_1000_0aa6(0x7e,199,0x78,0x78);
+  ultima_1000_0a70(*(undefined2 *)0x13b0);
+  ultima_1000_0b10(0x7f,199,0x7f,0x78);
   if ((*(char *)0x5893 != 'B') &&
-     (func_0x0001a79e(0x2c0,2000,0xb21e,0xa044), *(char *)0x5893 == '@')) {
+     (ultima_1000_256e(0x2c0,2000,0xb21e,0xa044), *(char *)0x5893 == '@')) {
     font_1641_0e52();
     do {
-      iVar1 = func_0x00019224(*(undefined2 *)0x25f0);
+      iVar1 = ultima_1000_0ff4(*(undefined2 *)0x25f0);
     } while (iVar1 == 0);
     font_1641_0e7b();
   }
@@ -298,7 +298,7 @@ void __cdecl16near font_1641_04a4(void)
     }
     uVar2 = (uint)*(byte *)(local_e + -0x4de2);
     if (uVar2 < 0x10) break;
-    iVar1 = func_0x00019f8e();
+    iVar1 = ultima_1000_1d5e();
     if (iVar1 != 0) {
       return;
     }
@@ -320,7 +320,7 @@ void __cdecl16near font_1641_0998(void)
   
   do {
     do {
-      iVar1 = func_0x0001a2c2(7,0);
+      iVar1 = ultima_1000_2092(7,0);
     } while (*(char *)(iVar1 + -0x42d6) != '\0');
   } while (*(char *)(iVar1 + -0x42ce) != '\0');
   *(undefined *)(iVar1 + -0x42d6) = 1;
@@ -343,10 +343,10 @@ void font_1641_09c8(undefined2 param_1,undefined2 param_2)
   int local_8;
   int local_6;
   
-  func_0x00018e52(1);
-  func_0x000198ea(0xff);
-  func_0x00018f7c(0,0,0x10,1,param_1);
-  func_0x00018f7c(0,0,200,1,param_1);
+  ultima_1000_0c22(1);
+  ultima_1000_16ba(0xff);
+  ultima_1000_0d4c(0,0,0x10,1,param_1);
+  ultima_1000_0d4c(0,0,200,1,param_1);
   *(undefined2 *)0x5156 = 0;
   *(undefined2 *)0x5158 = 0x98;
   local_6 = font_1641_0998();
@@ -361,16 +361,16 @@ void font_1641_09c8(undefined2 param_1,undefined2 param_2)
     local_10 = iVar3;
     local_e = local_6;
   }
-  func_0x00018f7c(0,*(undefined *)(local_e + 0x5204),*(undefined *)(local_e + 0x51fc),local_e + 2,
+  ultima_1000_0d4c(0,*(undefined *)(local_e + 0x5204),*(undefined *)(local_e + 0x51fc),local_e + 2,
                   param_1);
-  func_0x00018f7c(0,*(undefined *)(local_10 + 0x5204),*(byte *)(local_10 + 0x51fc) + 0xb8,
+  ultima_1000_0d4c(0,*(undefined *)(local_10 + 0x5204),*(byte *)(local_10 + 0x51fc) + 0xb8,
                   local_10 + 2,param_1);
-  func_0x0001a79e(*(undefined2 *)(iVar3 * 2 + local_6 * 0x10 + 0x517c),2000,0xb21e,0xa052);
+  ultima_1000_256e(*(undefined2 *)(iVar3 * 2 + local_6 * 0x10 + 0x517c),2000,0xb21e,0xa052);
   font_1641_0000(0xb21e,param_2);
-  func_0x0001919e(0,1);
+  ultima_1000_0f6e(0,1);
   do {
-    uVar4 = func_0x00019f8e();
-    cVar2 = func_0x0001a262(uVar4);
+    uVar4 = ultima_1000_1d5e();
+    cVar2 = ultima_1000_2032(uVar4);
     if (cVar2 == 'A') break;
   } while (cVar2 != 'B');
   local_8 = iVar3;
@@ -411,32 +411,32 @@ void __cdecl16near font_1641_0b0a(void)
   }
   *(undefined *)0xa9cb = 0xff;
   do {
-    iVar5 = func_0x000191de(*(undefined2 *)0x25ea);
+    iVar5 = ultima_1000_0fae(*(undefined2 *)0x25ea);
   } while (iVar5 == 0);
   do {
     iVar6 = func_0x00018dde(*(undefined2 *)0x260a);
   } while (iVar6 == 0);
-  func_0x0001a79e(0,0x1060,0x55a6,0xa060);
-  func_0x00018ca0(*(undefined2 *)0x13b2);
-  func_0x00018cd6(0x7e,200,0x78,0x78);
-  func_0x00018ca0(*(undefined2 *)0x13b0);
-  func_0x00018d40(0x7f,200,0x7f,0x78);
-  func_0x00018ca0(0);
-  func_0x00018cd6(0xbf,0x137,0x80,8);
-  func_0x00019e22(0x11,3);
-  func_0x00019a80(0xa06a);
-  func_0x00019e22(0x13,0xe);
-  func_0x000198ea(0x3a);
-  func_0x0001a068(8,0x55a8);
+  ultima_1000_256e(0,0x1060,0x55a6,0xa060);
+  ultima_1000_0a70(*(undefined2 *)0x13b2);
+  ultima_1000_0aa6(0x7e,200,0x78,0x78);
+  ultima_1000_0a70(*(undefined2 *)0x13b0);
+  ultima_1000_0b10(0x7f,200,0x7f,0x78);
+  ultima_1000_0a70(0);
+  ultima_1000_0aa6(0xbf,0x137,0x80,8);
+  ultima_1000_1bf2(0x11,3);
+  ultima_1000_1850(0xa06a);
+  ultima_1000_1bf2(0x13,0xe);
+  ultima_1000_16ba(0x3a);
+  ultima_1000_1e38(8,0x55a8);
   if (*(char *)0x55a8 != '\0') {
-    func_0x00019e22(0x15,8);
-    func_0x00019a80(0xa08c);
+    ultima_1000_1bf2(0x15,8);
+    ultima_1000_1850(0xa08c);
     do {
-      uVar7 = func_0x0001a00a(0);
-      cVar4 = func_0x0001a262(uVar7);
+      uVar7 = ultima_1000_1dda(0);
+      cVar4 = ultima_1000_2032(uVar7);
       if (cVar4 == 'M') break;
     } while (cVar4 != 'F');
-    func_0x000198ea(cVar4);
+    ultima_1000_16ba(cVar4);
     if (cVar4 == 'M') {
       *(undefined *)0x55b1 = 0xb;
     }
@@ -451,16 +451,16 @@ void __cdecl16near font_1641_0b0a(void)
     *(undefined2 *)0x514e = 0x140;
     *(undefined2 *)0x5150 = 0x59;
     *(undefined2 *)0x5152 = 200;
-    func_0x0001a79e(0,2000,0xb21e,0xa0a6);
-    func_0x00018e52(1);
+    ultima_1000_256e(0,2000,0xb21e,0xa0a6);
+    ultima_1000_0c22(1);
     *(undefined *)0xa9be = 2;
-    func_0x000198ea(0xff);
-    func_0x00018f7c(0,0x60,0,0,iVar6);
+    ultima_1000_16ba(0xff);
+    ultima_1000_0d4c(0,0x60,0,0,iVar6);
     font_1641_0000(0xb21e,iVar5);
-    func_0x0001919e(0,1);
+    ultima_1000_0f6e(0,1);
     *(undefined2 *)0x5150 = 200;
     do {
-      iVar8 = func_0x00019f8e();
+      iVar8 = ultima_1000_1d5e();
     } while (iVar8 == 0);
     *(undefined *)0xbd3c = *(undefined *)0x55b6;
     *(undefined *)0xbd3d = *(undefined *)0x55b5;
@@ -500,21 +500,21 @@ void __cdecl16near font_1641_0b0a(void)
     *(undefined2 *)0x5148 = 0;
     *(undefined2 *)0x514e = 0xa6;
     *(undefined2 *)0x5154 = 4;
-    func_0x0001a79e(0x322,2000,0xb21e,0xa0b4);
-    func_0x00018e52(1);
-    func_0x000198ea(0xff);
-    func_0x00018f7c(0,100,0xa8,10,iVar6);
+    ultima_1000_256e(0x322,2000,0xb21e,0xa0b4);
+    ultima_1000_0c22(1);
+    ultima_1000_16ba(0xff);
+    ultima_1000_0d4c(0,100,0xa8,10,iVar6);
     font_1641_0000(0xb21e,iVar5);
     *(undefined2 *)0x5154 = 5;
-    func_0x0001919e(0,1);
+    ultima_1000_0f6e(0,1);
     do {
-      iVar8 = func_0x00019f8e();
+      iVar8 = ultima_1000_1d5e();
     } while (iVar8 == 0);
     func_0x00018e14(iVar6);
     func_0x0001920c(iVar5);
-    func_0x00018e52(1);
-    func_0x000198ea(0xff);
-    func_0x00018e52(0);
+    ultima_1000_0c22(1);
+    ultima_1000_16ba(0xff);
+    ultima_1000_0c22(0);
     *(undefined *)0xa9be = 0;
     uVar1 = *(undefined *)0xbd3c;
     *(undefined *)0x55b6 = uVar1;
@@ -522,10 +522,10 @@ void __cdecl16near font_1641_0b0a(void)
     *(undefined *)0x55b5 = *(undefined *)0xbd3d;
     bVar9 = *(byte *)0xbd3e;
     *(char *)0x55b4 = (bVar9 - 0x14 & ~-(bVar9 < 0x14)) + 0x14;
-    func_0x0001a79e(0,0x100,0xb31e,0xa0c2);
-    func_0x000198ea(0xff);
-    func_0x00019e22(10,0);
-    func_0x0001a74e(3);
+    ultima_1000_256e(0,0x100,0xb31e,0xa0c2);
+    ultima_1000_16ba(0xff);
+    ultima_1000_1bf2(10,0);
+    ultima_1000_251e(3);
     puVar11 = (undefined *)0xb21e;
     for (iVar5 = 0x100; iVar5 != 0; iVar5 = iVar5 + -1) {
       puVar2 = puVar11;
@@ -535,7 +535,7 @@ void __cdecl16near font_1641_0b0a(void)
     func_0x0001a808(0x200,0xb21e,0xa0cc);
     func_0x0001a808(0x1060,0x55a6,0xa0d6);
   }
-  func_0x0001a74e(0);
+  ultima_1000_251e(0);
   *(undefined *)0x5893 = 0x40;
   return;
 }

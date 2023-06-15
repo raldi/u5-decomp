@@ -11,20 +11,20 @@ void dnglook_124c_0284(int param_1,int param_2)
   int iVar1;
   undefined2 unaff_DS;
   
-  func_0x00018ca0(*(int *)0x13b6 + 8);
+  ultima_1000_0a70(*(int *)0x13b6 + 8);
   iVar1 = param_2 + 6;
   param_2 = param_2 + 1;
-  func_0x00018d40(param_1,iVar1,param_1,param_2);
-  func_0x00018d40(param_1 + 1,iVar1,param_1 + 1,param_2);
-  func_0x00018ca0(*(int *)0x13ae + 8);
-  func_0x00018d40(param_1 + 2,iVar1,param_1 + 2,param_2);
-  func_0x00018d40(param_1 + 3,iVar1,param_1 + 3,param_2);
-  func_0x00018ca0(*(int *)0x13b2 + 8);
-  func_0x00018d40(param_1 + 4,iVar1,param_1 + 4,param_2);
-  func_0x00018d40(param_1 + 5,iVar1,param_1 + 5,param_2);
-  func_0x00018ca0(*(int *)0x13b4 + 8);
-  func_0x00018d40(param_1 + 6,iVar1,param_1 + 6,param_2);
-  func_0x00018d40(param_1 + 7,iVar1,param_1 + 7,param_2);
+  ultima_1000_0b10(param_1,iVar1,param_1,param_2);
+  ultima_1000_0b10(param_1 + 1,iVar1,param_1 + 1,param_2);
+  ultima_1000_0a70(*(int *)0x13ae + 8);
+  ultima_1000_0b10(param_1 + 2,iVar1,param_1 + 2,param_2);
+  ultima_1000_0b10(param_1 + 3,iVar1,param_1 + 3,param_2);
+  ultima_1000_0a70(*(int *)0x13b2 + 8);
+  ultima_1000_0b10(param_1 + 4,iVar1,param_1 + 4,param_2);
+  ultima_1000_0b10(param_1 + 5,iVar1,param_1 + 5,param_2);
+  ultima_1000_0a70(*(int *)0x13b4 + 8);
+  ultima_1000_0b10(param_1 + 6,iVar1,param_1 + 6,param_2);
+  ultima_1000_0b10(param_1 + 7,iVar1,param_1 + 7,param_2);
   return;
 }
 
@@ -52,8 +52,8 @@ undefined2 dnglook_124c_0340(int param_1,int param_2)
       bVar1 = *(byte *)((uint)*(byte *)0x5895 * 0x40 +
                         ((param_1 + (uint)*(byte *)0x5897) - 0xb & 7) * 8 +
                         ((param_2 + (uint)*(byte *)0x5896) - 0xb & 7) + 0x595a);
-      func_0x00019e22(param_1 + 1,param_2 + 1);
-      func_0x00018ca0(*(undefined2 *)0x13b0);
+      ultima_1000_1bf2(param_1 + 1,param_2 + 1);
+      ultima_1000_0a70(*(undefined2 *)0x13b0);
       uVar2 = (uint)(bVar1 >> 4);
       if (uVar2 < 0x10) {
                     // WARNING: Could not emulate address calculation at 0x000128c9
@@ -62,8 +62,8 @@ undefined2 dnglook_124c_0340(int param_1,int param_2)
         return uVar3;
       }
     }
-    func_0x00019efa(*(undefined2 *)0x13b0);
-    func_0x00019ece(0);
+    ultima_1000_1cca(*(undefined2 *)0x13b0);
+    ultima_1000_1c9e(0);
   }
   return local_8;
 }
@@ -85,8 +85,8 @@ void __cdecl16near dnglook_124c_06a8(void)
   undefined *local_6;
   undefined *local_4;
   
-  func_0x00018ca0(0);
-  func_0x00018cd6(0xb7,0xb7,8,8);
+  ultima_1000_0a70(0);
+  ultima_1000_0aa6(0xb7,0xb7,8,8);
   local_c = (undefined *)0xa528;
   local_10 = (undefined *)0xa628;
   puVar5 = (undefined *)0xad14;
@@ -100,23 +100,23 @@ void __cdecl16near dnglook_124c_06a8(void)
   *(undefined *)0xa628 = 0xb;
   local_6 = (undefined *)0xa629;
   *(undefined *)0xae7f = 0;
-  func_0x00018ca0(*(undefined2 *)0x13b0);
-  func_0x00019dc4(0);
-  func_0x00019e22(0xc,0xc);
-  func_0x00019ece(1);
-  func_0x00019efa(*(int *)0x13b4 + 8);
+  ultima_1000_0a70(*(undefined2 *)0x13b0);
+  ultima_1000_1b94(0);
+  ultima_1000_1bf2(0xc,0xc);
+  ultima_1000_1c9e(1);
+  ultima_1000_1cca(*(int *)0x13b4 + 8);
   if (*(int *)0x52c8 == 3) {
-    func_0x00019efa(*(undefined2 *)0x13b0);
+    ultima_1000_1cca(*(undefined2 *)0x13b0);
   }
-  func_0x000198ea(0x60);
-  func_0x00019efa(*(undefined2 *)0x13b0);
-  func_0x00019ece(0);
+  ultima_1000_16ba(0x60);
+  ultima_1000_1cca(*(undefined2 *)0x13b0);
+  ultima_1000_1c9e(0);
   do {
     if (local_4 == local_c) {
-      func_0x00019dc4(2);
-      func_0x0001a00a(0);
-      func_0x00018ca0(0);
-      func_0x00018cd6(0xb7,0xb7,8,8);
+      ultima_1000_1b94(2);
+      ultima_1000_1dda(0);
+      ultima_1000_0a70(0);
+      ultima_1000_0aa6(0xb7,0xb7,8,8);
       func_0x0001fe26();
       return;
     }
@@ -475,7 +475,7 @@ void __cdecl16near dnglook_124c_0c6c(void)
     }
     if (bVar4 == 3) {
       *(undefined *)0xbb16 = 1;
-      func_0x0001f1ec(0);
+      ultima_1000_6fbc(0);
     }
     else {
       *(undefined *)0xbb16 = 0;
@@ -627,7 +627,7 @@ LAB_124c_0ea5:
       iVar6 = 0;
       piVar9 = local_2e;
       do {
-        iVar5 = func_0x0001a2c2(0xf,0);
+        iVar5 = ultima_1000_2092(0xf,0);
         local_4 = *piVar9;
         *piVar9 = local_2e[iVar5];
         local_2e[iVar5] = local_4;
@@ -639,11 +639,11 @@ LAB_124c_0ea5:
         bVar4 = *(byte *)0x5c67;
       }
       else {
-        iVar6 = func_0x0001a2c2(7,0);
+        iVar6 = ultima_1000_2092(7,0);
         bVar4 = *(byte *)(iVar6 + 0x173c);
       }
       pcVar8 = (char *)((uint)bVar4 * 8 + 0x13c2);
-      local_4 = func_0x0001a2c2(*pcVar8,1);
+      local_4 = ultima_1000_2092(*pcVar8,1);
       if ((*pcVar8 == '\b') || (*pcVar8 == '\x10')) {
         local_4 = (uint)*(byte *)((uint)bVar4 * 8 + 0x13c2);
       }
@@ -689,11 +689,11 @@ void dnglook_124c_109e(int param_1)
       *(undefined *)0x5c64 = 0xff;
       *(undefined *)0x5c67 = 0xff;
     }
-    func_0x00018ca0(0);
-    func_0x00018cd6(0xb7,0xb7,8,8);
-    func_0x00018e52(1);
-    func_0x00018cd6(0xb7,0xb7,8,8);
-    func_0x00018e52(0);
+    ultima_1000_0a70(0);
+    ultima_1000_0aa6(0xb7,0xb7,8,8);
+    ultima_1000_0c22(1);
+    ultima_1000_0aa6(0xb7,0xb7,8,8);
+    ultima_1000_0c22(0);
   }
   return;
 }
@@ -736,7 +736,7 @@ LAB_124c_11bc:
     local_4 = 1;
   }
   else if (cVar3 == '\x05') goto LAB_124c_11bc;
-  func_0x0001eb66();
+  ultima_1000_6936();
   local_10 = 0;
   uVar5 = (uint)*(byte *)0x585b;
   if (uVar5 != 0) {
@@ -769,7 +769,7 @@ LAB_124c_1248:
     local_4 = 0xb;
     iVar7 = 0;
     do {
-      iVar4 = func_0x0001a2c2(7,0);
+      iVar4 = ultima_1000_2092(7,0);
       local_8[iVar7] = *(byte *)(iVar4 + 0x385e);
       iVar7 = iVar7 + 1;
     } while (iVar7 < 4);
@@ -788,18 +788,18 @@ LAB_124c_1248:
         if ((bVar2 & 0xfc) == 0xec) {
           uVar5 = (uint)local_8[bVar2 & 3];
         }
-        iVar7 = func_0x0001e736(*(undefined *)0x5895,*(undefined *)(local_e + -0x520c),
+        iVar7 = ultima_1000_6506(*(undefined *)0x5895,*(undefined *)(local_e + -0x520c),
                                 *(undefined *)(local_c + -0x522c),local_14,uVar5);
         if (local_14 == 2) {
           if (uVar5 == 1) {
             cVar3 = *(char *)0x5895 * '\x03' + '\a';
           }
           else if (uVar5 == 2) {
-            cVar3 = func_0x0001a2c2((uint)*(byte *)0x5895 * 10 + 10,1);
+            cVar3 = ultima_1000_2092((uint)*(byte *)0x5895 * 10 + 10,1);
           }
           else {
             if (0xf < uVar5) goto LAB_124c_1385;
-            cVar3 = func_0x0001a2c2(*(byte *)(uVar5 + 0x383f) - 1,0);
+            cVar3 = ultima_1000_2092(*(byte *)(uVar5 + 0x383f) - 1,0);
             cVar3 = *(char *)(uVar5 + 0x384d) + cVar3;
           }
           *(char *)(iVar7 * 8 + 0x5c5f) = cVar3;
