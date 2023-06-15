@@ -1,3 +1,5 @@
+#pragma once
+
 enum MONSTER_FLAG_BIT {
     NoDrop =   0x0001, // Leaves no guts or items
     Thief =    0x0002, // Steals food

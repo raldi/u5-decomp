@@ -33,7 +33,7 @@ void comsubs_1641_0056(void)
     int i;
 
     for (i = 0; i < NUM_MONSTERS; i++) {
-        if ((game.monsters[i].base_tile & ANIM_BASE_MASK) == ANY_FIELD) {
+        if ((game.monsters[i].base_tile & ANIM_BASE_MASK) == TileField) {
             x = func_0x0001a2c2(0xff,0);
             if (x < 0x10) {
                 func_0x0001ffb2(i + 1);
